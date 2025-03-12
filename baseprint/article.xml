@@ -1,15 +1,71 @@
 <article xmlns:ali="http://www.niso.org/schemas/ali/1.0/" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink">
   <front>
     <article-meta>
+      <title-group>
+        <article-title>Baseprint Document Format</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <contrib-id contrib-id-type="orcid">https://orcid.org/0000-0002-5014-4809</contrib-id>
+          <name>
+            <surname>Ellerman</surname>
+            <given-names>E. Castedo</given-names>
+          </name>
+          <email>castedo@castedo.com</email>
+        </contrib>
+      </contrib-group>
       <permissions>
+        <copyright-statement>© 2025, Ellerman et al</copyright-statement>
+      <license>
+        <ali:license_ref>https://creativecommons.org/licenses/by/4.0/</ali:license_ref>
+        <license-p>This document is distributed under a Creative Commons Attribution 4.0 International license.</license-p>
+      </license>
       </permissions>
       <abstract>
-
+<p><bold>DOCUMENT TYPE</bold>: Living Technical Specification</p>
       </abstract>
     </article-meta>
   </front>
   <body>
-
+<sec id="background">
+  <title>Background</title>
+  <p>Websites like <ext-link ext-link-type="uri" xlink:href="https://pilot.perm.pub">https://pilot.perm.pub</ext-link>
+  use free open-source software, such as the Python package
+  <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>,
+  to render Baseprint document snapshots into HTML pages and PDF files.</p>
+</sec>
+<sec id="scope">
+  <title>Scope</title>
+  <p>This document is a specification of the Baseprint Document Format (BpDF) for interoperability
+  with reference free open-source software implementations. As of 2024, the only
+  reference implementation is the Python package <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>.
+  Epijats is used by the authoring software
+  <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</ext-link>
+  and the website generation software
+  <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprintpress">BaseprintPress</ext-link>.</p>
+  <p>This specification does not define potential BpDF features that are not implemented in any software.
+  The online forum at <ext-link ext-link-type="uri" xlink:href="https://baseprints.singlesource.pub">https://baseprints.singlesource.pub</ext-link> is available for communication
+  about this living specification, its reference implementations, and other specifications
+  related to Baseprint document snapshots.</p>
+</sec>
+<sec id="informal-description">
+  <title>Informal Description</title>
+  <sec id="directory-encoding">
+    <title>Directory Encoding</title>
+    <p>Technically, BpDF is not a file format
+    but rather a format for a directory-like data structure.
+    This structure is addressable as
+    a <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git</ext-link> tree and <ext-link ext-link-type="uri" xlink:href="https://swhid.org">SWHID</ext-link>
+    directory.</p>
+    <p>When working with BpDF data,
+    it is often temporarily stored in a file system directory.
+    However, for public long-term storage, BpDF data is preserved in a SWHID addressable Git tree or
+    an equivalent “directory” object in the Software Heritage Archive.</p>
+    <p>Inside BpDF, there is a file named <monospace>article.xml</monospace> encoded in a subset of the
+    <ext-link ext-link-type="uri" xlink:href="../jats.md">JATS XML format</ext-link>.
+    This specification refers to this sub-format as <italic>Baseprint JATS XML</italic>.</p>
+  </sec>
+</sec>
   </body>
   <back>
   </back>
