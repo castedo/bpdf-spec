@@ -29,7 +29,7 @@
   <body>
 <sec id="background">
   <title>Background</title>
-  <p>Websites like <ext-link ext-link-type="uri" xlink:href="https://pilot.perm.pub">https://pilot.perm.pub</ext-link>
+  <p>Websites such as <ext-link ext-link-type="uri" xlink:href="https://lens.perm.pub">https://lens.perm.pub</ext-link> and <ext-link ext-link-type="uri" xlink:href="https://pilot.perm.pub">https://pilot.perm.pub</ext-link>
   use free open-source software, such as the Python package
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>,
   to render Baseprint document snapshots into HTML pages and PDF files.</p>
@@ -40,7 +40,9 @@
   with reference free open-source software implementations. As of 2024, the only
   reference implementation is the Python package <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>.
   Epijats is used by the authoring software
-  <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</ext-link>
+  <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</ext-link>,
+  the Single-Page Application (SPA)
+  <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprintlens">BaseprintLens</ext-link>,
   and the website generation software
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprintpress">BaseprintPress</ext-link>.</p>
   <p>This specification does not define potential BpDF features that are not implemented in any software.
@@ -61,10 +63,175 @@
     it is often temporarily stored in a file system directory.
     However, for public long-term storage, BpDF data is preserved in a SWHID addressable Git tree or
     an equivalent “directory” object in the Software Heritage Archive.</p>
-    <p>Inside BpDF, there is a file named <monospace>article.xml</monospace> encoded in a subset of the
+    <p>Inside a BpDF directory, there is a file named <monospace>article.xml</monospace> encoded in a subset of the
     <ext-link ext-link-type="uri" xlink:href="../jats.md">JATS XML format</ext-link>.
     This specification refers to this sub-format as <italic>Baseprint JATS XML</italic>.</p>
   </sec>
+  <sec id="baseprint-jats-xml">
+    <title>Baseprint JATS XML</title>
+    <p>Any external entities are ignored by Baseprint software
+    and must not be relied upon for interoperability.
+    Specifically, any official JATS DTD must not be required to parse a Baseprint JATS XML
+    file.</p>
+  </sec>
+</sec>
+<sec id="formal-criteria">
+  <title>Formal Criteria</title>
+  <sec id="directory-encoding-1">
+    <title>Directory Encoding</title>
+    <p><bold>Criterion</bold>:
+    The directory is encoded such that its computed hash interoperates with
+    <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git software</ext-link> as a Git tree hash.</p>
+    <p><bold>Criterion</bold>:
+    The directory is encoded such that its computed hash interoperates with
+    the hash following a <monospace>swh:1:dir:</monospace> prefix in a
+    <ext-link ext-link-type="uri" xlink:href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</ext-link>.</p>
+    <p><bold>Criterion</bold>:
+    The directory is encoded such that its computed hash interoperates with
+    <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git software</ext-link> as a Git tree hash and
+    the hash following a <monospace>swh:1:dir:</monospace> prefix in a
+    <ext-link ext-link-type="uri" xlink:href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</ext-link>.</p>
+    <p><bold>Criterion</bold>:
+    There is only one file in the directory and its filename is <monospace>article.xml</monospace>.
+    This file is in the Baseprint JATS XML format described in this specification.</p>
+    <p><bold>Criterion</bold>:</p>
+    <disp-quote>
+      <p>TODO:
+      which file flags/attributes are ignored or used by Hidos?</p>
+    </disp-quote>
+  </sec>
+  <sec id="xml-basics">
+    <title>XML basics</title>
+    <p><bold>Criterion</bold>:
+    “Well-formed” per the <ext-link ext-link-type="uri" xlink:href="https://www.w3.org/TR/REC-xml/">XML 1.0</ext-link> W3C recommendation.</p>
+    <p><bold>Criterion</bold>:
+    No dependency on any external XML DTD.</p>
+    <sec id="article-root-element">
+      <title><monospace>&lt;article&gt;</monospace> root element</title>
+      <disp-quote>
+        <p>TBD</p>
+      </disp-quote>
+    </sec>
+  </sec>
+  <sec id="front-element-tree">
+    <title><monospace>&lt;front&gt;</monospace> element tree</title>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;front&gt;</monospace> has no attributes.</p>
+    <disp-quote>
+      <p>TBD</p>
+    </disp-quote>
+  </sec>
+  <sec id="body-element-tree">
+    <title><monospace>&lt;body&gt;</monospace> element tree</title>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;body&gt;</monospace> has no attributes.</p>
+    <disp-quote>
+      <p>TBD</p>
+    </disp-quote>
+    <p><bold>Definition</bold>:
+    Symbol <monospace>{P_LEVEL_TAG}</monospace> means any one of:</p>
+    <preformat>&lt;code&gt;
+&lt;disp-quote&gt;
+&lt;list&gt;
+&lt;p&gt;
+&lt;preformat&gt;
+&lt;table-wrap&gt;</preformat>
+  </sec>
+  <sec id="back-element-tree">
+    <title><monospace>&lt;back&gt;</monospace> element tree</title>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;back&gt;</monospace> has no attributes.</p>
+    <disp-quote>
+      <p>TBD</p>
+    </disp-quote>
+  </sec>
+  <sec id="html-like-content">
+    <title>HTML-like content</title>
+    <p><bold>Definition</bold>:
+    Depending on the where XML elements are located in the XML document tree,
+    elements are implied to be in zero, one, or more of the following <italic>classes</italic>:</p>
+    <preformat>@HYPOTEXT
+@HYPERTEXT
+@P_ELEMENT
+@CITATION</preformat>
+    <p>by the criteria of this specification.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;p&gt;</monospace> elements have only child elements with <monospace>{P_CHILD_TAG}</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    Elements in class <monospace>@HYPOTEXT</monospace> only have child elements that are also in class
+    <monospace>@HYPOTEXT</monospace>.</p>
+    <p><bold>Definition</bold>:
+    Symbol <monospace>{TYPO_TAG}</monospace> means any of the following tags:</p>
+    <preformat>&lt;bold&gt;
+&lt;italic&gt;
+&lt;monospace&gt;
+&lt;sub&gt;
+&lt;sup&gt;</preformat>
+    <p><bold>Criterion</bold>:
+    Elements with <monospace>{TYPO_TAG}</monospace> have no attributes.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>{TYPO_TAG}</monospace> elements in class <monospace>@HYPERTEXT</monospace> only have child elements that are also in
+    class <monospace>@HYPERTEXT</monospace>.</p>
+    <p><bold>Definition</bold>:
+    Symbol <monospace>{LINK_TAG}</monospace> means any tag of:</p>
+    <preformat>&lt;ext-link&gt;
+&lt;xref&gt;</preformat>
+    <p><bold>Criterion</bold>:
+    <monospace>{LINK_TAG}</monospace> elements only have child elements in class <monospace>@HYPOTEXT</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    Every <monospace>&lt;ext-link&gt;</monospace> has an <monospace>href=</monospace> attribute from the XML namespace
+    <monospace>http://www.w3.org/1999/xlink</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;ext-link&gt;</monospace> attributes are either <monospace>href=</monospace> or (optional) <monospace>ext-link-type=</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    Every <monospace>&lt;ext-link&gt;</monospace> attribute <monospace>ext-link-type=</monospace> takes the value <monospace>&quot;uri&quot;</monospace> (if present).</p>
+    <p><bold>Definition</bold>:
+    The symbol <monospace>{P_CHILD_TAG}</monospace> means any of:</p>
+    <preformat>{TYPO_TAG}
+{LINK_TAG}
+&lt;code&gt;
+&lt;def-list&gt;
+&lt;disp-quote&gt;
+&lt;list&gt;
+&lt;preformat&gt;</preformat>
+    <sec id="list-elements">
+      <title>List elements</title>
+      <disp-quote>
+        <p>TODO</p>
+      </disp-quote>
+    </sec>
+    <sec id="table-elements">
+      <title>Table elements</title>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;table-wrap&gt;</monospace> elements contains a single <monospace>&lt;table&gt;</monospace> element.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;table&gt;</monospace> child elements are <monospace>&lt;thead&gt;</monospace> or <monospace>&lt;tbody&gt;</monospace> elements.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;thead&gt;</monospace> and <monospace>&lt;tbody&gt;</monospace> child elements are <monospace>&lt;tr&gt;</monospace> elements.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;table-wrap&gt;</monospace>, <monospace>&lt;table&gt;</monospace>, <monospace>&lt;thead&gt;</monospace>, <monospace>&lt;tbody&gt;</monospace>, and <monospace>&lt;tr&gt;</monospace> elements have no attributes.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;table-wrap&gt;</monospace>, <monospace>&lt;table&gt;</monospace>, <monospace>&lt;thead&gt;</monospace>, <monospace>&lt;tbody&gt;</monospace>, and <monospace>&lt;tr&gt;</monospace> elements only contain
+      white-space between child elements.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;tr&gt;</monospace> child elements are <monospace>&lt;th&gt;</monospace> or <monospace>&lt;td&gt;</monospace> elements.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> only have child elements with a <monospace>{P_CHILD_TAG}</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> attributes are optional <monospace>align=</monospace> with values <monospace>left</monospace>, <monospace>center</monospace>, or <monospace>right</monospace>.</p>
+    </sec>
+  </sec>
+</sec>
+<sec id="interoperability-issues">
+  <title>Interoperability Issues</title>
+  <list list-type="bullet">
+    <list-item>
+      <p>HTML <monospace>&lt;table&gt;</monospace> has <monospace>&lt;thead&gt;</monospace> before <monospace>&lt;tbody&gt;</monospace></p>
+    </list-item>
+    <list-item>
+      <p>HTML <monospace>&lt;table&gt;</monospace> probably (?) has exactly one <monospace>&lt;tbody&gt;</monospace> and at most one <monospace>&lt;thead&gt;</monospace></p>
+    </list-item>
+  </list>
 </sec>
   </body>
   <back>
