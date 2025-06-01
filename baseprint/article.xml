@@ -2,7 +2,7 @@
   <front>
     <article-meta>
       <title-group>
-        <article-title>Baseprint Document Format</article-title>
+        <article-title>Baseprint Document Format (BpDF)</article-title>
       </title-group>
       <contrib-group>
         <contrib contrib-type="author">
@@ -63,20 +63,22 @@
     it is often temporarily stored in a file system directory.
     However, for public long-term storage, BpDF data is preserved in a SWHID addressable Git tree or
     an equivalent “directory” object in the Software Heritage Archive.</p>
-    <p>Inside a BpDF directory, there is a file named <monospace>article.xml</monospace> encoded in a subset of the
-    <ext-link ext-link-type="uri" xlink:href="../jats.md">JATS XML format</ext-link>.
+    <p>At the top evel of a BpDF directory, is a file named <monospace>article.xml</monospace> encoded in a subset
+    of the <ext-link ext-link-type="uri" xlink:href="../jats.md">JATS XML format</ext-link>.
     This specification refers to this sub-format as <italic>Baseprint JATS XML</italic>.</p>
   </sec>
   <sec id="baseprint-jats-xml">
     <title>Baseprint JATS XML</title>
+    <p>Subset of the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS Article Authoring Tag Set</ext-link><sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>.</p>
+    <p>Inspired and influenced by JATS4R<sup><xref alt="2" rid="ref-jats4r_2015" ref-type="bibr">2</xref>,<xref alt="3" rid="ref-jats4r_2019" ref-type="bibr">3</xref></sup>.</p>
     <p>Any external entities are ignored by Baseprint software
     and must not be relied upon for interoperability.
-    Specifically, any official JATS DTD must not be required to parse a Baseprint JATS XML
+    Specifically, official JATS DTDs must not be required to parse a Baseprint JATS XML
     file.</p>
   </sec>
 </sec>
-<sec id="formal-criteria">
-  <title>Formal Criteria</title>
+<sec id="formal-criteria-for-snapshot-directory">
+  <title>Formal Criteria for Snapshot Directory</title>
   <sec id="directory-encoding-1">
     <title>Directory Encoding</title>
     <p><bold>Criterion</bold>:
@@ -84,7 +86,7 @@
     <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git software</ext-link> as a Git tree hash.</p>
     <p><bold>Criterion</bold>:
     The directory is encoded such that its computed hash interoperates with
-    the hash following a <monospace>swh:1:dir:</monospace> prefix in a
+    the hash following the <monospace>swh:1:dir:</monospace> prefix of a
     <ext-link ext-link-type="uri" xlink:href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</ext-link>.</p>
     <p><bold>Criterion</bold>:
     The directory is encoded such that its computed hash interoperates with
@@ -94,42 +96,273 @@
     <p><bold>Criterion</bold>:
     There is only one file in the directory and its filename is <monospace>article.xml</monospace>.
     This file is in the Baseprint JATS XML format described in this specification.</p>
-    <p><bold>Criterion</bold>:</p>
-    <disp-quote>
-      <p>TODO:
-      which file flags/attributes are ignored or used by Hidos?</p>
-    </disp-quote>
+    <p><bold>Criterion</bold>:
+    The tree (directory) entry for <monospace>article.xml</monospace> has normal file mode in Git and does not
+    have the executable bit set.</p>
   </sec>
+</sec>
+<sec id="formal-criteria-for-article.xml">
+  <title>Formal Criteria For <monospace>article.xml</monospace></title>
+  <p>In this specification, the term “element” means a specific XML element within an XML
+  document parse tree. The notation of <monospace>&lt;foobar&gt;</monospace> may refer to an XML tag or elements with
+  that tag, depending on context. When an element “has a tag” it never refers a child element.</p>
+  <p><bold>Definition</bold>:
+  Criteria of this specification imply XML elements in an XML document tree must have
+  zero, one, or more of the following <italic>constraints</italic>:</p>
+  <preformat>$CITATION
+$HYPERTEXT
+$HYPOTEXT
+$P_CHILD
+$P_LEVEL</preformat>
+  <p><bold>Definition</bold>:
+  Symbol <monospace>{TYPO_TAG}</monospace> means any one of the following tags:</p>
+  <preformat>&lt;bold&gt;
+&lt;italic&gt;
+&lt;monospace&gt;
+&lt;sub&gt;
+&lt;sup&gt;</preformat>
   <sec id="xml-basics">
-    <title>XML basics</title>
+    <title>XML Basics</title>
     <p><bold>Criterion</bold>:
     “Well-formed” per the <ext-link ext-link-type="uri" xlink:href="https://www.w3.org/TR/REC-xml/">XML 1.0</ext-link> W3C recommendation.</p>
     <p><bold>Criterion</bold>:
     No dependency on any external XML DTD.</p>
-    <sec id="article-root-element">
-      <title><monospace>&lt;article&gt;</monospace> root element</title>
-      <disp-quote>
-        <p>TBD</p>
-      </disp-quote>
-    </sec>
+    <p><bold>Criterion</bold>:
+    The following elements contain only optional whitespace between start tag, any child
+    elements, and end tag:</p>
+    <preformat>&lt;article-meta&gt;
+&lt;article&gt;
+&lt;back&gt;
+&lt;contrib-group&gt;
+&lt;contrib&gt;
+&lt;date-in-citation&gt;
+&lt;disp-quote&gt;
+&lt;element-citation&gt;
+&lt;front&gt;
+&lt;license&gt;
+&lt;permissions&gt;
+&lt;person-group&gt;
+&lt;ref-list&gt;
+&lt;ref&gt;
+&lt;sec&gt;
+&lt;table-wrap&gt;
+&lt;table&gt;
+&lt;tbody&gt;
+&lt;thead&gt;
+&lt;title-group&gt;
+&lt;tr&gt;</preformat>
+  </sec>
+  <sec id="minimal-attributes">
+    <title>Minimal attributes</title>
+    <p><bold>Criterion</bold>:
+    The following elements have no attributes:</p>
+    <preformat>&lt;abstract&gt;
+&lt;article-meta&gt;
+&lt;back&gt;
+&lt;body&gt;
+&lt;bold&gt;
+&lt;code&gt;
+&lt;comment&gt;
+&lt;contrib-group&gt;
+&lt;copyright-statement&gt;
+&lt;def-item&gt;
+&lt;def-list&gt;
+&lt;disp-quote&gt;
+&lt;element-citation&gt;
+&lt;fpage&gt;
+&lt;front&gt;
+&lt;isbn&gt;
+&lt;issn&gt;
+&lt;issue&gt;
+&lt;italic&gt;
+&lt;license-p&gt;
+&lt;license&gt;
+&lt;list-item&gt;
+&lt;lpage&gt;
+&lt;monospace&gt;
+&lt;name&gt;
+&lt;permissions&gt;
+&lt;preformat&gt;
+&lt;publisher-loc&gt;
+&lt;publisher-name&gt;
+&lt;ref-list&gt;
+&lt;string-name&gt;
+&lt;sub&gt;
+&lt;sup&gt;
+&lt;table-wrap&gt;
+&lt;table&gt;
+&lt;tbody&gt;
+&lt;thead&gt;
+&lt;title-group&gt;
+&lt;tr&gt;
+&lt;uri&gt;
+&lt;volume&gt;</preformat>
+    <p><bold>Criterion</bold>:
+    The elements with the following tags only have the following possible attributes:</p>
+    <table-wrap>
+      <table>
+        <colgroup>
+          <col width="44%" />
+          <col width="56%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Tag</th>
+            <th>Possible Attributes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><monospace>&lt;article&gt;</monospace></td>
+            <td><monospace>lang=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;contrib&gt;</monospace></td>
+            <td><monospace>contrib-type=</monospace>,<break/><monospace>id=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;date-in-citation&gt;</monospace></td>
+            <td><monospace>content-type=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;ext-link&gt;</monospace></td>
+            <td><monospace>href=</monospace>,<break/><monospace>ext-link-type=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;license_ref&gt;</monospace></td>
+            <td><monospace>content-type=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;list&gt;</monospace></td>
+            <td><monospace>list-type=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;person-group&gt;</monospace></td>
+            <td><monospace>person-group-type=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;pub-id&gt;</monospace></td>
+            <td><monospace>pub-id-type=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;sec&gt;</monospace></td>
+            <td><monospace>id=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;td&gt;</monospace></td>
+            <td><monospace>align=</monospace></td>
+          </tr>
+          <tr>
+            <td><monospace>&lt;th&gt;</monospace></td>
+            <td><monospace>align=</monospace></td>
+          </tr>
+        </tbody>
+      </table>
+    </table-wrap>
+  </sec>
+  <sec id="article-element">
+    <title><monospace>&lt;article&gt;</monospace> element</title>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;article&gt;</monospace> is the root element of the XML document.</p>
+    <p><bold>Criterion</bold>:
+    The <monospace>&lt;article&gt;</monospace> attribute <monospace>lang=</monospace> (if present) has value <monospace>&quot;en&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;article&gt;</monospace> has a sequence of child elements matching regular expression:</p>
+    <preformat>(&lt;front&gt;) (&lt;body&gt;) (&lt;back&gt;)?</preformat>
   </sec>
   <sec id="front-element-tree">
     <title><monospace>&lt;front&gt;</monospace> element tree</title>
     <p><bold>Criterion</bold>:
-    <monospace>&lt;front&gt;</monospace> has no attributes.</p>
-    <disp-quote>
-      <p>TBD</p>
-    </disp-quote>
+    <monospace>&lt;front&gt;</monospace> has exactly one child element <monospace>&lt;article-meta&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;article-meta&gt;</monospace> has a sequence of child elements matching regular expression:</p>
+    <preformat>(&lt;title-group&gt;) (&lt;contrib-group&gt;) (&lt;permissions&gt;)? (&lt;abstract&gt;)</preformat>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;title-group&gt;</monospace> has exactly one child element <monospace>&lt;article-title&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;article-title&gt;</monospace> has constraint <monospace>$HYPERTEXT</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;contrib-group&gt;</monospace> has only child elements with tag <monospace>&lt;contrib&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;contrib&gt;</monospace> elements have an attribute of <monospace>contrib-type=</monospace> and it has value the
+    <monospace>&quot;author&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;contrib&gt;</monospace> elements have only child elements with a tag of any one of:</p>
+    <list list-type="bullet">
+      <list-item>
+        <p><monospace>&lt;name&gt;</monospace> (exactly one)</p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;contrib-id&gt;</monospace> (zero or one)</p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;email&gt;</monospace> (zero or one)</p>
+      </list-item>
+    </list>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;name&gt;</monospace> has child elements <monospace>&lt;surname&gt;</monospace> and/or <monospace>&lt;given-names&gt;</monospace> (zero or one of each).</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;surname&gt;</monospace> and <monospace>&lt;given-names&gt;</monospace> have string content with no child elements.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;contrib-id&gt;</monospace> has exactly one attribute with value <monospace>contrib-id-type=&quot;orcid&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;contrib-id&gt;</monospace> has just string content of a valid an ORCID including the
+    <monospace>https://orcid.org/</monospace> prefix.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;permissions&gt;</monospace> has only child elements <monospace>&lt;copyright-statement&gt;</monospace> and <monospace>&lt;license&gt;</monospace> (zero or
+    one each).</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;copyright-statement&gt;</monospace> has constraint $HYPERTEXT.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;license&gt;</monospace> has only child elements <monospace>&lt;license-p&gt;</monospace> and <monospace>&lt;license_ref&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;license-p&gt;</monospace> has constraint $HYPERTEXT.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;license_ref&gt;</monospace> tags are in the XML namespace:</p>
+    <p><monospace>&quot;http://www.niso.org/schemas/ali/1.0/&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>
+    <monospace>&lt;license_ref&gt;</monospace> element content is just a string (URL).</p>
+    <p><bold>Criterion</bold>:
+    Attributes values of <monospace>content-type=</monospace> of element <monospace>&lt;license_ref&gt;</monospace> are any one of the
+    following:</p>
+    <preformat>&quot;cc0license&quot;
+&quot;ccbylicense&quot;
+&quot;ccbysalicense&quot;
+&quot;ccbynclicense&quot;
+&quot;ccbyncsalicense&quot;
+&quot;ccbyndlicense&quot;
+&quot;ccbyncndlicense&quot;</preformat>
+    <p><bold>Criterion</bold>:
+    If the non-whitespace string contents of <monospace>&lt;license_ref&gt;</monospace> has one of the following prefixes:</p>
+    <preformat>&quot;https://creativecommons.org/publicdomain/zero/&quot;
+'https://creativecommons.org/licenses/by/&quot;
+'https://creativecommons.org/licenses/by-sa/&quot;
+'https://creativecommons.org/licenses/by-nc/&quot;
+'https://creativecommons.org/licenses/by-nc-sa/&quot;
+'https://creativecommons.org/licenses/by-nd/&quot;
+'https://creativecommons.org/licenses/by-nc-nd/&quot;</preformat>
+    <p>then the <monospace>content-type=</monospace> value, if present, must equal the corresponding respective
+    value:</p>
+    <preformat>&quot;cc0license&quot;
+&quot;ccbylicense&quot;
+&quot;ccbysalicense&quot;
+&quot;ccbynclicense&quot;
+&quot;ccbyncsalicense&quot;
+&quot;ccbyndlicense&quot;
+&quot;ccbyncndlicense&quot;</preformat>
   </sec>
   <sec id="body-element-tree">
     <title><monospace>&lt;body&gt;</monospace> element tree</title>
     <p><bold>Criterion</bold>:
-    <monospace>&lt;body&gt;</monospace> has no attributes.</p>
-    <disp-quote>
-      <p>TBD</p>
-    </disp-quote>
+    Elements <monospace>&lt;body&gt;</monospace> and <monospace>&lt;abstract&gt;</monospace> contain a sequence of child elements with tags
+    matching the regular expression:</p>
+    <p><monospace>(&lt;p&gt;)* (&lt;sec&gt;)*</monospace></p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;sec&gt;</monospace> elements contain a sequence of child elements with tags and constraints matching
+    the regular expression:</p>
+    <p><monospace>(&lt;title&gt;)? ($P_LEVEL)* (&lt;sec&gt;)*</monospace></p>
     <p><bold>Definition</bold>:
-    Symbol <monospace>{P_LEVEL_TAG}</monospace> means any one of:</p>
+    Elements with constraint <monospace>$P_LEVEL</monospace> have any one of the following tags:</p>
     <preformat>&lt;code&gt;
 &lt;disp-quote&gt;
 &lt;list&gt;
@@ -139,66 +372,181 @@
   </sec>
   <sec id="back-element-tree">
     <title><monospace>&lt;back&gt;</monospace> element tree</title>
+    <p><bold>Criterion</bold>
+    <monospace>&lt;back&gt;</monospace> has exactly one child element <monospace>&lt;ref-list&gt;</monospace>.</p>
     <p><bold>Criterion</bold>:
-    <monospace>&lt;back&gt;</monospace> has no attributes.</p>
-    <disp-quote>
-      <p>TBD</p>
-    </disp-quote>
+    The <monospace>&lt;ref-list&gt;</monospace> element contain a sequence of child elements with tags matching the
+    regular expression:</p>
+    <p><monospace>(&lt;title&gt;)? (&lt;ref&gt;)*</monospace></p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;ref&gt;</monospace> elements have one attribute and it is <monospace>id=</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;ref&gt;</monospace> elements have exactly one child element of <monospace>&lt;element-citation&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;element-citation&gt;</monospace> elements only have child elements with any one the following tags:</p>
+    <preformat>&lt;article-title&gt;
+&lt;comment&gt;
+&lt;date-in-citation&gt;
+&lt;edition&gt;
+&lt;fpage&gt;
+&lt;isbn&gt;
+&lt;issn&gt;
+&lt;issue&gt;
+&lt;lpage&gt;
+&lt;person-group&gt;
+&lt;pub-id&gt;
+&lt;publisher-loc&gt;
+&lt;publisher-name&gt;
+&lt;source&gt;
+&lt;uri&gt;
+&lt;volume&gt;</preformat>
+    <p><bold>Criterion</bold>:
+    For <monospace>&lt;element-citation&gt;</monospace> elements, there are one or zero child elements for each
+    possible tag, with the exception of <monospace>&lt;pub-id&gt;</monospace>, which can appear more than once.</p>
+    <p><bold>Criterion</bold>:
+    For <monospace>&lt;element-citation&gt;</monospace> elements, all child elements with tag <monospace>&lt;pub-id&gt;</monospace> have different
+    values for attribute <monospace>pub-id-type=</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;person-group&gt;</monospace> elements have an attribute <monospace>person-group-type=</monospace> with either value
+    <monospace>&quot;author&quot;</monospace> or <monospace>&quot;editor&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;person-group&gt;</monospace> elements have zero or more child elements with either tag <monospace>&lt;name&gt;</monospace> or
+    <monospace>&lt;string-name&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    The following elements have string content only:</p>
+    <preformat>&lt;comment&gt;
+&lt;fpage&gt;
+&lt;isbn&gt;
+&lt;issn&gt;
+&lt;issue&gt;
+&lt;lpage&gt;
+&lt;publisher-loc&gt;
+&lt;publisher-name&gt;
+&lt;string-name&gt;
+&lt;uri&gt;
+&lt;volume&gt;</preformat>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;date-in-citation&gt;</monospace> attribute <monospace>content-type=</monospace> equals value <monospace>&quot;access-date&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;date-in-citation&gt;</monospace> have all child elements with tag <monospace>&lt;year&gt;</monospace>, <monospace>&lt;month&gt;</monospace>, or <monospace>&lt;day&gt;</monospace>
+    and at most once for each tag.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;date-in-citation&gt;</monospace> elements contain child element <monospace>&lt;year&gt;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;date-in-citation&gt;</monospace> has child element <monospace>&lt;month&gt;</monospace> only if <monospace>&lt;year&gt;</monospace> is also present.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;date-in-citation&gt;</monospace> has child element <monospace>&lt;day&gt;</monospace> only if <monospace>&lt;month&gt;</monospace> is also present.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;edition&gt;</monospace> elements have just an integer as content and do not have any non-digit
+    characters.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;pub-id&gt;</monospace> <monospace>pub-id-type=</monospace> attributes have values <monospace>&quot;doi&quot;</monospace> or <monospace>&quot;pmid&quot;</monospace>.</p>
+    <p><bold>Criterion</bold>:
+    <monospace>&lt;pub-id&gt;</monospace> elements with attribute value <monospace>pub-id-type=&quot;doi&quot;</monospace> have string content
+    that starts with “10.” and not “http”.</p>
   </sec>
   <sec id="html-like-content">
     <title>HTML-like content</title>
-    <p><bold>Definition</bold>:
-    Depending on the where XML elements are located in the XML document tree,
-    elements are implied to be in zero, one, or more of the following <italic>classes</italic>:</p>
-    <preformat>@HYPOTEXT
-@HYPERTEXT
-@P_ELEMENT
-@CITATION</preformat>
-    <p>by the criteria of this specification.</p>
     <p><bold>Criterion</bold>:
-    <monospace>&lt;p&gt;</monospace> elements have only child elements with <monospace>{P_CHILD_TAG}</monospace>.</p>
+    Elements with constraint <monospace>$HYPOTEXT</monospace> have tag <monospace>{TYPO_TAG}</monospace>.</p>
     <p><bold>Criterion</bold>:
-    Elements in class <monospace>@HYPOTEXT</monospace> only have child elements that are also in class
-    <monospace>@HYPOTEXT</monospace>.</p>
-    <p><bold>Definition</bold>:
-    Symbol <monospace>{TYPO_TAG}</monospace> means any of the following tags:</p>
-    <preformat>&lt;bold&gt;
-&lt;italic&gt;
-&lt;monospace&gt;
-&lt;sub&gt;
-&lt;sup&gt;</preformat>
-    <p><bold>Criterion</bold>:
-    Elements with <monospace>{TYPO_TAG}</monospace> have no attributes.</p>
-    <p><bold>Criterion</bold>:
-    <monospace>{TYPO_TAG}</monospace> elements in class <monospace>@HYPERTEXT</monospace> only have child elements that are also in
-    class <monospace>@HYPERTEXT</monospace>.</p>
-    <p><bold>Definition</bold>:
-    Symbol <monospace>{LINK_TAG}</monospace> means any tag of:</p>
-    <preformat>&lt;ext-link&gt;
-&lt;xref&gt;</preformat>
-    <p><bold>Criterion</bold>:
-    <monospace>{LINK_TAG}</monospace> elements only have child elements in class <monospace>@HYPOTEXT</monospace>.</p>
-    <p><bold>Criterion</bold>:
-    Every <monospace>&lt;ext-link&gt;</monospace> has an <monospace>href=</monospace> attribute from the XML namespace
-    <monospace>http://www.w3.org/1999/xlink</monospace>.</p>
-    <p><bold>Criterion</bold>:
-    <monospace>&lt;ext-link&gt;</monospace> attributes are either <monospace>href=</monospace> or (optional) <monospace>ext-link-type=</monospace>.</p>
-    <p><bold>Criterion</bold>:
-    Every <monospace>&lt;ext-link&gt;</monospace> attribute <monospace>ext-link-type=</monospace> takes the value <monospace>&quot;uri&quot;</monospace> (if present).</p>
-    <p><bold>Definition</bold>:
-    The symbol <monospace>{P_CHILD_TAG}</monospace> means any of:</p>
-    <preformat>{TYPO_TAG}
-{LINK_TAG}
-&lt;code&gt;
+    Elements with constraint <monospace>$HYPOTEXT</monospace> have all child elements also with constraint
+    <monospace>$HYPOTEXT</monospace>.</p>
+    <sec id="hypertext-elements">
+      <title>Hypertext elements</title>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$HYPERTEXT</monospace> have any one of the following tags</p>
+      <preformat>&lt;ext-link&gt;
+&lt;xref&gt;
+{TYPO_TAG}</preformat>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$HYPERTEXT</monospace> and <monospace>{TYPO_TAG}</monospace> have all child elements with
+      constraint <monospace>$HYPERTEXT</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with tag <monospace>&lt;ext-link&gt;</monospace> have all child elements with constraint <monospace>$HYPOTEXT</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Every <monospace>&lt;ext-link&gt;</monospace> has an <monospace>href=</monospace> attribute from the XML namespace
+      <monospace>http://www.w3.org/1999/xlink</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Every <monospace>&lt;ext-link&gt;</monospace> attribute <monospace>ext-link-type=</monospace> takes the value <monospace>&quot;uri&quot;</monospace> (if present).</p>
+      <p><bold>Criterion</bold>:
+      Elements with tag <monospace>&lt;xref&gt;</monospace> have all child elements with constraint <monospace>$HYPOTEXT</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Every element with tag <monospace>&lt;xref&gt;</monospace> and constraint <monospace>$HYPERTEXT</monospace> has an attribute <monospace>rid=</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Every element with tag <monospace>&lt;xref&gt;</monospace> and constraint <monospace>$HYPERTEXT</monospace> has no attribute other than
+      <monospace>rid=</monospace>.</p>
+    </sec>
+    <sec id="paragraph-elements">
+      <title>Paragraph elements</title>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$P_CHILD</monospace> have one of the following tags</p>
+      <preformat>&lt;code&gt;
 &lt;def-list&gt;
 &lt;disp-quote&gt;
+&lt;ext-link&gt;
 &lt;list&gt;
-&lt;preformat&gt;</preformat>
+&lt;preformat&gt;
+&lt;xref&gt;
+{TYPO_TAG}</preformat>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;p&gt;</monospace> elements have all child elements with constraint <monospace>$P_CHILD</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$P_CHILD</monospace> and <monospace>{TYPO_TAG}</monospace> but not tag <monospace>&lt;sup&gt;</monospace> have constraint
+      <monospace>$HYPERTEXT</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$P_CHILD</monospace> and tag <monospace>&lt;sup&gt;</monospace> have constraint <monospace>$HYPERTEXT</monospace> or <monospace>$CITATION</monospace>.</p>
+    </sec>
+    <sec id="citation-elements">
+      <title>Citation elements</title>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$CITATION</monospace> and tag <monospace>&lt;sup&gt;</monospace> have text content of:</p>
+      <list list-type="bullet">
+        <list-item>
+          <p>optional whitespace before the first child element</p>
+        </list-item>
+        <list-item>
+          <p>optional whitespace after the last child element, and</p>
+        </list-item>
+        <list-item>
+          <p>a comma and optional whitespace between child elements.</p>
+        </list-item>
+      </list>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$CITATION</monospace> have all child elements with constraint <monospace>$CITATION</monospace> and tag <monospace>&lt;xref&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$CITATION</monospace> and tag <monospace>&lt;xref&gt;</monospace> have an attributes of <monospace>ref-type=</monospace>
+      with value <monospace>bibr</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$CITATION</monospace> and tag <monospace>&lt;xref&gt;</monospace> have exactly two attributes of
+      <monospace>rid=</monospace> and <monospace>ref-type=</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$CITATION</monospace> and tag <monospace>&lt;xref&gt;</monospace> have a value for <monospace>rid=</monospace> that
+      matches the value of attribute <monospace>id=</monospace> in an element with tag <monospace>&lt;ref&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      Elements with constraint <monospace>$CITATION</monospace> and tag <monospace>&lt;xref&gt;</monospace> have content of only
+      a single integer, surrounded by optional whitespace, and no child elements.
+      The integer corresponds to the position in <monospace>&lt;ref-list&gt;</monospace> of the <monospace>&lt;ref&gt;</monospace> element
+      with an <monospace>id=</monospace> attribute value that equals the <monospace>rid=</monospace> attribute of the <monospace>&lt;xref&gt;</monospace> element.</p>
+    </sec>
     <sec id="list-elements">
       <title>List elements</title>
-      <disp-quote>
-        <p>TODO</p>
-      </disp-quote>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;list&gt;</monospace> element attributes <monospace>list-type=</monospace> have either value <monospace>&quot;bullet&quot;</monospace> or <monospace>&quot;order&quot;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;list&gt;</monospace> elements only have child elements with tag <monospace>&lt;list-item&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;list-item&gt;</monospace> elements only have child elements with either tag <monospace>&lt;p&gt;</monospace> or <monospace>&lt;list&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;def-list&gt;</monospace> elements only have child elements with tag <monospace>&lt;def-item&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;def-list&gt;</monospace> elements only have child elements with either tag <monospace>&lt;term&gt;</monospace> or <monospace>&lt;def&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;term&gt;</monospace> elements only have child elements with <monospace>{TYPO_TAG}</monospace> or <monospace>{LINK_TAG}</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;term&gt;</monospace> elements have all child elements with constraint <monospace>$HYPERTEXT</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;def&gt;</monospace> elements only have child elements with tag <monospace>&lt;p&gt;</monospace>.</p>
     </sec>
     <sec id="table-elements">
       <title>Table elements</title>
@@ -209,16 +557,18 @@
       <p><bold>Criterion</bold>:
       <monospace>&lt;thead&gt;</monospace> and <monospace>&lt;tbody&gt;</monospace> child elements are <monospace>&lt;tr&gt;</monospace> elements.</p>
       <p><bold>Criterion</bold>:
-      <monospace>&lt;table-wrap&gt;</monospace>, <monospace>&lt;table&gt;</monospace>, <monospace>&lt;thead&gt;</monospace>, <monospace>&lt;tbody&gt;</monospace>, and <monospace>&lt;tr&gt;</monospace> elements have no attributes.</p>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;table-wrap&gt;</monospace>, <monospace>&lt;table&gt;</monospace>, <monospace>&lt;thead&gt;</monospace>, <monospace>&lt;tbody&gt;</monospace>, and <monospace>&lt;tr&gt;</monospace> elements only contain
-      white-space between child elements.</p>
-      <p><bold>Criterion</bold>:
       <monospace>&lt;tr&gt;</monospace> child elements are <monospace>&lt;th&gt;</monospace> or <monospace>&lt;td&gt;</monospace> elements.</p>
       <p><bold>Criterion</bold>:
-      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> only have child elements with a <monospace>{P_CHILD_TAG}</monospace>.</p>
+      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> elements have all child elements with constraint <monospace>$P_CHILD</monospace>.</p>
       <p><bold>Criterion</bold>:
-      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> attributes are optional <monospace>align=</monospace> with values <monospace>left</monospace>, <monospace>center</monospace>, or <monospace>right</monospace>.</p>
+      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> attributes <monospace>align=</monospace> have values <monospace>&quot;left&quot;</monospace>, <monospace>&quot;center&quot;</monospace>, or <monospace>&quot;right&quot;</monospace>.</p>
+    </sec>
+    <sec id="other-elements">
+      <title>Other elements</title>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;disp-quote&gt;</monospace> elements only contain child elements with tag <monospace>&lt;p&gt;</monospace>.</p>
+      <p><bold>Criterion</bold>:
+      <monospace>&lt;code&gt;</monospace> and <monospace>&lt;preformat&gt;</monospace> elements have all child elements with constraint <monospace>$HYPERTEXT</monospace>.</p>
     </sec>
   </sec>
 </sec>
@@ -231,9 +581,57 @@
     <list-item>
       <p>HTML <monospace>&lt;table&gt;</monospace> probably (?) has exactly one <monospace>&lt;tbody&gt;</monospace> and at most one <monospace>&lt;thead&gt;</monospace></p>
     </list-item>
+    <list-item>
+      <p><monospace>&lt;xref&gt;</monospace> attribute <monospace>rid=</monospace> values that might not match an <monospace>id=</monospace> attribute
+      of an element converted to HTML with the same <monospace>id=</monospace> (e.g., <monospace>&lt;sec&gt;</monospace>, <monospace>&lt;ref&gt;</monospace>).</p>
+    </list-item>
   </list>
 </sec>
   </body>
   <back>
+<ref-list>
+  <title>References</title>
+  <ref id="ref-jats_authoring">
+    <element-citation>
+      <person-group person-group-type="author">
+        <string-name>U.S. National Library of Medicine (NLM)</string-name>
+      </person-group>
+      <article-title>JATS: Article Authoring Tag Set</article-title>
+      <year iso-8601-date="2024">2024</year>
+      <uri>https://jats.nlm.nih.gov/articleauthoring/1.4/</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-jats4r_2015">
+    <element-citation publication-type="paper-conference">
+      <person-group person-group-type="author">
+        <name><surname>Maloney</surname><given-names>Chris</given-names></name>
+        <name><surname>Eaton</surname><given-names>Alf</given-names></name>
+        <name><surname>Beck</surname><given-names>Jeff</given-names></name>
+      </person-group>
+      <article-title>A client-side JATS4R validator using saxon-CE</article-title>
+      <source>Balisage: The markup conference</source>
+      <year iso-8601-date="2015">2015</year>
+      <volume>15</volume>
+      <uri>https://doi.org/10.4242/BalisageVol15.Beck01</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-jats4r_2019">
+    <element-citation publication-type="paper-conference">
+      <person-group person-group-type="author">
+        <name><surname>Beck</surname><given-names>Jeffrey</given-names></name>
+        <name><surname>Harrison</surname><given-names>Melissa</given-names></name>
+        <name><surname>Laverick</surname><given-names>Stephen</given-names></name>
+        <name><surname>Lawson</surname><given-names>Kevin</given-names></name>
+        <name><surname>McDougall</surname><given-names>Kelly</given-names></name>
+        <name><surname>Seligy</surname><given-names>Mary</given-names></name>
+        <name><surname>Senn</surname><given-names>Lucie</given-names></name>
+      </person-group>
+      <article-title>What JATS4R can achieve, with a little help from its friends</article-title>
+      <source>Journal Article Tag Suite Conference (JATS-Con)</source>
+      <year iso-8601-date="2019">2019</year>
+      <uri>https://www.ncbi.nlm.nih.gov/books/NBK540949/</uri>
+    </element-citation>
+  </ref>
+</ref-list>
   </back>
 </article>
