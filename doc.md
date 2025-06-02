@@ -212,10 +212,10 @@ The elements with the following tags only have the following possible attributes
 |     Tag              | Possible Attributes        |
 |----------------------|----------------------------|
 | `<article>`          | `lang=`                    |
-| `<contrib>`          | `contrib-type=`, \
+| `<contrib>`          | `contrib-type=` \
                           `id=`                     |
 | `<date-in-citation>` | `content-type=`            |
-| `<ext-link>`         | `href=`, \
+| `<ext-link>`         | `href=` \
                          `ext-link-type=`           |
 | `<license_ref>`      | `content-type=`            |
 | `<list>`             | `list-type=`                |

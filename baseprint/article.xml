@@ -218,7 +218,7 @@ $P_LEVEL</preformat>
           </tr>
           <tr>
             <td><monospace>&lt;contrib&gt;</monospace></td>
-            <td><monospace>contrib-type=</monospace>,<break/><monospace>id=</monospace></td>
+            <td><monospace>contrib-type=</monospace><break/><monospace>id=</monospace></td>
           </tr>
           <tr>
             <td><monospace>&lt;date-in-citation&gt;</monospace></td>
@@ -226,7 +226,7 @@ $P_LEVEL</preformat>
           </tr>
           <tr>
             <td><monospace>&lt;ext-link&gt;</monospace></td>
-            <td><monospace>href=</monospace>,<break/><monospace>ext-link-type=</monospace></td>
+            <td><monospace>href=</monospace><break/><monospace>ext-link-type=</monospace></td>
           </tr>
           <tr>
             <td><monospace>&lt;license_ref&gt;</monospace></td>
@@ -602,21 +602,21 @@ $P_LEVEL</preformat>
     </element-citation>
   </ref>
   <ref id="ref-jats4r_2015">
-    <element-citation publication-type="paper-conference">
+    <element-citation>
       <person-group person-group-type="author">
         <name><surname>Maloney</surname><given-names>Chris</given-names></name>
         <name><surname>Eaton</surname><given-names>Alf</given-names></name>
         <name><surname>Beck</surname><given-names>Jeff</given-names></name>
       </person-group>
       <article-title>A client-side JATS4R validator using saxon-CE</article-title>
-      <source>Balisage: The markup conference</source>
+      <source>Balisage: The Markup Conference</source>
       <year iso-8601-date="2015">2015</year>
       <volume>15</volume>
       <uri>https://doi.org/10.4242/BalisageVol15.Beck01</uri>
     </element-citation>
   </ref>
   <ref id="ref-jats4r_2019">
-    <element-citation publication-type="paper-conference">
+    <element-citation>
       <person-group person-group-type="author">
         <name><surname>Beck</surname><given-names>Jeffrey</given-names></name>
         <name><surname>Harrison</surname><given-names>Melissa</given-names></name>
