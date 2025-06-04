@@ -2,6 +2,19 @@
 title: "Baseprint Document Format (BpDF)"
 abstract: |
     **DOCUMENT TYPE**: Living Technical Specification
+
+    The Baseprint Document Format
+    is the digital encoding of a Baseprint document snapshot.
+    These snapshots are immutable and
+    are referenced using a [SoftWare Hash IDentifier (SWHID)](https://swhid.org).
+    This format is designed for self-archived scientific
+    and technical documents for long-term redistribution.
+    The XML component of the format is a subset of the [JATS XML
+    Article Authoring Tag Set](https://jats.nlm.nih.gov/articleauthoring/) and
+    approximates XML found in [PubMed Central](https://pmc.ncbi.nlm.nih.gov/).
+    After archiving,
+    document snapshots are rendered into HTML pages and PDF files
+    by independent websites using Baseprint-compatible software.
 ---
 
 ## Background
