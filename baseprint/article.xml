@@ -23,6 +23,18 @@
       </permissions>
       <abstract>
 <p><bold>DOCUMENT TYPE</bold>: Living Technical Specification</p>
+<p>The Baseprint Document Format
+is the digital encoding of a Baseprint document snapshot.
+These snapshots are immutable and
+are referenced using a <ext-link ext-link-type="uri" xlink:href="https://swhid.org">SoftWare Hash IDentifier (SWHID)</ext-link>.
+This format is designed for self-archived scientific
+and technical documents for long-term redistribution.
+The XML component of the format is a subset of the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML
+Article Authoring Tag Set</ext-link> and
+approximates XML found in <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/">PubMed Central</ext-link>.
+After archiving,
+document snapshots are rendered into HTML pages and PDF files
+by independent websites using Baseprint-compatible software.</p>
       </abstract>
     </article-meta>
   </front>
