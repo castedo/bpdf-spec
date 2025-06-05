@@ -1,3 +1,5 @@
+<!-- copybreak off -->
+
 ---
 title: "Baseprint Document Format (BpDF)"
 abstract: |
@@ -17,18 +19,28 @@ abstract: |
     by independent websites using Baseprint-compatible software.
 ---
 
-## Background
+<!-- copybreak off -->
+
+Feedback
+--------
+
+In addition to email,
+feedback can also be communicated through the GitHub repository of the source files for this
+edition at [github.com/castedo/bpdf-spec/](https://github.com/castedo/bpdf-spec/).
+The online forum at <https://baseprints.singlesource.pub> is available for
+discussions related to Baseprint topics and specifications.
+
+
+Interoperability
+----------------
 
 Websites such as <https://lens.perm.pub> and <https://pilot.perm.pub>
-use free open-source software, such as the Python package
+use free open-source software, like the Python package
 [Epijats](https://gitlab.com/perm.pub/epijats),
 to render Baseprint document snapshots into HTML pages and PDF files.
 
-Scope
------
-
-This document is a specification of the Baseprint Document Format (BpDF) for interoperability
-with reference free open-source software implementations. As of 2024, the only
+This specification is for interoperability
+with reference software implementations. As of 2024, the only
 reference implementation is the Python package [Epijats](https://gitlab.com/perm.pub/epijats).
 Epijats is used by the authoring software
 [Baseprinter](https://gitlab.com/perm.pub/baseprinter),
@@ -37,43 +49,64 @@ the Single-Page Application (SPA)
 and the website generation software
 [BaseprintPress](https://gitlab.com/perm.pub/baseprintpress).
 
-This specification does not define potential BpDF features that are not implemented in any software.
-The online forum at <https://baseprints.singlesource.pub> is available for communication
-about this living specification, its reference implementations, and other specifications
-related to Baseprint document snapshots.
+<!-- copybreak off -->
 
 
-Informal Description
---------------------
+Snapshots vs. Successions
+-------------------------
 
-### Directory Encoding
+This specification of the Baseprint Document Format (BpDF) is for
+Baseprint document *snapshots* rather than Baseprint document *successions*.
+Snapshots are archived and redistributed as part of a
+*Baseprint document successions* whose digital encoding format is specified by the
+separate specification,
+ the [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8).
+While snapshots are immutable, successions, in contrast, can be amended.
+The SWHID for a snapshot is distinct from the
+[Document Succession Identifier (DSI)](https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo)
+used to identify a succession.
+
+### Document Dates
+
+Like
+[JATS XML Article Authoring Tag Set](https://jats.nlm.nih.gov/articleauthoring/)
+[@jats_authoring],
+BpDF does not store a date for a document.
+Instead, dates for a Baseprint document are recorded in the Git commit records of
+the [Document Succession Git Layout (DSGL)](https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8)
+[@dsgl].
+These dates are set when an author amends a succession in DSGL with a snapshot as a new
+edition.
+
+<!-- copybreak off -->
+
+
+JATS XML in a Directory
+-----------------------
 
 Technically, BpDF is not a file format
 but rather a format for a directory-like data structure.
-This structure is addressable as
-a [Git](https://en.wikipedia.org/wiki/Git) tree and [SWHID](https://swhid.org)
-directory.
+This structure is addressable as a
+[SWHID](https://swhid.org) version 1 directory
+(equivalent to a [Git](https://en.wikipedia.org/wiki/Git) tree).
 
-When working with BpDF data,
-it is often temporarily stored in a file system directory.
-However, for public long-term storage, BpDF data is preserved in a SWHID addressable Git tree or
-an equivalent "directory" object in the Software Heritage Archive.
+When generating BpDF data, it is temporarily stored in a file system directory.
+However, for long-term public storage, BpDF data is preserved in a
+SWHID addressable directory in the [Software Heritage Archive](https://softwareheritage.org)
+(or an equivalent tree in a Git repository).
 
-At the top evel of a BpDF directory, is a file named `article.xml` encoded in a subset
-of the [JATS XML format](../jats.md).
-This specification refers to this sub-format as *Baseprint JATS XML*.
+At the top level of a BpDF directory, a file named `article.xml`
+is encoded in a subset of the [JATS Article Authoring Tag
+Set](https://jats.nlm.nih.gov/articleauthoring/) [@jats_authoring]
+and is inspired and influenced by JATS4R [@jats4r_2015; @jats4r_2019].
+Most of BpDF is a specification of this JATS XML file format,
+which will be referred to as *Baseprint JATS XML*.
 
+BpDF differs from the [Manuscript Exchange Common Approach (MECA)](https://meca.niso.org/)
+in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
+and is not designed for a non-automated publishing process.
 
-### Baseprint JATS XML
-
-Subset of the [JATS Article Authoring Tag Set](https://jats.nlm.nih.gov/articleauthoring/) [@jats_authoring].
-
-Inspired and influenced by JATS4R [@jats4r_2015; @jats4r_2019].
-
-Any external entities are ignored by Baseprint software
-and must not be relied upon for interoperability.
-Specifically, official JATS DTDs must not be required to parse a Baseprint JATS XML
-file.
+<!-- copybreak off -->
 
 
 Formal Criteria for Snapshot Directory
@@ -141,7 +174,7 @@ Symbol `{TYPO_TAG}` means any one of the following tags:
 "Well-formed" per the [XML 1.0](https://www.w3.org/TR/REC-xml/) W3C recommendation.
 
 **Criterion**:
-No dependency on any external XML DTD.
+No dependency on any external XML DTD (not even a dependency to an official JATS DTD).
 
 **Criterion**:
 The following elements contain only optional whitespace between start tag, any child

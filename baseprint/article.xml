@@ -39,17 +39,22 @@ by independent websites using Baseprint-compatible software.</p>
     </article-meta>
   </front>
   <body>
-<sec id="background">
-  <title>Background</title>
+<sec id="feedback">
+  <title>Feedback</title>
+  <p>In addition to email,
+  feedback can also be communicated through the GitHub repository of the source files for this
+  edition at <ext-link ext-link-type="uri" xlink:href="https://github.com/castedo/bpdf-spec/">github.com/castedo/bpdf-spec/</ext-link>.
+  The online forum at <ext-link ext-link-type="uri" xlink:href="https://baseprints.singlesource.pub">https://baseprints.singlesource.pub</ext-link> is available for
+  discussions related to Baseprint topics and specifications.</p>
+</sec>
+<sec id="interoperability">
+  <title>Interoperability</title>
   <p>Websites such as <ext-link ext-link-type="uri" xlink:href="https://lens.perm.pub">https://lens.perm.pub</ext-link> and <ext-link ext-link-type="uri" xlink:href="https://pilot.perm.pub">https://pilot.perm.pub</ext-link>
-  use free open-source software, such as the Python package
+  use free open-source software, like the Python package
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>,
   to render Baseprint document snapshots into HTML pages and PDF files.</p>
-</sec>
-<sec id="scope">
-  <title>Scope</title>
-  <p>This document is a specification of the Baseprint Document Format (BpDF) for interoperability
-  with reference free open-source software implementations. As of 2024, the only
+  <p>This specification is for interoperability
+  with reference software implementations. As of 2024, the only
   reference implementation is the Python package <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>.
   Epijats is used by the authoring software
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</ext-link>,
@@ -57,41 +62,54 @@ by independent websites using Baseprint-compatible software.</p>
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprintlens">BaseprintLens</ext-link>,
   and the website generation software
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprintpress">BaseprintPress</ext-link>.</p>
-  <p>This specification does not define potential BpDF features that are not implemented in any software.
-  The online forum at <ext-link ext-link-type="uri" xlink:href="https://baseprints.singlesource.pub">https://baseprints.singlesource.pub</ext-link> is available for communication
-  about this living specification, its reference implementations, and other specifications
-  related to Baseprint document snapshots.</p>
 </sec>
-<sec id="informal-description">
-  <title>Informal Description</title>
-  <sec id="directory-encoding">
-    <title>Directory Encoding</title>
-    <p>Technically, BpDF is not a file format
-    but rather a format for a directory-like data structure.
-    This structure is addressable as
-    a <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git</ext-link> tree and <ext-link ext-link-type="uri" xlink:href="https://swhid.org">SWHID</ext-link>
-    directory.</p>
-    <p>When working with BpDF data,
-    it is often temporarily stored in a file system directory.
-    However, for public long-term storage, BpDF data is preserved in a SWHID addressable Git tree or
-    an equivalent “directory” object in the Software Heritage Archive.</p>
-    <p>At the top evel of a BpDF directory, is a file named <monospace>article.xml</monospace> encoded in a subset
-    of the <ext-link ext-link-type="uri" xlink:href="../jats.md">JATS XML format</ext-link>.
-    This specification refers to this sub-format as <italic>Baseprint JATS XML</italic>.</p>
+<sec id="snapshots-vs.-successions">
+  <title>Snapshots vs. Successions</title>
+  <p>This specification of the Baseprint Document Format (BpDF) is for
+  Baseprint document <italic>snapshots</italic> rather than Baseprint document <italic>successions</italic>.
+  Snapshots are archived and redistributed as part of a
+  <italic>Baseprint document successions</italic> whose digital encoding format is specified by the
+  separate specification,
+  the <ext-link ext-link-type="uri" xlink:href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</ext-link>.
+  While snapshots are immutable, successions, in contrast, can be amended.
+  The SWHID for a snapshot is distinct from the
+  <ext-link ext-link-type="uri" xlink:href="https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo">Document Succession Identifier (DSI)</ext-link>
+  used to identify a succession.</p>
+  <sec id="document-dates">
+    <title>Document Dates</title>
+    <p>Like
+    <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML Article Authoring Tag Set</ext-link><sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>,
+    BpDF does not store a date for a document.
+    Instead, dates for a Baseprint document are recorded in the Git commit records of
+    the <ext-link ext-link-type="uri" xlink:href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</ext-link><sup><xref alt="2" rid="ref-dsgl" ref-type="bibr">2</xref></sup>.
+    These dates are set when an author amends a succession in DSGL with a snapshot as a new
+    edition.</p>
   </sec>
-  <sec id="baseprint-jats-xml">
-    <title>Baseprint JATS XML</title>
-    <p>Subset of the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS Article Authoring Tag Set</ext-link><sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>.</p>
-    <p>Inspired and influenced by JATS4R<sup><xref alt="2" rid="ref-jats4r_2015" ref-type="bibr">2</xref>,<xref alt="3" rid="ref-jats4r_2019" ref-type="bibr">3</xref></sup>.</p>
-    <p>Any external entities are ignored by Baseprint software
-    and must not be relied upon for interoperability.
-    Specifically, official JATS DTDs must not be required to parse a Baseprint JATS XML
-    file.</p>
-  </sec>
+</sec>
+<sec id="jats-xml-in-a-directory">
+  <title>JATS XML in a Directory</title>
+  <p>Technically, BpDF is not a file format
+  but rather a format for a directory-like data structure.
+  This structure is addressable as a
+  <ext-link ext-link-type="uri" xlink:href="https://swhid.org">SWHID</ext-link> version 1 directory
+  (equivalent to a <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git</ext-link> tree).</p>
+  <p>When generating BpDF data, it is temporarily stored in a file system directory.
+  However, for long-term public storage, BpDF data is preserved in a
+  SWHID addressable directory in the <ext-link ext-link-type="uri" xlink:href="https://softwareheritage.org">Software Heritage Archive</ext-link>
+  (or an equivalent tree in a Git repository).</p>
+  <p>At the top level of a BpDF directory, a file named <monospace>article.xml</monospace>
+  is encoded in a subset of the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS Article Authoring Tag
+  Set</ext-link><sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>
+  and is inspired and influenced by JATS4R<sup><xref alt="3" rid="ref-jats4r_2015" ref-type="bibr">3</xref>,<xref alt="4" rid="ref-jats4r_2019" ref-type="bibr">4</xref></sup>.
+  Most of BpDF is a specification of this JATS XML file format,
+  which will be referred to as <italic>Baseprint JATS XML</italic>.</p>
+  <p>BpDF differs from the <ext-link ext-link-type="uri" xlink:href="https://meca.niso.org/">Manuscript Exchange Common Approach (MECA)</ext-link>
+  in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
+  and is not designed for a non-automated publishing process.</p>
 </sec>
 <sec id="formal-criteria-for-snapshot-directory">
   <title>Formal Criteria for Snapshot Directory</title>
-  <sec id="directory-encoding-1">
+  <sec id="directory-encoding">
     <title>Directory Encoding</title>
     <p><bold>Criterion</bold>:
     The directory is encoded such that its computed hash interoperates with
@@ -138,7 +156,7 @@ $P_LEVEL</preformat>
     <p><bold>Criterion</bold>:
     “Well-formed” per the <ext-link ext-link-type="uri" xlink:href="https://www.w3.org/TR/REC-xml/">XML 1.0</ext-link> W3C recommendation.</p>
     <p><bold>Criterion</bold>:
-    No dependency on any external XML DTD.</p>
+    No dependency on any external XML DTD (not even a dependency to an official JATS DTD).</p>
     <p><bold>Criterion</bold>:
     The following elements contain only optional whitespace between start tag, any child
     elements, and end tag:</p>
@@ -611,6 +629,16 @@ $P_LEVEL</preformat>
       <article-title>JATS: Article Authoring Tag Set</article-title>
       <year iso-8601-date="2024">2024</year>
       <uri>https://jats.nlm.nih.gov/articleauthoring/1.4/</uri>
+    </element-citation>
+  </ref>
+  <ref id="ref-dsgl">
+    <element-citation>
+      <person-group person-group-type="author">
+        <name><surname>Ellerman</surname><given-names>E. Castedo</given-names></name>
+      </person-group>
+      <article-title>Document Succession Git Layout (DSGL)</article-title>
+      <year iso-8601-date="2024">2024</year>
+      <uri>https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8</uri>
     </element-citation>
   </ref>
   <ref id="ref-jats4r_2015">
