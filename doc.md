@@ -109,6 +109,40 @@ and is not designed for a non-automated publishing process.
 <!-- copybreak off -->
 
 
+Restyling to JATS4R
+-------------------
+
+Since the Baseprint JATS XML format is a small subset of JATS and is not intended for
+real journal articles, a Baseprint JATS XML file can be restyled by adding fictitious data to
+conform to the XML schema of a JATS4R validator or the [PMC Style
+Checker](https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/).
+
+The [source code repository for Epijats](https://gitlab.com/perm.pub/epijats) includes
+an XSLT file for such restyling. Some of the information that must be added is fictitious, such as
+journal title. This restyling is for testing and facilitating possible
+interoperability with other JATS systems.
+
+<!-- copybreak off -->
+
+
+Formal Specification Terminology
+--------------------------------
+
+The formal part of this specification is defined in terms of *criteria* and does not
+prescribe what criteria XML files must or should satisfy.
+However, to accurately claim that an XML file "satisfies all the criteria" of this
+specification, the XML file MUST satisfy all the criteria of this specification.
+
+Each formal criterion is a true or false statement for a given XML file.
+Each criterion is documented to facilitate communication about which criteria
+might not be satisfied in particular contexts.
+Depending on the context, it might or might not make sense to satisfy specific criteria.
+In general, the more criteria that are satisfied by an XML file, the higher
+the level of interoperability it will achieve with the reference software of this specification.
+
+<!-- copybreak off -->
+
+
 Formal Criteria for Snapshot Directory
 --------------------------------------
 
@@ -138,8 +172,8 @@ The tree (directory) entry for `article.xml` has normal file mode in Git and doe
 have the executable bit set.
 
 
-Formal Criteria For `article.xml`
----------------------------------
+Formal Criteria For Baseprint JATS XML
+--------------------------------------
 
 In this specification, the term "element" means a specific XML element within an XML
 document parse tree. The notation of `<foobar>` may refer to an XML tag or elements with

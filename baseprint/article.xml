@@ -107,6 +107,30 @@ by independent websites using Baseprint-compatible software.</p>
   in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
   and is not designed for a non-automated publishing process.</p>
 </sec>
+<sec id="restyling-to-jats4r">
+  <title>Restyling to JATS4R</title>
+  <p>Since the Baseprint JATS XML format is a small subset of JATS and is not intended for
+  real journal articles, a Baseprint JATS XML file can be restyled by adding fictitious data to
+  conform to the XML schema of a JATS4R validator or the <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/">PMC Style
+  Checker</ext-link>.</p>
+  <p>The <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">source code repository for Epijats</ext-link> includes
+  an XSLT file for such restyling. Some of the information that must be added is fictitious, such as
+  journal title. This restyling is for testing and facilitating possible
+  interoperability with other JATS systems.</p>
+</sec>
+<sec id="formal-specification-terminology">
+  <title>Formal Specification Terminology</title>
+  <p>The formal part of this specification is defined in terms of <italic>criteria</italic> and does not
+  prescribe what criteria XML files must or should satisfy.
+  However, to accurately claim that an XML file “satisfies all the criteria” of this
+  specification, the XML file MUST satisfy all the criteria of this specification.</p>
+  <p>Each formal criterion is a true or false statement for a given XML file.
+  Each criterion is documented to facilitate communication about which criteria
+  might not be satisfied in particular contexts.
+  Depending on the context, it might or might not make sense to satisfy specific criteria.
+  In general, the more criteria that are satisfied by an XML file, the higher
+  the level of interoperability it will achieve with the reference software of this specification.</p>
+</sec>
 <sec id="formal-criteria-for-snapshot-directory">
   <title>Formal Criteria for Snapshot Directory</title>
   <sec id="directory-encoding">
@@ -131,8 +155,8 @@ by independent websites using Baseprint-compatible software.</p>
     have the executable bit set.</p>
   </sec>
 </sec>
-<sec id="formal-criteria-for-article.xml">
-  <title>Formal Criteria For <monospace>article.xml</monospace></title>
+<sec id="formal-criteria-for-baseprint-jats-xml">
+  <title>Formal Criteria For Baseprint JATS XML</title>
   <p>In this specification, the term “element” means a specific XML element within an XML
   document parse tree. The notation of <monospace>&lt;foobar&gt;</monospace> may refer to an XML tag or elements with
   that tag, depending on context. When an element “has a tag” it never refers a child element.</p>
