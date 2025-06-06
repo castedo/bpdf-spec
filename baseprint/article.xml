@@ -56,6 +56,8 @@ by independent websites using Baseprint-compatible software.</p>
   <p>This specification is for interoperability
   with reference software implementations. As of 2024, the only
   reference implementation is the Python package <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>.
+  For this edition of this specification,
+  version 2.0 of Epijats is the reference software.
   Epijats is used by the authoring software
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</ext-link>,
   the Single-Page Application (SPA)
@@ -118,23 +120,110 @@ by independent websites using Baseprint-compatible software.</p>
   journal title. This restyling is for testing and facilitating possible
   interoperability with other JATS systems.</p>
 </sec>
-<sec id="formal-specification-terminology">
-  <title>Formal Specification Terminology</title>
-  <p>The formal part of this specification is defined in terms of <italic>criteria</italic> and does not
-  prescribe what criteria XML files must or should satisfy.
-  However, to accurately claim that an XML file “satisfies all the criteria” of this
-  specification, the XML file MUST satisfy all the criteria of this specification.</p>
-  <p>Each formal criterion is a true or false statement for a given XML file.
-  Each criterion is documented to facilitate communication about which criteria
-  might not be satisfied in particular contexts.
-  Depending on the context, it might or might not make sense to satisfy specific criteria.
-  In general, the more criteria that are satisfied by an XML file, the higher
-  the level of interoperability it will achieve with the reference software of this specification.</p>
+<sec id="notable-featureslimitations">
+  <title>Notable Features/Limitations</title>
+  <p>XML elements for images and mathematics are absent from this edition of Baseprint JATS.
+  These important features of JATS are planned for a future edition.</p>
+  <p>Citations and references in Baseprint JATS XML
+  are styled by the application
+  software that generates HTML pages and/or PDF files.
+  Authors do not control the citation styling.
+  References are in <monospace>&lt;element-citation&gt;</monospace> elements and not <monospace>&lt;mixed-citation&gt;</monospace>.
+  Furthermore,
+  there is no <monospace>publication-type</monospace> attribute.
+  Depending on the bibliographic fields present inside the <monospace>&lt;element-citation&gt;</monospace>,
+  the application software must choose appropriate styling.
+  If the <monospace>&lt;element-citation&gt;</monospace> “looks” like a journal reference,
+  then the software should style it like a journal reference.
+  This means
+  it is challenging for rendering software to exactly match popular citation styles.
+  Software can approximate these styles
+  or rely on services like <ext-link ext-link-type="uri" xlink:href="https://www.crossref.org/">Crossref</ext-link>
+  to get addition reference metadata
+  absent from the document snapshot data.</p>
+  <p>Another notable restriction
+  is <monospace>&lt;xref ref-type=&quot;bibr&quot;&gt;</monospace> XML elements
+  being in top-level <monospace>&lt;sup&gt;</monospace> elements,
+  which are interpreted to have the semantic meaning
+  of a group of citations
+  to be styled together (e.g., <monospace>[7,11]</monospace>),
+  not necessarily superscripted text.</p>
 </sec>
-<sec id="formal-criteria-for-snapshot-directory">
-  <title>Formal Criteria for Snapshot Directory</title>
-  <sec id="directory-encoding">
-    <title>Directory Encoding</title>
+<sec id="formal-specification">
+  <title>Formal Specification</title>
+  <sec id="terminology">
+    <title>Terminology</title>
+    <sec id="element">
+      <title>Element</title>
+      <p>In this specification, the term “element” means a specific XML element within an XML
+      document parse tree. The notation of <monospace>&lt;foobar&gt;</monospace> may refer to an XML tag or elements with
+      that tag, depending on context. When an element “has a tag” it never refers a child element.</p>
+    </sec>
+    <sec id="criterion">
+      <title>Criterion</title>
+      <p>The formal part of this specification is defined in terms of <italic>criteria</italic> and does not
+      prescribe what criteria XML files must or should satisfy.
+      However, to accurately claim that an XML file “satisfies all the criteria” of this
+      specification, the XML file MUST satisfy all the criteria of this specification.</p>
+      <p>Each formal criterion is a true or false statement for a given XML file.
+      Each criterion is documented to facilitate communication about which criteria
+      might not be satisfied in particular contexts.
+      Depending on the context, it might or might not make sense to satisfy specific criteria.
+      In general, the more criteria that are satisfied by an XML file, the higher
+      the level of interoperability it will achieve with the reference software of this specification.</p>
+    </sec>
+    <sec id="constraints">
+      <title>Constraints</title>
+      <p>Due to the complexities of where XML elements can appear within an XML document tree,
+      some criteria are specified in terms of <italic>constraints</italic>.
+      XML elements in a document may have zero, one, or more constraints.
+      As an example, consider the following JATS paragraph:</p>
+      <preformat>&lt;p&gt;
+    &lt;sup&gt;
+        &lt;xref rid=&quot;definition-e&quot;&gt;
+            e&lt;sup&gt;x&lt;/sup&gt;
+        &lt;/xref&gt;
+    &lt;/sup&gt;
+    &lt;sup&gt;
+         &lt;xref rid=&quot;r1&quot; rid-type=&quot;bibr&quot;&gt;1&lt;/xref&gt;
+    &lt;/sup&gt;
+&lt;/p&gt;</preformat>
+      <p>The above example satisfies the criteria of this specification because
+      constraints can be assigned in the following manner:</p>
+      <list list-type="bullet">
+        <list-item>
+          <p>the first <monospace>&lt;sup&gt;</monospace> has constraint <monospace>$HYPERTEXT</monospace>,</p>
+        </list-item>
+        <list-item>
+          <p>the second <monospace>&lt;sup&gt;</monospace> (nested inside the first) has constraint <monospace>$HYPOTEXT</monospace> (in addition
+          to <monospace>$HYPERTEXT</monospace>), and</p>
+        </list-item>
+        <list-item>
+          <p>the last <monospace>&lt;sup&gt;</monospace> has constraint <monospace>$CITATION</monospace>.</p>
+        </list-item>
+      </list>
+    </sec>
+  </sec>
+  <sec id="definitionssymbols">
+    <title>Definitions/Symbols</title>
+    <p><bold>Definition</bold>:
+    Criteria of this specification imply XML elements in an XML document tree must have
+    zero, one, or more of the following <italic>constraints</italic>:</p>
+    <preformat>$CITATION
+$HYPERTEXT
+$HYPOTEXT
+$P_CHILD
+$P_LEVEL</preformat>
+    <p><bold>Definition</bold>:
+    Symbol <monospace>{TYPO_TAG}</monospace> means any one of the following tags:</p>
+    <preformat>&lt;bold&gt;
+&lt;italic&gt;
+&lt;monospace&gt;
+&lt;sub&gt;
+&lt;sup&gt;</preformat>
+  </sec>
+  <sec id="snapshot-directory-encoding">
+    <title>Snapshot Directory Encoding</title>
     <p><bold>Criterion</bold>:
     The directory is encoded such that its computed hash interoperates with
     <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git software</ext-link> as a Git tree hash.</p>
@@ -144,9 +233,7 @@ by independent websites using Baseprint-compatible software.</p>
     <ext-link ext-link-type="uri" xlink:href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</ext-link>.</p>
     <p><bold>Criterion</bold>:
     The directory is encoded such that its computed hash interoperates with
-    <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git software</ext-link> as a Git tree hash and
-    the hash following a <monospace>swh:1:dir:</monospace> prefix in a
-    <ext-link ext-link-type="uri" xlink:href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</ext-link>.</p>
+    <ext-link ext-link-type="uri" xlink:href="https://en.wikipedia.org/wiki/Git">Git software</ext-link> as a Git tree hash.</p>
     <p><bold>Criterion</bold>:
     There is only one file in the directory and its filename is <monospace>article.xml</monospace>.
     This file is in the Baseprint JATS XML format described in this specification.</p>
@@ -154,27 +241,6 @@ by independent websites using Baseprint-compatible software.</p>
     The tree (directory) entry for <monospace>article.xml</monospace> has normal file mode in Git and does not
     have the executable bit set.</p>
   </sec>
-</sec>
-<sec id="formal-criteria-for-baseprint-jats-xml">
-  <title>Formal Criteria For Baseprint JATS XML</title>
-  <p>In this specification, the term “element” means a specific XML element within an XML
-  document parse tree. The notation of <monospace>&lt;foobar&gt;</monospace> may refer to an XML tag or elements with
-  that tag, depending on context. When an element “has a tag” it never refers a child element.</p>
-  <p><bold>Definition</bold>:
-  Criteria of this specification imply XML elements in an XML document tree must have
-  zero, one, or more of the following <italic>constraints</italic>:</p>
-  <preformat>$CITATION
-$HYPERTEXT
-$HYPOTEXT
-$P_CHILD
-$P_LEVEL</preformat>
-  <p><bold>Definition</bold>:
-  Symbol <monospace>{TYPO_TAG}</monospace> means any one of the following tags:</p>
-  <preformat>&lt;bold&gt;
-&lt;italic&gt;
-&lt;monospace&gt;
-&lt;sub&gt;
-&lt;sup&gt;</preformat>
   <sec id="xml-basics">
     <title>XML Basics</title>
     <p><bold>Criterion</bold>:
@@ -184,73 +250,201 @@ $P_LEVEL</preformat>
     <p><bold>Criterion</bold>:
     The following elements contain only optional whitespace between start tag, any child
     elements, and end tag:</p>
-    <preformat>&lt;article-meta&gt;
-&lt;article&gt;
-&lt;back&gt;
-&lt;contrib-group&gt;
-&lt;contrib&gt;
-&lt;date-in-citation&gt;
-&lt;disp-quote&gt;
-&lt;element-citation&gt;
-&lt;front&gt;
-&lt;license&gt;
-&lt;permissions&gt;
-&lt;person-group&gt;
-&lt;ref-list&gt;
-&lt;ref&gt;
-&lt;sec&gt;
-&lt;table-wrap&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;thead&gt;
-&lt;title-group&gt;
-&lt;tr&gt;</preformat>
+    <list list-type="bullet">
+      <list-item>
+        <p><monospace>&lt;article-meta&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;article&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;back&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;contrib-group&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;contrib&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;date-in-citation&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;disp-quote&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;element-citation&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;front&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;license&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;permissions&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;person-group&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;ref-list&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;ref&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;sec&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;table-wrap&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;table&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;tbody&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;thead&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;title-group&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;tr&gt;</monospace></p>
+      </list-item>
+    </list>
   </sec>
   <sec id="minimal-attributes">
     <title>Minimal attributes</title>
     <p><bold>Criterion</bold>:
     The following elements have no attributes:</p>
-    <preformat>&lt;abstract&gt;
-&lt;article-meta&gt;
-&lt;back&gt;
-&lt;body&gt;
-&lt;bold&gt;
-&lt;code&gt;
-&lt;comment&gt;
-&lt;contrib-group&gt;
-&lt;copyright-statement&gt;
-&lt;def-item&gt;
-&lt;def-list&gt;
-&lt;disp-quote&gt;
-&lt;element-citation&gt;
-&lt;fpage&gt;
-&lt;front&gt;
-&lt;isbn&gt;
-&lt;issn&gt;
-&lt;issue&gt;
-&lt;italic&gt;
-&lt;license-p&gt;
-&lt;license&gt;
-&lt;list-item&gt;
-&lt;lpage&gt;
-&lt;monospace&gt;
-&lt;name&gt;
-&lt;permissions&gt;
-&lt;preformat&gt;
-&lt;publisher-loc&gt;
-&lt;publisher-name&gt;
-&lt;ref-list&gt;
-&lt;string-name&gt;
-&lt;sub&gt;
-&lt;sup&gt;
-&lt;table-wrap&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;thead&gt;
-&lt;title-group&gt;
-&lt;tr&gt;
-&lt;uri&gt;
-&lt;volume&gt;</preformat>
+    <list list-type="bullet">
+      <list-item>
+        <p><monospace>&lt;abstract&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;article-meta&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;back&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;body&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;bold&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;code&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;comment&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;contrib-group&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;copyright-statement&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;def-item&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;def-list&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;disp-quote&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;element-citation&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;fpage&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;front&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;isbn&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;issn&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;issue&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;italic&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;license-p&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;license&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;list-item&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;lpage&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;monospace&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;name&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;permissions&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;preformat&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;publisher-loc&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;publisher-name&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;ref-list&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;string-name&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;sub&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;sup&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;table-wrap&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;table&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;tbody&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;thead&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;title-group&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;tr&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;uri&gt;</monospace></p>
+      </list-item>
+      <list-item>
+        <p><monospace>&lt;volume&gt;</monospace></p>
+      </list-item>
+    </list>
     <p><bold>Criterion</bold>:
     The elements with the following tags only have the following possible attributes:</p>
     <table-wrap>
@@ -549,7 +743,7 @@ $P_LEVEL</preformat>
       Elements with constraint <monospace>$P_CHILD</monospace> and <monospace>{TYPO_TAG}</monospace> but not tag <monospace>&lt;sup&gt;</monospace> have constraint
       <monospace>$HYPERTEXT</monospace>.</p>
       <p><bold>Criterion</bold>:
-      Elements with constraint <monospace>$P_CHILD</monospace> and tag <monospace>&lt;sup&gt;</monospace> have constraint <monospace>$HYPERTEXT</monospace> or <monospace>$CITATION</monospace>.</p>
+      Elements with constraint <monospace>$P_CHILD</monospace> and tag <monospace>&lt;sup&gt;</monospace> have constraint <monospace>$HYPERTEXT</monospace> or <monospace>$CITATION</monospace> (but not both).</p>
     </sec>
     <sec id="citation-elements">
       <title>Citation elements</title>
