@@ -42,6 +42,8 @@ to render Baseprint document snapshots into HTML pages and PDF files.
 This specification is for interoperability
 with reference software implementations. As of 2024, the only
 reference implementation is the Python package [Epijats](https://gitlab.com/perm.pub/epijats).
+For this edition of this specification,
+version 2.0 of Epijats is the reference software.
 Epijats is used by the authoring software
 [Baseprinter](https://gitlab.com/perm.pub/baseprinter),
 the Single-Page Application (SPA)
@@ -125,8 +127,53 @@ interoperability with other JATS systems.
 <!-- copybreak off -->
 
 
-Formal Specification Terminology
---------------------------------
+Notable Features/Limitations
+----------------------------
+
+XML elements for images and mathematics are absent from this edition of Baseprint JATS.
+These important features of JATS are planned for a future edition.
+
+Citations and references in Baseprint JATS XML
+are styled by the application
+software that generates HTML pages and/or PDF files.
+Authors do not control the citation styling.
+References are in `<element-citation>` elements and not `<mixed-citation>`.
+Furthermore,
+there is no `publication-type` attribute.
+Depending on the bibliographic fields present inside the `<element-citation>`,
+the application software must choose appropriate styling.
+If the `<element-citation>` "looks" like a journal reference,
+then the software should style it like a journal reference.
+This means
+it is challenging for rendering software to exactly match popular citation styles.
+Software can approximate these styles
+or rely on services like [Crossref](https://www.crossref.org/)
+to get addition reference metadata
+absent from the document snapshot data.
+
+Another notable restriction
+is `<xref ref-type="bibr">` XML elements
+being in top-level `<sup>` elements,
+which are interpreted to have the semantic meaning
+of a group of citations
+to be styled together (e.g., `[7,11]`),
+not necessarily superscripted text.
+
+<!-- copybreak off -->
+
+
+Formal Specification
+--------------------
+
+### Terminology
+
+#### Element
+
+In this specification, the term "element" means a specific XML element within an XML
+document parse tree. The notation of `<foobar>` may refer to an XML tag or elements with
+that tag, depending on context. When an element "has a tag" it never refers a child element.
+
+#### Criterion
 
 The formal part of this specification is defined in terms of *criteria* and does not
 prescribe what criteria XML files must or should satisfy.
@@ -142,43 +189,36 @@ the level of interoperability it will achieve with the reference software of thi
 
 <!-- copybreak off -->
 
+#### Constraints
 
-Formal Criteria for Snapshot Directory
---------------------------------------
+Due to the complexities of where XML elements can appear within an XML document tree,
+some criteria are specified in terms of *constraints*.
+XML elements in a document may have zero, one, or more constraints.
+As an example, consider the following JATS paragraph:
+```
+<p>
+    <sup>
+        <xref rid="definition-e">
+            e<sup>x</sup>
+        </xref>
+    </sup>
+    <sup>
+         <xref rid="r1" rid-type="bibr">1</xref>
+    </sup>
+</p>
+```
+The above example satisfies the criteria of this specification because
+constraints can be assigned in the following manner:
 
-### Directory Encoding
+* the first `<sup>` has constraint `$HYPERTEXT`,
+* the second `<sup>` (nested inside the first) has constraint `$HYPOTEXT` (in addition
+  to `$HYPERTEXT`), and
+* the last `<sup>` has constraint `$CITATION`.
 
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
-
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-the hash following the `swh:1:dir:` prefix of a
-[SWHID (SoftWare Hash IDentifier)](https://www.swhid.org/).
-
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash and
-the hash following a `swh:1:dir:` prefix in a
-[SWHID (SoftWare Hash IDentifier)](https://www.swhid.org/).
-
-**Criterion**:
-There is only one file in the directory and its filename is `article.xml`.
-This file is in the Baseprint JATS XML format described in this specification.
-
-**Criterion**:
-The tree (directory) entry for `article.xml` has normal file mode in Git and does not
-have the executable bit set.
+<!-- copybreak off -->
 
 
-Formal Criteria For Baseprint JATS XML
---------------------------------------
-
-In this specification, the term "element" means a specific XML element within an XML
-document parse tree. The notation of `<foobar>` may refer to an XML tag or elements with
-that tag, depending on context. When an element "has a tag" it never refers a child element.
-
+### Definitions/Symbols
 
 **Definition**:
 Criteria of this specification imply XML elements in an XML document tree must have
@@ -202,6 +242,30 @@ Symbol `{TYPO_TAG}` means any one of the following tags:
 ```
 
 
+### Snapshot Directory Encoding
+
+**Criterion**:
+The directory is encoded such that its computed hash interoperates with
+[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
+
+**Criterion**:
+The directory is encoded such that its computed hash interoperates with
+the hash following the `swh:1:dir:` prefix of a
+[SWHID (SoftWare Hash IDentifier)](https://www.swhid.org/).
+
+**Criterion**:
+The directory is encoded such that its computed hash interoperates with
+[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
+
+**Criterion**:
+There is only one file in the directory and its filename is `article.xml`.
+This file is in the Baseprint JATS XML format described in this specification.
+
+**Criterion**:
+The tree (directory) entry for `article.xml` has normal file mode in Git and does not
+have the executable bit set.
+
+
 ### XML Basics
 
 **Criterion**:
@@ -213,78 +277,77 @@ No dependency on any external XML DTD (not even a dependency to an official JATS
 **Criterion**:
 The following elements contain only optional whitespace between start tag, any child
 elements, and end tag:
-```
-<article-meta>
-<article>
-<back>
-<contrib-group>
-<contrib>
-<date-in-citation>
-<disp-quote>
-<element-citation>
-<front>
-<license>
-<permissions>
-<person-group>
-<ref-list>
-<ref>
-<sec>
-<table-wrap>
-<table>
-<tbody>
-<thead>
-<title-group>
-<tr>
-```
+
+* `<article-meta>`
+* `<article>`
+* `<back>`
+* `<contrib-group>`
+* `<contrib>`
+* `<date-in-citation>`
+* `<disp-quote>`
+* `<element-citation>`
+* `<front>`
+* `<license>`
+* `<permissions>`
+* `<person-group>`
+* `<ref-list>`
+* `<ref>`
+* `<sec>`
+* `<table-wrap>`
+* `<table>`
+* `<tbody>`
+* `<thead>`
+* `<title-group>`
+* `<tr>`
 
 
 ### Minimal attributes
 
 **Criterion**:
 The following elements have no attributes:
-```
-<abstract>
-<article-meta>
-<back>
-<body>
-<bold>
-<code>
-<comment>
-<contrib-group>
-<copyright-statement>
-<def-item>
-<def-list>
-<disp-quote>
-<element-citation>
-<fpage>
-<front>
-<isbn>
-<issn>
-<issue>
-<italic>
-<license-p>
-<license>
-<list-item>
-<lpage>
-<monospace>
-<name>
-<permissions>
-<preformat>
-<publisher-loc>
-<publisher-name>
-<ref-list>
-<string-name>
-<sub>
-<sup>
-<table-wrap>
-<table>
-<tbody>
-<thead>
-<title-group>
-<tr>
-<uri>
-<volume>
-```
+
+* `<abstract>`
+* `<article-meta>`
+* `<back>`
+* `<body>`
+* `<bold>`
+* `<code>`
+* `<comment>`
+* `<contrib-group>`
+* `<copyright-statement>`
+* `<def-item>`
+* `<def-list>`
+* `<disp-quote>`
+* `<element-citation>`
+* `<fpage>`
+* `<front>`
+* `<isbn>`
+* `<issn>`
+* `<issue>`
+* `<italic>`
+* `<license-p>`
+* `<license>`
+* `<list-item>`
+* `<lpage>`
+* `<monospace>`
+* `<name>`
+* `<permissions>`
+* `<preformat>`
+* `<publisher-loc>`
+* `<publisher-name>`
+* `<ref-list>`
+* `<string-name>`
+* `<sub>`
+* `<sup>`
+* `<table-wrap>`
+* `<table>`
+* `<tbody>`
+* `<thead>`
+* `<title-group>`
+* `<tr>`
+* `<uri>`
+* `<volume>`
+
 
 **Criterion**:
 The elements with the following tags only have the following possible attributes:
@@ -616,7 +679,7 @@ Elements with constraint `$P_CHILD` and `{TYPO_TAG}` but not tag `<sup>` have co
 `$HYPERTEXT`.
 
 **Criterion**:
-Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION`.
+Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION` (but not both).
 
 #### Citation elements
 
