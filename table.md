@@ -6,6 +6,7 @@
 * `<table>`
 * `<tbody>`
 * `<thead>`
+* `<tr>`
 
 
 ### Minimal attributes
@@ -14,6 +15,13 @@
 * `<table>`
 * `<tbody>`
 * `<thead>`
+* `<tr>`
+
+
+```
+<td>                  align=
+<th>                  align=
+```
 
 
 ### `<body>` element tree

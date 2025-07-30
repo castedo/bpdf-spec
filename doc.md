@@ -27,7 +27,7 @@ Feedback
 In addition to email,
 feedback can also be communicated through the GitHub repository of the source files for this
 edition at [github.com/castedo/bpdf-spec/](https://github.com/castedo/bpdf-spec/).
-The online forum at <https://baseprints.singlesource.pub> is available for
+The online forum at <https://baseprints.singlesource.pub> is also available for
 discussions related to Baseprint topics and specifications.
 
 
@@ -177,9 +177,6 @@ that tag, depending on context. When an element "has a tag" it never refers a ch
 
 The formal part of this specification is defined in terms of *criteria* and does not
 prescribe what criteria XML files must or should satisfy.
-However, to accurately claim that an XML file "satisfies all the criteria" of this
-specification, the XML file MUST satisfy all the criteria of this specification.
-
 Each formal criterion is a true or false statement for a given XML file.
 Each criterion is documented to facilitate communication about which criteria
 might not be satisfied in particular contexts.
@@ -275,8 +272,22 @@ have the executable bit set.
 No dependency on any external XML DTD (not even a dependency to an official JATS DTD).
 
 **Criterion**:
+The XML prefix `ali` is used for any and all elements and attributes using the XML
+namespace `http://www.niso.org/schemas/ali/1.0/` by relying on the declaration
+```
+xmlns:ali="http://www.niso.org/schemas/ali/1.0/" 
+```
+
+**Criterion**:
+The XML prefix `xlink` is used for any and all elements and attributes using the XML
+namespace `http://www.w3.org/1999/xlink` by relying on the declaration
+```
+xmlns:xlink="http://www.w3.org/1999/xlink"
+```
+
+**Criterion**:
 The following elements contain only optional whitespace between start tag, any child
-elements, and end tag:
+elements, and the end tag:
 
 * `<article-meta>`
 * `<article>`
@@ -294,7 +305,6 @@ elements, and end tag:
 * `<ref>`
 * `<sec>`
 * `<title-group>`
-* `<tr>`
 
 
 ### Minimal attributes
@@ -336,7 +346,6 @@ The following elements have no attributes:
 * `<sub>`
 * `<sup>`
 * `<title-group>`
-* `<tr>`
 * `<uri>`
 * `<volume>`
 
@@ -344,21 +353,18 @@ The following elements have no attributes:
 **Criterion**:
 The elements with the following tags only have the following possible attributes:
 
-|     Tag              | Possible Attributes        |
-|----------------------|----------------------------|
-| `<article>`          | `lang=`                    |
-| `<contrib>`          | `contrib-type=` \
-                          `id=`                     |
-| `<date-in-citation>` | `content-type=`            |
-| `<ext-link>`         | `href=` \
-                         `ext-link-type=`           |
-| `<license_ref>`      | `content-type=`            |
-| `<list>`             | `list-type=`               |
-| `<person-group>`     | `person-group-type=`       |
-| `<pub-id>`           | `pub-id-type=`             |
-| `<sec>`              | `id=`                      |
-| `<td>`               | `align=`                   |
-| `<th>`               | `align=`                   |
+```
+TAG                   POSSIBLE ATTRIBUTES
+<article>             lang=
+<contrib>             contrib-type=    id=
+<date-in-citation>    content-type=
+<ext-link>            ext-link-type=   href=          
+<license_ref>         content-type=
+<list>                list-type=
+<person-group>        person-group-type=
+<pub-id>              pub-id-type=
+<sec>                 id=
+```
 
 
 ### `<article>` element
@@ -532,14 +538,19 @@ regular expression:
 `<element-citation>` elements only have child elements with any one the following tags:
 ```
 <article-title>
+<author>
 <comment>
 <date-in-citation>
+<day>
 <edition>
+<editor>
+<elocation-id>
 <fpage>
 <isbn>
 <issn>
 <issue>
 <lpage>
+<month>
 <person-group>
 <pub-id>
 <publisher-loc>
@@ -547,6 +558,7 @@ regular expression:
 <source>
 <uri>
 <volume>
+<year>
 ```
 
 **Criterion**:
@@ -562,8 +574,18 @@ values for attribute `pub-id-type=`.
 `"author"` or `"editor"`.
 
 **Criterion**:
-`<person-group>` elements have zero or more child elements with either tag `<name>` or
-`<string-name>`.
+`<person-group>` elements only have child elements with any of the following tags:
+```
+<name>
+<string-name>
+<etal>
+```
+
+**Criterion**:
+`<person-group>` elements have no more than one `<etal/>` child element.
+
+**Criterion**:
+`<etal>` elements are empty XML elements.
 
 **Criterion**:
 The following elements have string content only:
@@ -677,7 +699,7 @@ Elements with constraint `$P_CHILD` and `{TYPO_TAG}` but not tag `<sup>` have co
 `$HYPERTEXT`.
 
 **Criterion**:
-Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION` (but not both).
+Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION`.
 
 #### Citation elements
 
@@ -692,7 +714,7 @@ Elements with constraint `$CITATION` and tag `<sup>` have text content of:
 Elements with constraint `$CITATION` have all child elements with constraint `$CITATION` and tag `<xref>`.
 
 **Criterion**:
-Elements with constraint `$CITATION` and tag `<xref>` have an attributes of `ref-type=`
+Elements with constraint `$CITATION` and tag `<xref>` have an attribute of `ref-type=`
 with value `bibr`.
 
 **Criterion**:
