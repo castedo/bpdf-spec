@@ -1,5 +1,5 @@
 baseprint:
-  baseprinter --defaults pandocin.yaml --baseprint baseprint --outdir _preview
+  python3 -m baseprinter --defaults pandocin.yaml --baseprint baseprint --outdir _preview
 
 baseprint-fast:
-  baseprinter --defaults pandocin.yaml --baseprint baseprint --outdir _preview --skip-pdf
+  python3 -m baseprinter --defaults pandocin.yaml --baseprint baseprint --outdir _preview --skip-pdf
