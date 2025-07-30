@@ -130,22 +130,22 @@ interoperability with other JATS systems.
 Notable Features/Limitations
 ----------------------------
 
-XML elements for images and mathematics are absent from this edition of Baseprint JATS.
+XML elements for tables, images and mathematics are absent from this edition of Baseprint JATS.
 These important features of JATS are planned for a future edition.
 
 Citations and references in Baseprint JATS XML
-are styled by the application
-software that generates HTML pages and/or PDF files.
+are styled by viewer
+software that generate HTML pages and/or PDF files.
 Authors do not control the citation styling.
 References are in `<element-citation>` elements and not `<mixed-citation>`.
 Furthermore,
 there is no `publication-type` attribute.
 Depending on the bibliographic fields present inside the `<element-citation>`,
-the application software must choose appropriate styling.
+viewer software must choose appropriate styling.
 If the `<element-citation>` "looks" like a journal reference,
-then the software should style it like a journal reference.
+then viewer software should style it like a journal reference.
 This means
-it is challenging for rendering software to exactly match popular citation styles.
+it is challenging for viewer software to exactly match popular citation styles.
 Software can approximate these styles
 or rely on services like [Crossref](https://www.crossref.org/)
 to get addition reference metadata
@@ -153,7 +153,7 @@ absent from the document snapshot data.
 
 Another notable restriction
 is `<xref ref-type="bibr">` XML elements
-being in top-level `<sup>` elements,
+being inside top-level `<sup>` elements,
 which are interpreted to have the semantic meaning
 of a group of citations
 to be styled together (e.g., `[7,11]`),
@@ -293,10 +293,6 @@ elements, and end tag:
 * `<ref-list>`
 * `<ref>`
 * `<sec>`
-* `<table-wrap>`
-* `<table>`
-* `<tbody>`
-* `<thead>`
 * `<title-group>`
 * `<tr>`
 
@@ -339,10 +335,6 @@ The following elements have no attributes:
 * `<string-name>`
 * `<sub>`
 * `<sup>`
-* `<table-wrap>`
-* `<table>`
-* `<tbody>`
-* `<thead>`
 * `<title-group>`
 * `<tr>`
 * `<uri>`
@@ -361,7 +353,7 @@ The elements with the following tags only have the following possible attributes
 | `<ext-link>`         | `href=` \
                          `ext-link-type=`           |
 | `<license_ref>`      | `content-type=`            |
-| `<list>`             | `list-type=`                |
+| `<list>`             | `list-type=`               |
 | `<person-group>`     | `person-group-type=`       |
 | `<pub-id>`           | `pub-id-type=`             |
 | `<sec>`              | `id=`                      |
@@ -486,13 +478,20 @@ value:
 "ccbyncndlicense"
 ```
 
-### `<body>` element tree
-
 **Criterion**:
-Elements `<body>` and `<abstract>` contain a sequence of child elements with tags
+Element `<abstract>` contains a sequence of child elements with tags
 matching the regular expression:
 
 `(<p>)* (<sec>)*`
+
+
+### `<body>` element tree
+
+**Criterion**:
+Element `<body>` contains a sequence of child elements with tags
+matching the regular expression:
+
+`($P_LEVEL)* (<sec>)*`
 
 **Criterion**:
 `<sec>` elements contain a sequence of child elements with tags and constraints matching
@@ -508,7 +507,6 @@ Elements with constraint `$P_LEVEL` have any one of the following tags:
 <list>
 <p>
 <preformat>
-<table-wrap>
 ```
 
 
@@ -740,27 +738,6 @@ with an `id=` attribute value that equals the `rid=` attribute of the `<xref>` e
 `<def>` elements only have child elements with tag `<p>`.
 
 
-#### Table elements
-
-**Criterion**:
-`<table-wrap>` elements contains a single `<table>` element.
-
-**Criterion**:
-`<table>` child elements are `<thead>` or `<tbody>` elements.
-
-**Criterion**:
-`<thead>` and `<tbody>` child elements are `<tr>` elements.
-
-**Criterion**:
-`<tr>` child elements are `<th>` or `<td>` elements.
-
-**Criterion**:
-`<th>` and `<td>` elements have all child elements with constraint `$P_CHILD`.
-
-**Criterion**:
-`<th>` and `<td>` attributes `align=` have values `"left"`, `"center"`, or `"right"`.
-
-
 #### Other elements
 
 **Criterion**:
@@ -774,8 +751,5 @@ with an `id=` attribute value that equals the `rid=` attribute of the `<xref>` e
 Interoperability Issues
 -----------------------
 
-* HTML `<table>` has `<thead>` before `<tbody>`
-* HTML `<table>` probably (?) has exactly one `<tbody>` and at most one `<thead>`
 * `<xref>` attribute `rid=` values that might not match an `id=` attribute
   of an element converted to HTML with the same `id=` (e.g., `<sec>`, `<ref>`).
-

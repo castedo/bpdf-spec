@@ -122,28 +122,28 @@ by independent websites using Baseprint-compatible software.</p>
 </sec>
 <sec id="notable-featureslimitations">
   <title>Notable Features/Limitations</title>
-  <p>XML elements for images and mathematics are absent from this edition of Baseprint JATS.
+  <p>XML elements for tables, images and mathematics are absent from this edition of Baseprint JATS.
   These important features of JATS are planned for a future edition.</p>
   <p>Citations and references in Baseprint JATS XML
-  are styled by the application
-  software that generates HTML pages and/or PDF files.
+  are styled by viewer
+  software that generate HTML pages and/or PDF files.
   Authors do not control the citation styling.
   References are in <monospace>&lt;element-citation&gt;</monospace> elements and not <monospace>&lt;mixed-citation&gt;</monospace>.
   Furthermore,
   there is no <monospace>publication-type</monospace> attribute.
   Depending on the bibliographic fields present inside the <monospace>&lt;element-citation&gt;</monospace>,
-  the application software must choose appropriate styling.
+  viewer software must choose appropriate styling.
   If the <monospace>&lt;element-citation&gt;</monospace> “looks” like a journal reference,
-  then the software should style it like a journal reference.
+  then viewer software should style it like a journal reference.
   This means
-  it is challenging for rendering software to exactly match popular citation styles.
+  it is challenging for viewer software to exactly match popular citation styles.
   Software can approximate these styles
   or rely on services like <ext-link ext-link-type="uri" xlink:href="https://www.crossref.org/">Crossref</ext-link>
   to get addition reference metadata
   absent from the document snapshot data.</p>
   <p>Another notable restriction
   is <monospace>&lt;xref ref-type=&quot;bibr&quot;&gt;</monospace> XML elements
-  being in top-level <monospace>&lt;sup&gt;</monospace> elements,
+  being inside top-level <monospace>&lt;sup&gt;</monospace> elements,
   which are interpreted to have the semantic meaning
   of a group of citations
   to be styled together (e.g., <monospace>[7,11]</monospace>),
@@ -297,18 +297,6 @@ $P_LEVEL</preformat>
         <p><monospace>&lt;sec&gt;</monospace></p>
       </list-item>
       <list-item>
-        <p><monospace>&lt;table-wrap&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;table&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;tbody&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;thead&gt;</monospace></p>
-      </list-item>
-      <list-item>
         <p><monospace>&lt;title-group&gt;</monospace></p>
       </list-item>
       <list-item>
@@ -419,18 +407,6 @@ $P_LEVEL</preformat>
       </list-item>
       <list-item>
         <p><monospace>&lt;sup&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;table-wrap&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;table&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;tbody&gt;</monospace></p>
-      </list-item>
-      <list-item>
-        <p><monospace>&lt;thead&gt;</monospace></p>
       </list-item>
       <list-item>
         <p><monospace>&lt;title-group&gt;</monospace></p>
@@ -598,13 +574,17 @@ $P_LEVEL</preformat>
 &quot;ccbyncsalicense&quot;
 &quot;ccbyndlicense&quot;
 &quot;ccbyncndlicense&quot;</preformat>
+    <p><bold>Criterion</bold>:
+    Element <monospace>&lt;abstract&gt;</monospace> contains a sequence of child elements with tags
+    matching the regular expression:</p>
+    <p><monospace>(&lt;p&gt;)* (&lt;sec&gt;)*</monospace></p>
   </sec>
   <sec id="body-element-tree">
     <title><monospace>&lt;body&gt;</monospace> element tree</title>
     <p><bold>Criterion</bold>:
-    Elements <monospace>&lt;body&gt;</monospace> and <monospace>&lt;abstract&gt;</monospace> contain a sequence of child elements with tags
+    Element <monospace>&lt;body&gt;</monospace> contains a sequence of child elements with tags
     matching the regular expression:</p>
-    <p><monospace>(&lt;p&gt;)* (&lt;sec&gt;)*</monospace></p>
+    <p><monospace>($P_LEVEL)* (&lt;sec&gt;)*</monospace></p>
     <p><bold>Criterion</bold>:
     <monospace>&lt;sec&gt;</monospace> elements contain a sequence of child elements with tags and constraints matching
     the regular expression:</p>
@@ -615,8 +595,7 @@ $P_LEVEL</preformat>
 &lt;disp-quote&gt;
 &lt;list&gt;
 &lt;p&gt;
-&lt;preformat&gt;
-&lt;table-wrap&gt;</preformat>
+&lt;preformat&gt;</preformat>
   </sec>
   <sec id="back-element-tree">
     <title><monospace>&lt;back&gt;</monospace> element tree</title>
@@ -796,21 +775,6 @@ $P_LEVEL</preformat>
       <p><bold>Criterion</bold>:
       <monospace>&lt;def&gt;</monospace> elements only have child elements with tag <monospace>&lt;p&gt;</monospace>.</p>
     </sec>
-    <sec id="table-elements">
-      <title>Table elements</title>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;table-wrap&gt;</monospace> elements contains a single <monospace>&lt;table&gt;</monospace> element.</p>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;table&gt;</monospace> child elements are <monospace>&lt;thead&gt;</monospace> or <monospace>&lt;tbody&gt;</monospace> elements.</p>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;thead&gt;</monospace> and <monospace>&lt;tbody&gt;</monospace> child elements are <monospace>&lt;tr&gt;</monospace> elements.</p>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;tr&gt;</monospace> child elements are <monospace>&lt;th&gt;</monospace> or <monospace>&lt;td&gt;</monospace> elements.</p>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> elements have all child elements with constraint <monospace>$P_CHILD</monospace>.</p>
-      <p><bold>Criterion</bold>:
-      <monospace>&lt;th&gt;</monospace> and <monospace>&lt;td&gt;</monospace> attributes <monospace>align=</monospace> have values <monospace>&quot;left&quot;</monospace>, <monospace>&quot;center&quot;</monospace>, or <monospace>&quot;right&quot;</monospace>.</p>
-    </sec>
     <sec id="other-elements">
       <title>Other elements</title>
       <p><bold>Criterion</bold>:
@@ -823,12 +787,6 @@ $P_LEVEL</preformat>
 <sec id="interoperability-issues">
   <title>Interoperability Issues</title>
   <list list-type="bullet">
-    <list-item>
-      <p>HTML <monospace>&lt;table&gt;</monospace> has <monospace>&lt;thead&gt;</monospace> before <monospace>&lt;tbody&gt;</monospace></p>
-    </list-item>
-    <list-item>
-      <p>HTML <monospace>&lt;table&gt;</monospace> probably (?) has exactly one <monospace>&lt;tbody&gt;</monospace> and at most one <monospace>&lt;thead&gt;</monospace></p>
-    </list-item>
     <list-item>
       <p><monospace>&lt;xref&gt;</monospace> attribute <monospace>rid=</monospace> values that might not match an <monospace>id=</monospace> attribute
       of an element converted to HTML with the same <monospace>id=</monospace> (e.g., <monospace>&lt;sec&gt;</monospace>, <monospace>&lt;ref&gt;</monospace>).</p>
