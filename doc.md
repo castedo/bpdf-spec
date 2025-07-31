@@ -27,7 +27,7 @@ Feedback
 In addition to email,
 feedback can also be communicated through the GitHub repository of the source files for this
 edition at [github.com/castedo/bpdf-spec/](https://github.com/castedo/bpdf-spec/).
-The online forum at <https://baseprints.singlesource.pub> is available for
+The online forum at <https://baseprints.singlesource.pub> is also available for
 discussions related to Baseprint topics and specifications.
 
 
@@ -177,9 +177,6 @@ that tag, depending on context. When an element "has a tag" it never refers a ch
 
 The formal part of this specification is defined in terms of *criteria* and does not
 prescribe what criteria XML files must or should satisfy.
-However, to accurately claim that an XML file "satisfies all the criteria" of this
-specification, the XML file MUST satisfy all the criteria of this specification.
-
 Each formal criterion is a true or false statement for a given XML file.
 Each criterion is documented to facilitate communication about which criteria
 might not be satisfied in particular contexts.
@@ -221,7 +218,7 @@ constraints can be assigned in the following manner:
 ### Definitions/Symbols
 
 **Definition**:
-Criteria of this specification imply XML elements in an XML document tree must have
+Criteria of this specification imply that XML elements in an XML document tree must have
 zero, one, or more of the following *constraints*:
 ```
 $CITATION
@@ -262,8 +259,10 @@ There is only one file in the directory and its filename is `article.xml`.
 This file is in the Baseprint JATS XML format described in this specification.
 
 **Criterion**:
-The tree (directory) entry for `article.xml` has normal file mode in Git and does not
+The tree (directory) entry for `article.xml` has a normal file mode in Git and does not
 have the executable bit set.
+
+<!-- copybreak off -->
 
 
 ### XML Basics
@@ -275,8 +274,22 @@ have the executable bit set.
 No dependency on any external XML DTD (not even a dependency to an official JATS DTD).
 
 **Criterion**:
-The following elements contain only optional whitespace between start tag, any child
-elements, and end tag:
+The XML prefix `ali` is used for any and all elements and attributes using the XML
+namespace `http://www.niso.org/schemas/ali/1.0/` by relying on the declaration
+```
+xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
+```
+
+**Criterion**:
+The XML prefix `xlink` is used for any and all elements and attributes using the XML
+namespace `http://www.w3.org/1999/xlink` by relying on the declaration
+```
+xmlns:xlink="http://www.w3.org/1999/xlink"
+```
+
+**Criterion**:
+The following elements contain only optional whitespace between the start tag, any child
+elements, and the end tag:
 
 * `<article-meta>`
 * `<article>`
@@ -294,7 +307,6 @@ elements, and end tag:
 * `<ref>`
 * `<sec>`
 * `<title-group>`
-* `<tr>`
 
 
 ### Minimal attributes
@@ -307,14 +319,18 @@ The following elements have no attributes:
 * `<back>`
 * `<body>`
 * `<bold>`
+* `<break>`
 * `<code>`
 * `<comment>`
 * `<contrib-group>`
 * `<copyright-statement>`
+* `<day>`
 * `<def-item>`
 * `<def-list>`
 * `<disp-quote>`
 * `<element-citation>`
+* `<elocation-id>`
+* `<etal>`
 * `<fpage>`
 * `<front>`
 * `<isbn>`
@@ -326,39 +342,41 @@ The following elements have no attributes:
 * `<list-item>`
 * `<lpage>`
 * `<monospace>`
+* `<month>`
 * `<name>`
 * `<permissions>`
 * `<preformat>`
 * `<publisher-loc>`
 * `<publisher-name>`
 * `<ref-list>`
+* `<source>`
 * `<string-name>`
 * `<sub>`
+* `<suffix>`
 * `<sup>`
 * `<title-group>`
-* `<tr>`
 * `<uri>`
 * `<volume>`
+* `<year>`
 
 
 **Criterion**:
 The elements with the following tags only have the following possible attributes:
 
-|     Tag              | Possible Attributes        |
-|----------------------|----------------------------|
-| `<article>`          | `lang=`                    |
-| `<contrib>`          | `contrib-type=` \
-                          `id=`                     |
-| `<date-in-citation>` | `content-type=`            |
-| `<ext-link>`         | `href=` \
-                         `ext-link-type=`           |
-| `<license_ref>`      | `content-type=`            |
-| `<list>`             | `list-type=`               |
-| `<person-group>`     | `person-group-type=`       |
-| `<pub-id>`           | `pub-id-type=`             |
-| `<sec>`              | `id=`                      |
-| `<td>`               | `align=`                   |
-| `<th>`               | `align=`                   |
+```
+TAG                   POSSIBLE ATTRIBUTES
+<article>             lang=
+<contrib>             contrib-type=    id=
+<date-in-citation>    content-type=
+<ext-link>            ext-link-type=   href=          
+<license_ref>         content-type=
+<list>                list-type=
+<person-group>        person-group-type=
+<pub-id>              pub-id-type=
+<sec>                 id=
+```
+
+<!-- copybreak off -->
 
 
 ### `<article>` element
@@ -398,7 +416,7 @@ The `<article>` attribute `lang=` (if present) has value `"en"`.
 `<contrib-group>` has only child elements with tag `<contrib>`.
 
 **Criterion**:
-`<contrib>` elements have an attribute of `contrib-type=` and it has value the
+`<contrib>` elements have an attribute of `contrib-type=` with value
 `"author"`.
 
 **Criterion**:
@@ -409,16 +427,22 @@ The `<article>` attribute `lang=` (if present) has value `"en"`.
 * `<email>` (zero or one)
 
 **Criterion**:
-`<name>` has child elements `<surname>` and/or `<given-names>` (zero or one of each).
+`<name>` elements have only child elements with any one of the following tags:
+```
+<surname>
+<given-names>
+<suffix>
+```
+and at most one child element for each tag.
 
 **Criterion**:
-`<surname>` and `<given-names>` have string content with no child elements.
+`<surname>`, `<given-names>`, and `<suffix>` have string content with no child elements.
 
 **Criterion**:
 `<contrib-id>` has exactly one attribute with value `contrib-id-type="orcid"`.
 
 **Criterion**:
-`<contrib-id>` has just string content of a valid an ORCID including the
+`<contrib-id>` has just string content of a valid ORCID including the
 `https://orcid.org/` prefix.
 
 **Criterion**:
@@ -439,11 +463,11 @@ one each).
 
 `"http://www.niso.org/schemas/ali/1.0/"`.
 
-**Criterion**
+**Criterion**:
 `<license_ref>` element content is just a string (URL).
 
 **Criterion**:
-Attributes values of `content-type=` of element `<license_ref>` are any one of the
+Attribute values of `content-type=` of element `<license_ref>` are any one of the
 following:
 ```
 "cc0license"
@@ -456,15 +480,15 @@ following:
 ```
 
 **Criterion**:
-If the non-whitespace string contents of `<license_ref>` has one of the following prefixes:
+If the non-whitespace string contents of `<license_ref>` have one of the following prefixes:
 ```
 "https://creativecommons.org/publicdomain/zero/"
-'https://creativecommons.org/licenses/by/"
-'https://creativecommons.org/licenses/by-sa/"
-'https://creativecommons.org/licenses/by-nc/"
-'https://creativecommons.org/licenses/by-nc-sa/"
-'https://creativecommons.org/licenses/by-nd/"
-'https://creativecommons.org/licenses/by-nc-nd/"
+"https://creativecommons.org/licenses/by/"
+"https://creativecommons.org/licenses/by-sa/"
+"https://creativecommons.org/licenses/by-nc/"
+"https://creativecommons.org/licenses/by-nc-sa/"
+"https://creativecommons.org/licenses/by-nd/"
+"https://creativecommons.org/licenses/by-nc-nd/"
 ```
 then the `content-type=` value, if present, must equal the corresponding respective
 value:
@@ -483,6 +507,8 @@ Element `<abstract>` contains a sequence of child elements with tags
 matching the regular expression:
 
 `(<p>)* (<sec>)*`
+
+<!-- copybreak off -->
 
 
 ### `<body>` element tree
@@ -509,10 +535,24 @@ Elements with constraint `$P_LEVEL` have any one of the following tags:
 <preformat>
 ```
 
+**Criterion**:
+Child elements under `<title>` have any of the following tags:
+```
+<break>
+<ext-link>
+<xref>
+{TYPO_TAG}
+```
+
+**Criterion**:
+`<break>` elements are empty XML elements.
+
+<!-- copybreak off -->
+
 
 ### `<back>` element tree
 
-**Criterion**
+**Criterion**:
 `<back>` has exactly one child element `<ref-list>`.
 
 **Criterion**:
@@ -534,12 +574,15 @@ regular expression:
 <article-title>
 <comment>
 <date-in-citation>
+<day>
 <edition>
+<elocation-id>
 <fpage>
 <isbn>
 <issn>
 <issue>
 <lpage>
+<month>
 <person-group>
 <pub-id>
 <publisher-loc>
@@ -547,6 +590,7 @@ regular expression:
 <source>
 <uri>
 <volume>
+<year>
 ```
 
 **Criterion**:
@@ -562,13 +606,27 @@ values for attribute `pub-id-type=`.
 `"author"` or `"editor"`.
 
 **Criterion**:
-`<person-group>` elements have zero or more child elements with either tag `<name>` or
-`<string-name>`.
+`<person-group>` elements only have child elements with any of the following tags:
+```
+<name>
+<string-name>
+<etal>
+```
+**Criterion**:
+`<string-name>` elements have string content only.
 
 **Criterion**:
-The following elements have string content only:
+`<person-group>` elements have no more than one `<etal/>` child element.
+
+**Criterion**:
+`<etal>` elements are empty XML elements.
+
+**Criterion**:
+The following elements under `<element-citation>` have string content only:
 ```
+<article-title>
 <comment>
+<elocation-id>
 <fpage>
 <isbn>
 <issn>
@@ -576,17 +634,21 @@ The following elements have string content only:
 <lpage>
 <publisher-loc>
 <publisher-name>
-<string-name>
+<source>
 <uri>
 <volume>
 ```
 
 **Criterion**:
+`<year>`, `<month>`, and `<day>` elements have just an integer as content and do not have any non-digit
+characters.
+
+**Criterion**:
 `<date-in-citation>` attribute `content-type=` equals value `"access-date"`.
 
 **Criterion**:
-`<date-in-citation>` have all child elements with tag `<year>`, `<month>`, or `<day>`
-and at most once for each tag.
+Child elements `<year>`, `<month>`, and `<day>` appear at most once under their parent
+element.
 
 **Criterion**:
 `<date-in-citation>` elements contain child element `<year>`.
@@ -598,6 +660,9 @@ and at most once for each tag.
 `<date-in-citation>` has child element `<day>` only if `<month>` is also present.
 
 **Criterion**:
+`<date-in-citation>` elements do not contain any child elements other than `<year>`, `<month>`, or `<day>`.
+
+**Criterion**:
 `<edition>` elements have just an integer as content and do not have any non-digit
 characters.
 
@@ -607,6 +672,8 @@ characters.
 **Criterion**:
 `<pub-id>` elements with attribute value `pub-id-type="doi"` have string content
 that starts with "10." and not "http".
+
+<!-- copybreak off -->
 
 
 ### HTML-like content
@@ -622,7 +689,7 @@ Elements with constraint `$HYPOTEXT` have all child elements also with constrain
 #### Hypertext elements
 
 **Criterion**:
-Elements with constraint `$HYPERTEXT` have any one of the following tags 
+Elements with constraint `$HYPERTEXT` have any one of the following tags:
 ```
 <ext-link>
 <xref>
@@ -657,7 +724,7 @@ Every element with tag `<xref>` and constraint `$HYPERTEXT` has no attribute oth
 #### Paragraph elements
 
 **Criterion**:
-Elements with constraint `$P_CHILD` have one of the following tags
+Elements with constraint `$P_CHILD` have one of the following tags:
 ```
 <code>
 <def-list>
@@ -677,7 +744,8 @@ Elements with constraint `$P_CHILD` and `{TYPO_TAG}` but not tag `<sup>` have co
 `$HYPERTEXT`.
 
 **Criterion**:
-Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION` (but not both).
+Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION`.
+
 
 #### Citation elements
 
@@ -692,7 +760,7 @@ Elements with constraint `$CITATION` and tag `<sup>` have text content of:
 Elements with constraint `$CITATION` have all child elements with constraint `$CITATION` and tag `<xref>`.
 
 **Criterion**:
-Elements with constraint `$CITATION` and tag `<xref>` have an attributes of `ref-type=`
+Elements with constraint `$CITATION` and tag `<xref>` have an attribute of `ref-type=`
 with value `bibr`.
 
 **Criterion**:
@@ -726,7 +794,6 @@ with an `id=` attribute value that equals the `rid=` attribute of the `<xref>` e
 
 **Criterion**:
 `<def-list>` elements only have child elements with either tag `<term>` or `<def>`.
-
 
 **Criterion**:
 `<term>` elements only have child elements with `{TYPO_TAG}` or `{LINK_TAG}`.
