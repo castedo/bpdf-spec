@@ -171,7 +171,7 @@ Formal Specification
 
 In this specification, the term "element" means a specific XML element within an XML
 document parse tree. The notation of `<foobar>` may refer to an XML tag or elements with
-that tag, depending on context. When an element "has a tag" it never refers a child element.
+that tag, depending on context. When an element "has a tag" it never refers to a child element.
 
 #### Criterion
 
@@ -249,10 +249,6 @@ The directory is encoded such that its computed hash interoperates with
 The directory is encoded such that its computed hash interoperates with
 the hash following the `swh:1:dir:` prefix of a
 [SWHID (SoftWare Hash IDentifier)](https://www.swhid.org/).
-
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
 
 **Criterion**:
 There is only one file in the directory and its filename is `article.xml`.
@@ -569,7 +565,7 @@ regular expression:
 
 
 **Criterion**:
-`<element-citation>` elements only have child elements with any one the following tags:
+`<element-citation>` elements only have child elements with any one of the following tags:
 ```
 <article-title>
 <comment>
