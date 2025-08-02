@@ -130,12 +130,16 @@ interoperability with other JATS systems.
 Notable Features/Limitations
 ----------------------------
 
-XML elements for tables, images and mathematics are absent from this edition of Baseprint JATS.
+### Tables, math, and images
+
+XML elements for tables, math, and images are absent from this edition of Baseprint JATS.
 These important features of JATS are planned for a future edition.
+
+### Citation style
 
 Citations and references in Baseprint JATS XML
 are styled by viewer
-software that generate HTML pages and/or PDF files.
+software that generates HTML pages and/or PDF files.
 Authors do not control the citation styling.
 References are in `<element-citation>` elements and not `<mixed-citation>`.
 Furthermore,
@@ -148,8 +152,10 @@ This means
 it is challenging for viewer software to exactly match popular citation styles.
 Software can approximate these styles
 or rely on services like [Crossref](https://www.crossref.org/)
-to get addition reference metadata
+to get additional reference metadata
 absent from the document snapshot data.
+
+### Citation elements
 
 Another notable restriction
 is `<xref ref-type="bibr">` XML elements
@@ -157,7 +163,28 @@ being inside top-level `<sup>` elements,
 which are interpreted to have the semantic meaning
 of a group of citations
 to be styled together (e.g., `[7,11]`),
-not necessarily superscripted text.
+and not necessarily superscripted text.
+
+<!-- copybreak off -->
+
+### External Metadata
+
+Metadata in a typical JATS XML document is sourced from both authors and journal
+publishers. In this most common scenario, JATS XML serves as a vehicle for multiple
+sources of metadata.
+Baseprint JATS XML differs from typical JATS XML documents in two ways:
+
+1. a Baseprint document is designed for self-archiving/self-publishing by authors, and
+2. Baseprint JATS XML is contained within an *immutable* document *snapshot*.
+
+With respect to a document snapshot, some metadata is *internal*, to be included in
+Baseprint JATS XML, while other metadata is *external* and intentionally not included.
+For example, the JATS element 
+`/article/front/article-meta/title-group/article-title` is internal metadata that is
+sourced from an author and thus appropriately included in Baseprint JATS XML.
+In contrast, the JATS element
+`/article/front/article-meta/history` is external metadata, and does not make sense
+to store inside an immutable Baseprint document snapshot.
 
 <!-- copybreak off -->
 
@@ -166,12 +193,6 @@ Formal Specification
 --------------------
 
 ### Terminology
-
-#### Element
-
-In this specification, the term "element" means a specific XML element within an XML
-document parse tree. The notation of `<foobar>` may refer to an XML tag or elements with
-that tag, depending on context. When an element "has a tag" it never refers a child element.
 
 #### Criterion
 
@@ -184,14 +205,67 @@ Depending on the context, it might or might not make sense to satisfy specific c
 In general, the more criteria that are satisfied by an XML file, the higher
 the level of interoperability it will achieve with the reference software of this specification.
 
+#### Element
+
+In this specification, the term "element" refers to a specific XML element within an XML
+document's parse tree. The notation `<foobar>` may refer to an XML tag or elements with
+that tag, depending on the context. When an element "has a tag" it never refers to a child element.
+
 <!-- copybreak off -->
 
-#### Constraints
+#### Content
 
-Due to the complexities of where XML elements can appear within an XML document tree,
-some criteria are specified in terms of *constraints*.
-XML elements in a document may have zero, one, or more constraints.
-As an example, consider the following JATS paragraph:
+The contents of XML elements fall into four categories:
+
+empty
+: content of an empty XML element (e.g., `<break/>`)
+
+text-only
+: content of non-whitespace text with no child elements
+
+element-only
+: content of only child elements (and optional whitespace text)
+
+mixed
+: content of both text and child elements
+
+Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
+(10), vertical tab (11), formfeed (12), carriage return (13), and space (32).
+
+<!-- copybreak off -->
+
+#### Element Varieties
+
+Some XML elements with the same tag have differing semantics depending on their location
+within an XML document tree.
+For this reason, some criteria in this specification are specified in terms of *element varieties*.
+Specifically, the elements `<bold>`, `<italic>`, `<monospace>`, `<sub>`, `<sup>`, and `<xref>`
+have multiple *varieties*.
+For XML documents that satisfy the criteria of this specification, these elements will
+unambiguously belong to exactly one of their varieties.
+
+Elements with the following tags may be of the following varieties
+based on the criteria of this specification.
+
+```
+ELEMENT TAG      ELEMENT VARIETIES
+-----------      -----------------
+<bold>           ~HYPER  ~HYPO
+<italic>         ~HYPER  ~HYPO
+<monospace>      ~HYPER  ~HYPO
+<sub>            ~HYPER  ~HYPO
+<sup>            ~HYPER  ~HYPO  ~CITE
+<xref>           ~DEFAULT  ~CITE
+```
+
+The notation `<foo>~BAR` is used to denote a `<foo>` element of the `~BAR` variety.
+The notation of `<foo>` without any variety means a `<foo>` element of *any* variety.
+
+In theory, element varieties could be made unnecessary by using different XML tags.
+But due to backward compatibility with archived JATS XML files, changing XML tags is
+not an option.
+
+As an example, consider the `<sup>` elements of the following JATS paragraph:
 ```
 <p>
     <sup>
@@ -204,32 +278,88 @@ As an example, consider the following JATS paragraph:
     </sup>
 </p>
 ```
-The above example satisfies the criteria of this specification because
-constraints can be assigned in the following manner:
 
-* the first `<sup>` has constraint `$HYPERTEXT`,
-* the second `<sup>` (nested inside the first) has constraint `$HYPOTEXT` (in addition
-  to `$HYPERTEXT`), and
-* the last `<sup>` has constraint `$CITATION`.
+Based on the criteria of this specification, the `<sup>` elements are of the following varieties:
+
+* the first `<sup>` is of the variety `<sup>~HYPER`,
+* the second `<sup>` (nested inside the first) is of the variety `<sup>~HYPO`, and
+* the last `<sup>` is of the variety `<sup>~CITE`.
 
 <!-- copybreak off -->
 
 
-### Definitions/Symbols
+### Snapshot Directory Encoding
+
+**Criterion #14435**:
+The directory is encoded such that its computed hash interoperates with
+[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
+
+**Criterion #16289**:
+The directory is encoded such that its computed hash interoperates with
+the hash following the `swh:1:dir:` prefix of a
+[SWHID (SoftWare Hash IDentifier)](https://www.swhid.org/).
+
+**Criterion #12743**:
+There is only one file in the directory and its filename is `article.xml`.
+This file is in the Baseprint JATS XML format described in this specification.
+
+**Criterion #14763**:
+The directory (Git tree) entry for `article.xml` has a normal file mode in Git and does not
+have the executable bit set.
+
+<!-- copybreak off -->
+
+
+### XML Basics
+
+**Criterion #15719**:
+The file `article.xml` is "well-formed" per the [XML 1.0](https://www.w3.org/TR/REC-xml/) W3C recommendation.
+
+**Criterion #13799**:
+There is no parsing dependency on any external XML DTD (not even a dependency on an official JATS DTD).
+
+**Criterion #10192**:
+The XML prefix `ali` is used for any and all elements and attributes using the XML
+namespace `http://www.niso.org/schemas/ali/1.0/` by relying on the declaration
+```
+xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
+```
+*Note:* A [similar restriction is specified
+](https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-ali.html)
+by NISO JATS [@jats_authoring].
+
+
+**Criterion #11855**:
+The XML prefix `xlink` is used for any and all elements and attributes using the XML
+namespace `http://www.w3.org/1999/xlink` by relying on the declaration
+```
+xmlns:xlink="http://www.w3.org/1999/xlink"
+```
+*Note:* A [similar restriction is specified](
+https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-xlink.html)
+by NISO JATS [@jats_authoring].
+
+<!-- copybreak off -->
+
+
+### HTML-like content
+
+#### Hypertext
 
 **Definition**:
-Criteria of this specification imply that XML elements in an XML document tree must have
-zero, one, or more of the following *constraints*:
+The element set `{HYPERTEXT}` consists of the elements
 ```
-$CITATION
-$HYPERTEXT
-$HYPOTEXT
-$P_CHILD
-$P_LEVEL
+<bold>
+<ext-link>
+<italic>
+<monospace>
+<sub>
+<sup>
+<xref>~DEFAULT
 ```
 
-**Definition**:
-Symbol `{TYPO_TAG}` means any one of the following tags:
+**Criterion #18455**:
+The following elements do not have any attributes:
 ```
 <bold>
 <italic>
@@ -238,196 +368,323 @@ Symbol `{TYPO_TAG}` means any one of the following tags:
 <sup>
 ```
 
+**Criterion #19521**:
+The following elements contain mixed content with all child elements from the set
+`{HYPERTEXT}`:
+```
+<bold>~HYPER
+<ext-link>
+<italic>~HYPER
+<monospace>~HYPER
+<sub>~HYPER
+<sup>~HYPER
+```
 
-### Snapshot Directory Encoding
 
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
+#### Hypotext
 
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-the hash following the `swh:1:dir:` prefix of a
-[SWHID (SoftWare Hash IDentifier)](https://www.swhid.org/).
+**Definition**:
+The element set `{HYPOTEXT}` consists of the elements
+```
+<bold>~HYPO
+<italic>~HYPO
+<monospace>~HYPO
+<sub>~HYPO
+<sup>~HYPO
+```
 
-**Criterion**:
-The directory is encoded such that its computed hash interoperates with
-[Git software](https://en.wikipedia.org/wiki/Git) as a Git tree hash.
+**Criterion #16382**:
+Elements from the set `{HYPOTEXT}` contain mixed content with all child elements from the set
+`{HYPOTEXT}`.
 
-**Criterion**:
-There is only one file in the directory and its filename is `article.xml`.
-This file is in the Baseprint JATS XML format described in this specification.
 
-**Criterion**:
-The tree (directory) entry for `article.xml` has a normal file mode in Git and does not
-have the executable bit set.
+#### Hyperlinking elements
+
+##### \<ext-link>
+
+**Criterion #13099**:
+`<ext-link>` has an `xlink:href=` attribute with a URL as an attribute value.
+
+**Criterion #14614**:
+Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if present).
+
+**Criterion #17431**:
+`<ext-link>` has no attributes other than `xlink:href=` and (optional) `ext-link-type=`.
+
+**Criterion #19236**:
+`<ext-link>` contains mixed content with all child elements from the set `{HYPOTEXT}`.
+
+##### \<xref>~DEFAULT
+
+**Criterion #17683**:
+`<xref>~DEFAULT` has exactly one attribute, and it is `rid=`. 
+
+**Criterion #12342**:
+`<xref>~DEFAULT` contains mixed content with all child elements from the set `{HYPOTEXT}`.
+
+
+#### Other elements
+
+##### \<break>
+
+**Criterion #12430**:
+`<break>` has no attributes and contains empty content.
+
+##### \<code>
+
+**Criterion #13634**:
+`<code>` elements have no attributes.
+
+**Criterion #15943**:
+`<code>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
+
+##### \<p> (paragraph)
+
+**Definition**:
+`{P_CHILD}` denotes the set of elements
+```
+<code>
+<def-list>
+<disp-quote>
+<list>
+<preformat>
+{HYPERTEXT}
+```
+
+**Criterion #13912**:
+`<p>` elements have no attributes.
+
+**Criterion #17818**:
+`<p>` elements contain mixed content with all child elements from the set `{P_CHILD}`.
+
+##### \<preformat>
+
+**Criterion #10279**:
+`<preformat>` elements have no attributes.
+
+**Criterion #16819**:
+`<preformat>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
+
+
+#### List elements
+
+##### \<list>
+
+**Criterion #14304**:
+`<list>` elements have no attributes or only an attribute of `list-type=`.
+
+**Criterion #17495**:
+`<list>` element attributes of `list-type=` have the value `"bullet"` or `"order"`.
+
+**Criterion #13090**:
+`<list>` elements contain element-only content with only `<list-item>` child elements.
+
+##### \<list-item>
+
+**Criterion #18148**:
+`<list-item>` elements have no attributes.
+
+**Criterion #12420**:
+`<list-item>` elements contain element-only content with child elements of either `<p>` or `<list>`.
+
+##### \<def-list>
+
+**Criterion #18543**:
+`<def-list>` elements have no attributes.
+
+**Criterion #14530**:
+`<def-list>` elements contain element-only content with only `<def-item>` child elements.
+
+##### \<def-item>
+
+**Criterion #13583**:
+`<def-item>` elements have no attributes.
+
+**Criterion #10045**:
+`<def-item>` elements contain element-only content with child elements of either `<term>` or `<def>`.
+
+##### \<term>
+
+**Criterion #11829**:
+`<term>` elements have no attributes.
+
+**Criterion #13735**:
+`<term>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
+
+##### \<def>
+
+**Criterion #14358**:
+`<def>` elements have no attributes.
+
+**Criterion #15807**:
+`<def>` elements contain element-only content with only `<p>` child elements.
 
 <!-- copybreak off -->
 
 
-### XML Basics
+### High-level structural elements
 
-**Criterion**:
-"Well-formed" per the [XML 1.0](https://www.w3.org/TR/REC-xml/) W3C recommendation.
+#### Highest-level elements
 
-**Criterion**:
-No dependency on any external XML DTD (not even a dependency to an official JATS DTD).
+##### \<article>
 
-**Criterion**:
-The XML prefix `ali` is used for any and all elements and attributes using the XML
-namespace `http://www.niso.org/schemas/ali/1.0/` by relying on the declaration
-```
-xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
-```
-
-**Criterion**:
-The XML prefix `xlink` is used for any and all elements and attributes using the XML
-namespace `http://www.w3.org/1999/xlink` by relying on the declaration
-```
-xmlns:xlink="http://www.w3.org/1999/xlink"
-```
-
-**Criterion**:
-The following elements contain only optional whitespace between the start tag, any child
-elements, and the end tag:
-
-* `<article-meta>`
-* `<article>`
-* `<back>`
-* `<contrib-group>`
-* `<contrib>`
-* `<date-in-citation>`
-* `<disp-quote>`
-* `<element-citation>`
-* `<front>`
-* `<license>`
-* `<permissions>`
-* `<person-group>`
-* `<ref-list>`
-* `<ref>`
-* `<sec>`
-* `<title-group>`
-
-
-### Minimal attributes
-
-**Criterion**:
-The following elements have no attributes:
-
-* `<abstract>`
-* `<article-meta>`
-* `<back>`
-* `<body>`
-* `<bold>`
-* `<break>`
-* `<code>`
-* `<comment>`
-* `<contrib-group>`
-* `<copyright-statement>`
-* `<day>`
-* `<def-item>`
-* `<def-list>`
-* `<disp-quote>`
-* `<element-citation>`
-* `<elocation-id>`
-* `<etal>`
-* `<fpage>`
-* `<front>`
-* `<isbn>`
-* `<issn>`
-* `<issue>`
-* `<italic>`
-* `<license-p>`
-* `<license>`
-* `<list-item>`
-* `<lpage>`
-* `<monospace>`
-* `<month>`
-* `<name>`
-* `<permissions>`
-* `<preformat>`
-* `<publisher-loc>`
-* `<publisher-name>`
-* `<ref-list>`
-* `<source>`
-* `<string-name>`
-* `<sub>`
-* `<suffix>`
-* `<sup>`
-* `<title-group>`
-* `<uri>`
-* `<volume>`
-* `<year>`
-
-
-**Criterion**:
-The elements with the following tags only have the following possible attributes:
-
-```
-TAG                   POSSIBLE ATTRIBUTES
-<article>             lang=
-<contrib>             contrib-type=    id=
-<date-in-citation>    content-type=
-<ext-link>            ext-link-type=   href=          
-<license_ref>         content-type=
-<list>                list-type=
-<person-group>        person-group-type=
-<pub-id>              pub-id-type=
-<sec>                 id=
-```
-
-<!-- copybreak off -->
-
-
-### `<article>` element
-
-**Criterion**:
+**Criterion #15199**:
 `<article>` is the root element of the XML document.
 
-**Criterion**:
-The `<article>` attribute `lang=` (if present) has value `"en"`.
+**Criterion #10864**:
+`<article>` has no attributes (apart from pseudo-attributes for XML namespaces).
 
-**Criterion**:
-`<article>` has a sequence of child elements matching regular expression:
+**Criterion #16641**:
+`<article>` contains element-only content with a sequence of child elements matching the regular
+expression:
 ```
 (<front>) (<body>) (<back>)?
 ```
 
+##### \<front>
 
-### `<front>` element tree
+**Criterion #14001**:
+`<front>` has no attributes.
 
-**Criterion**:
-`<front>` has exactly one child element `<article-meta>`.
+**Criterion #12640**:
+`<front>` contains element-only content with exactly one child element `<article-meta>`.
 
+##### \<article-meta> element tree
 
-**Criterion**:
-`<article-meta>` has a sequence of child elements matching regular expression:
+**Criterion #13284**:
+`<article-meta>` has no attributes.
+
+**Criterion #11553**:
+`<article-meta>` contains element-only content with a sequence of child elements matching the regular expression:
 ```
 (<title-group>) (<contrib-group>) (<permissions>)? (<abstract>)
 ```
 
-**Criterion**:
-`<title-group>` has exactly one child element `<article-title>`.
+##### \<back> element tree
 
-**Criterion**:
-`<article-title>` has constraint `$HYPERTEXT`.
+**Criterion #11019**:
+`<back>` has no attributes.
+ 
+**Criterion #18947**:
+`<back>` contains element-only content with exactly one child element `<ref-list>`.
 
-**Criterion**:
-`<contrib-group>` has only child elements with tag `<contrib>`.
 
-**Criterion**:
-`<contrib>` elements have an attribute of `contrib-type=` with value
+#### Content elements
+
+**Definition**:
+`{P_LEVEL}` denotes the set of elements
+```
+<code>
+<disp-quote>
+<list>
+<p>
+<preformat>
+```
+
+##### \<disp-quote>
+
+**Criterion #18135**:
+`<disp-quote>` elements have no attributes.
+
+**Criterion #18442**:
+`<disp-quote>` elements contain element-only content with only `<p>` child elements.
+
+##### \<abstract>
+
+**Criterion #14631**:
+`<abstract>` has no attributes.
+
+**Criterion #10926**:
+`<abstract>` contains element-only content with a sequence of child elements matching the
+regular expression:
+
+`(<p>)* (<sec>)*`
+
+##### \<body>
+
+**Criterion #18521**:
+`<body>` contains element-only content with a sequence of child elements matching the regular
+expression:
+
+`({P_LEVEL})* (<sec>)*`
+
+**Criterion #19029**:
+`<body>` has no attributes.
+
+##### \<sec>
+
+**Criterion #18933**:
+`<sec>` elements contain element-only content with a sequence of child elements matching the
+regular expression:
+
+`(<title>)? ({P_LEVEL})* (<sec>)*`
+
+**Criterion #12620**:
+`<sec>` elements have no attributes or an `id=` attribute.
+
+##### \<title>
+
+**Criterion #16981**:
+`<title>` elements contain mixed content with each child element either `<break>` or from
+the set `{HYPERTEXT}`.
+
+**Criterion #15129**:
+`<title>` elements have no attributes.
+
+<!-- copybreak off -->
+
+
+### Metadata elements
+
+#### Article title
+
+##### \<title-group>
+
+**Criterion #15574**:
+`<title-group>` has no attributes.
+
+**Criterion #19365**:
+`<title-group>` contains element-only content with exactly one child element `<article-title>`.
+
+##### \<article-title>
+
+**Criterion #17019**:
+`<article-title>` has no attributes.
+
+**Criterion #16217**:
+`<article-title>` contains mixed content with child elements of set `{HYPERTEXT}`.
+
+
+#### Contributors
+
+##### \<contrib-group>
+
+**Criterion #10923**:
+`<contrib-group>` has no attributes.
+
+**Criterion #17698**:
+`<contrib-group>` contains element-only content with only child elements of `<contrib>`.
+
+##### \<contrib>
+
+**Criterion #17181**:
+`<contrib>` elements have exactly one attribute of `contrib-type=` with value
 `"author"`.
 
-**Criterion**:
-`<contrib>` elements have only child elements with a tag of any one of:
+**Criterion #19818**:
+`<contrib>` elements contain element-only content with child elements:
 
 * `<name>` (exactly one)
 * `<contrib-id>` (zero or one)
 * `<email>` (zero or one)
 
-**Criterion**:
-`<name>` elements have only child elements with any one of the following tags:
+##### \<name>
+
+**Criterion #15691**:
+`<name>` has no attributes.
+
+**Criterion #12424**:
+`<name>` contains element-only content with child elements from the set:
 ```
 <surname>
 <given-names>
@@ -435,40 +692,67 @@ The `<article>` attribute `lang=` (if present) has value `"en"`.
 ```
 and at most one child element for each tag.
 
-**Criterion**:
-`<surname>`, `<given-names>`, and `<suffix>` have string content with no child elements.
+##### \<surname>, \<given-names>, and \<suffix>
 
-**Criterion**:
+**Criterion #17569**:
+`<surname>`, `<given-names>`, and `<suffix>` have no attributes.
+
+**Criterion #17289**:
+`<surname>`, `<given-names>`, and `<suffix>` contain text content.
+
+##### \<contrib-id>
+
+**Criterion #13828**:
 `<contrib-id>` has exactly one attribute with value `contrib-id-type="orcid"`.
 
-**Criterion**:
-`<contrib-id>` has just string content of a valid ORCID including the
+**Criterion #12150**:
+`<contrib-id>` contains only text content of a valid ORCID including the
 `https://orcid.org/` prefix.
 
-**Criterion**:
-`<permissions>` has only child elements `<copyright-statement>` and `<license>` (zero or
-one each).
 
-**Criterion**:
-`<copyright-statement>` has constraint $HYPERTEXT.
+#### Permissions and licensing
 
-**Criterion**:
-`<license>` has only child elements `<license-p>` and `<license_ref>`.
+##### \<permissions>
 
-**Criterion**:
-`<license-p>` has constraint $HYPERTEXT.
+**Criterion #19885**:
+`<permissions>` has no attributes.
 
-**Criterion**:
-`<license_ref>` tags are in the XML namespace:
+**Criterion #11010**:
+`<permissions>` contains element-only content of only child elements `<copyright-statement>` and
+`<license>` (zero or one of each).
 
-`"http://www.niso.org/schemas/ali/1.0/"`.
+##### \<copyright-statement>
 
-**Criterion**:
-`<license_ref>` element content is just a string (URL).
+**Criterion #13932**:
+`<copyright-statement>` has no attributes.
 
-**Criterion**:
-Attribute values of `content-type=` of element `<license_ref>` are any one of the
-following:
+**Criterion #13317**:
+`<copyright-statement>` contains mixed content with child elements of set `{HYPERTEXT}`.
+
+##### \<license>
+
+**Criterion #19475**:
+`<license>` contains element-only content with child elements `<license-p>` and/or `<ali:license_ref>`.
+
+**Criterion #19618**:
+`<license>` has no attributes.
+
+##### \<license-p>
+
+**Criterion #11028**:
+`<license-p>` contains mixed content with child elements of set `{HYPERTEXT}`.
+
+**Criterion #10671**:
+`<license-p>` has no attributes.
+
+##### \<ali:license\_ref>
+
+**Criterion #16170**:
+`<ali:license_ref>` contains text content of a URL.
+
+**Criterion #16811**:
+`<ali:license_ref>` has no attribute or an attribute of `content-type=` with any one of
+the following values:
 ```
 "cc0license"
 "ccbylicense"
@@ -479,8 +763,8 @@ following:
 "ccbyncndlicense"
 ```
 
-**Criterion**:
-If the non-whitespace string contents of `<license_ref>` have one of the following prefixes:
+**Criterion #11510**:
+If the non-whitespace text contents of `<ali:license_ref>` have one of the following prefixes:
 ```
 "https://creativecommons.org/publicdomain/zero/"
 "https://creativecommons.org/licenses/by/"
@@ -502,74 +786,72 @@ value:
 "ccbyncndlicense"
 ```
 
-**Criterion**:
-Element `<abstract>` contains a sequence of child elements with tags
-matching the regular expression:
-
-`(<p>)* (<sec>)*`
-
 <!-- copybreak off -->
 
 
-### `<body>` element tree
+### Bibliographic elements
 
-**Criterion**:
-Element `<body>` contains a sequence of child elements with tags
-matching the regular expression:
+#### Citation
 
-`($P_LEVEL)* (<sec>)*`
+##### \<xref>~CITE
 
-**Criterion**:
-`<sec>` elements contain a sequence of child elements with tags and constraints matching
-the regular expression:
+**Criterion #14740**:
+`<xref>~CITE` elements have exactly two attributes: `rid=` and `ref-type=`.
 
-`(<title>)? ($P_LEVEL)* (<sec>)*`
+**Criterion #11027**:
+`<xref>~CITE` elements have an attribute of `ref-type=` with the value `bibr`.
 
-**Definition**:
-Elements with constraint `$P_LEVEL` have any one of the following tags:
-```
-<code>
-<disp-quote>
-<list>
-<p>
-<preformat>
-```
+**Criterion #12086**:
+`<xref>~CITE` elements have a value for `rid=` that
+matches the value of the attribute `id=` of a `<ref>` element.
 
-**Criterion**:
-Child elements under `<title>` have any of the following tags:
-```
-<break>
-<ext-link>
-<xref>
-{TYPO_TAG}
-```
+**Criterion #10484**:
+`<xref>~CITE` elements contain text-only content of
+a single integer (surrounded by optional whitespace).
+The integer corresponds to the ordered position in `<ref-list>` of the `<ref>` element
+with an `id=` attribute value matching the `rid=` attribute value of the `<xref>` element.
 
-**Criterion**:
-`<break>` elements are empty XML elements.
+##### \<sup>~CITE
 
-<!-- copybreak off -->
+**Criterion #14278**:
+`<sup>~CITE` elements only have child elements of `<xref>~CITE`.
+
+**Criterion #12352**:
+`<sup>~CITE` elements have mixed content with text-only content of:
+
+* optional whitespace before the first child element,
+* optional whitespace after the last child element, and
+* a comma and optional whitespace between child elements.
 
 
-### `<back>` element tree
+#### Bibliography
 
-**Criterion**:
-`<back>` has exactly one child element `<ref-list>`.
+##### \<ref-list>
 
-**Criterion**:
-The `<ref-list>` element contain a sequence of child elements with tags matching the
+**Criterion #12136**:
+`<ref-list>` contains element-only content with a sequence of child elements matching the
 regular expression:
 
 `(<title>)? (<ref>)*`
 
-**Criterion**:
-`<ref>` elements have one attribute and it is `id=`.
+**Criterion #14165**:
+`<ref-list>` has no attributes.
 
-**Criterion**:
-`<ref>` elements have exactly one child element of `<element-citation>`.
+##### \<ref>
 
+**Criterion #18652**:
+`<ref>` elements have one attribute, and it is `id=`.
 
-**Criterion**:
-`<element-citation>` elements only have child elements with any one the following tags:
+**Criterion #15949**:
+`<ref>` contains element-only content with exactly one child element of `<element-citation>`.
+
+##### \<element-citation>
+
+**Criterion #15660**:
+`<element-citation>` elements have no attributes.
+
+**Criterion #14559**:
+`<element-citation>` contains element-only content with child elements from the set:
 ```
 <article-title>
 <comment>
@@ -593,38 +875,18 @@ regular expression:
 <year>
 ```
 
-**Criterion**:
+**Criterion #12492**:
 For `<element-citation>` elements, there are one or zero child elements for each
 possible tag, with the exception of `<pub-id>`, which can appear more than once.
 
-**Criterion**:
-For `<element-citation>` elements, all child elements with tag `<pub-id>` have different
-values for attribute `pub-id-type=`.
+**Criterion #13786**:
+For `<element-citation>` elements, all child elements with the tag `<pub-id>` have different
+values for the attribute `pub-id-type=`.
 
-**Criterion**:
-`<person-group>` elements have an attribute `person-group-type=` with either value
-`"author"` or `"editor"`.
-
-**Criterion**:
-`<person-group>` elements only have child elements with any of the following tags:
+**Criterion #18428**:
+The following elements under `<element-citation>` have no attributes and contain
+text-only content:
 ```
-<name>
-<string-name>
-<etal>
-```
-**Criterion**:
-`<string-name>` elements have string content only.
-
-**Criterion**:
-`<person-group>` elements have no more than one `<etal/>` child element.
-
-**Criterion**:
-`<etal>` elements are empty XML elements.
-
-**Criterion**:
-The following elements under `<element-citation>` have string content only:
-```
-<article-title>
 <comment>
 <elocation-id>
 <fpage>
@@ -639,184 +901,89 @@ The following elements under `<element-citation>` have string content only:
 <volume>
 ```
 
-**Criterion**:
-`<year>`, `<month>`, and `<day>` elements have just an integer as content and do not have any non-digit
+**Criterion #10807**:
+`<article-title>` elements, *when under* `<element-citation>`, contain text-only content.
+
+**Note:** Criterion #10807 does not apply to `<article-title>` under `<title-group>`.
+
+##### \<person-group>
+
+**Criterion #18377**:
+`<person-group>` elements have exactly one attribute, `person-group-type=`, with either the value
+`"author"` or `"editor"`.
+
+**Criterion #17091**:
+`<person-group>` contains element-only content with child elements from the set:
+```
+<name>
+<string-name>
+<etal>
+```
+
+##### \<string-name>
+
+**Criterion #18187**:
+`<string-name>` elements have no attributes and contain text-only content.
+
+##### \<etal>
+
+**Criterion #14180**:
+`<person-group>` elements have no more than one `<etal/>` child element.
+
+**Criterion #16837**:
+`<etal>` elements have no attributes and contain empty content.
+
+##### \<year>, \<month>, and \<day> elements
+
+**Criterion #13721**:
+`<year>`, `<month>`, and `<day>` elements have no attributes.
+
+**Criterion #17289**:
+`<year>`, `<month>`, and `<day>` elements contain just an integer as content and do not have any non-digit
 characters.
 
-**Criterion**:
-`<date-in-citation>` attribute `content-type=` equals value `"access-date"`.
-
-**Criterion**:
+**Criterion #10430**:
 Child elements `<year>`, `<month>`, and `<day>` appear at most once under their parent
 element.
 
-**Criterion**:
-`<date-in-citation>` elements contain child element `<year>`.
+**Criterion #14321**:
+Child element `<month>` appears only if `<year>` is present as a sibling element.
 
-**Criterion**:
-`<date-in-citation>` has child element `<month>` only if `<year>` is also present.
+**Criterion #19206**:
+Child element `<day>` appears only if `<month>` is present as a sibling element.
 
-**Criterion**:
-`<date-in-citation>` has child element `<day>` only if `<month>` is also present.
+##### \<date-in-citation>
 
-**Criterion**:
-`<date-in-citation>` elements do not contain any child elements other than `<year>`, `<month>`, or `<day>`.
+**Criterion #13166**:
+`<date-in-citation>` has exactly one attribute, it is `content-type=`, and its value is
+`"access-date"`.
 
-**Criterion**:
-`<edition>` elements have just an integer as content and do not have any non-digit
+**Criterion #11337**:
+`<date-in-citation>` contains element-only content with child elements from the set:
+```
+<year>
+<month>
+<day>
+```
+
+##### \<edition>
+
+**Criterion #18615**:
+`<edition>` elements have no attributes.
+
+**Criterion #11753**:
+`<edition>` elements contain just an integer as content and do not have any non-digit
 characters.
 
-**Criterion**:
-`<pub-id>` `pub-id-type=` attributes have values `"doi"` or `"pmid"`.
+##### \<pub-id>
 
-**Criterion**:
-`<pub-id>` elements with attribute value `pub-id-type="doi"` have string content
+**Criterion #14308**:
+`<pub-id>` elements have exactly one attribute, it is `pub-id-type=`, and it has the value `"doi"` or `"pmid"`.
+
+**Criterion #15283**:
+`<pub-id>` elements with the attribute value `pub-id-type="doi"` have text-only content
 that starts with "10." and not "http".
 
-<!-- copybreak off -->
-
-
-### HTML-like content
-
-**Criterion**:
-Elements with constraint `$HYPOTEXT` have tag `{TYPO_TAG}`.
-
-**Criterion**:
-Elements with constraint `$HYPOTEXT` have all child elements also with constraint
-`$HYPOTEXT`.
-
-
-#### Hypertext elements
-
-**Criterion**:
-Elements with constraint `$HYPERTEXT` have any one of the following tags:
-```
-<ext-link>
-<xref>
-{TYPO_TAG}
-```
-
-**Criterion**:
-Elements with constraint `$HYPERTEXT` and `{TYPO_TAG}` have all child elements with
-constraint `$HYPERTEXT`.
-
-**Criterion**:
-Elements with tag `<ext-link>` have all child elements with constraint `$HYPOTEXT`.
-
-**Criterion**:
-Every `<ext-link>` has an `href=` attribute from the XML namespace
-`http://www.w3.org/1999/xlink`.
-
-**Criterion**:
-Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if present).
-
-**Criterion**:
-Elements with tag `<xref>` have all child elements with constraint `$HYPOTEXT`.
-
-**Criterion**:
-Every element with tag `<xref>` and constraint `$HYPERTEXT` has an attribute `rid=`.
-
-**Criterion**:
-Every element with tag `<xref>` and constraint `$HYPERTEXT` has no attribute other than
-`rid=`.
-
-
-#### Paragraph elements
-
-**Criterion**:
-Elements with constraint `$P_CHILD` have one of the following tags:
-```
-<code>
-<def-list>
-<disp-quote>
-<ext-link>
-<list>
-<preformat>
-<xref>
-{TYPO_TAG}
-```
-
-**Criterion**:
-`<p>` elements have all child elements with constraint `$P_CHILD`.
-
-**Criterion**:
-Elements with constraint `$P_CHILD` and `{TYPO_TAG}` but not tag `<sup>` have constraint
-`$HYPERTEXT`.
-
-**Criterion**:
-Elements with constraint `$P_CHILD` and tag `<sup>` have constraint `$HYPERTEXT` or `$CITATION`.
-
-
-#### Citation elements
-
-**Criterion**:
-Elements with constraint `$CITATION` and tag `<sup>` have text content of:
-
-* optional whitespace before the first child element
-* optional whitespace after the last child element, and
-* a comma and optional whitespace between child elements.
-
-**Criterion**:
-Elements with constraint `$CITATION` have all child elements with constraint `$CITATION` and tag `<xref>`.
-
-**Criterion**:
-Elements with constraint `$CITATION` and tag `<xref>` have an attribute of `ref-type=`
-with value `bibr`.
-
-**Criterion**:
-Elements with constraint `$CITATION` and tag `<xref>` have exactly two attributes of
-`rid=` and `ref-type=`.
-
-**Criterion**:
-Elements with constraint `$CITATION` and tag `<xref>` have a value for `rid=` that
-matches the value of attribute `id=` in an element with tag `<ref>`.
-
-**Criterion**:
-Elements with constraint `$CITATION` and tag `<xref>` have content of only 
-a single integer, surrounded by optional whitespace, and no child elements.
-The integer corresponds to the position in `<ref-list>` of the `<ref>` element
-with an `id=` attribute value that equals the `rid=` attribute of the `<xref>` element.
-
-
-#### List elements
-
-**Criterion**:
-`<list>` element attributes `list-type=` have either value `"bullet"` or `"order"`.
-
-**Criterion**:
-`<list>` elements only have child elements with tag `<list-item>`.
-
-**Criterion**:
-`<list-item>` elements only have child elements with either tag `<p>` or `<list>`.
-
-**Criterion**:
-`<def-list>` elements only have child elements with tag `<def-item>`.
-
-**Criterion**:
-`<def-list>` elements only have child elements with either tag `<term>` or `<def>`.
-
-**Criterion**:
-`<term>` elements only have child elements with `{TYPO_TAG}` or `{LINK_TAG}`.
-
-**Criterion**:
-`<term>` elements have all child elements with constraint `$HYPERTEXT`.
-
-**Criterion**:
-`<def>` elements only have child elements with tag `<p>`.
-
-
-#### Other elements
-
-**Criterion**:
-`<disp-quote>` elements only contain child elements with tag `<p>`.
-
-**Criterion**:
-`<code>` and `<preformat>` elements have all child elements with constraint `$HYPERTEXT`.
-
-
-
-Interoperability Issues
------------------------
-
-* `<xref>` attribute `rid=` values that might not match an `id=` attribute
-  of an element converted to HTML with the same `id=` (e.g., `<sec>`, `<ref>`).
+**Criterion #10955**:
+`<pub-id>` elements with the attribute value `pub-id-type="pmid"` have text-only content of a
+valid PubMed Identification Number.
