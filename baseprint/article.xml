@@ -57,7 +57,7 @@ by independent websites using Baseprint-compatible software.</p>
   with reference software implementations. As of 2024, the only
   reference implementation is the Python package <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">Epijats</ext-link>.
   For this edition of this specification,
-  version 2.0 of Epijats is the reference software.
+  version 2.1 of Epijats is the reference software.
   Epijats is used by the authoring software
   <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</ext-link>,
   the Single-Page Application (SPA)
@@ -198,7 +198,7 @@ by independent websites using Baseprint-compatible software.</p>
     </sec>
     <sec id="element">
       <title>Element</title>
-      <p>In this specification, the term “element” refers to a specific XML element within an XML
+      <p>In the definition of a criterion, the term “element” refers to an XML element within an XML
       document’s parse tree. The notation <monospace>&lt;foobar&gt;</monospace> may refer to an XML tag or elements with
       that tag, depending on the context. When an element “has a tag” it never refers to a child element.</p>
     </sec>
@@ -323,7 +323,7 @@ by independent websites using Baseprint-compatible software.</p>
     <sec id="hypertext">
       <title>Hypertext</title>
       <p><bold>Definition</bold>:
-      The element set <monospace>{HYPERTEXT}</monospace> consists of the elements</p>
+      The element set <monospace>{HYPERTEXT}</monospace> consists of the elements:</p>
       <preformat>&lt;bold&gt;
 &lt;ext-link&gt;
 &lt;italic&gt;
@@ -351,7 +351,7 @@ by independent websites using Baseprint-compatible software.</p>
     <sec id="hypotext">
       <title>Hypotext</title>
       <p><bold>Definition</bold>:
-      The element set <monospace>{HYPOTEXT}</monospace> consists of the elements</p>
+      The element set <monospace>{HYPOTEXT}</monospace> consists of the elements:</p>
       <preformat>&lt;bold&gt;~HYPO
 &lt;italic&gt;~HYPO
 &lt;monospace&gt;~HYPO
@@ -377,7 +377,7 @@ by independent websites using Baseprint-compatible software.</p>
       <sec id="xrefdefault">
         <title>&lt;xref&gt;~DEFAULT</title>
         <p><bold>Criterion #17683</bold>:
-        <monospace>&lt;xref&gt;~DEFAULT</monospace> has exactly one attribute, and it is <monospace>rid=</monospace>.</p>
+        <monospace>&lt;xref&gt;~DEFAULT</monospace> elements have exactly one attribute, and it is <monospace>rid=</monospace>.</p>
         <p><bold>Criterion #12342</bold>:
         <monospace>&lt;xref&gt;~DEFAULT</monospace> contains mixed content with all child elements from the set <monospace>{HYPOTEXT}</monospace>.</p>
       </sec>
@@ -387,7 +387,7 @@ by independent websites using Baseprint-compatible software.</p>
       <sec id="break">
         <title>&lt;break&gt;</title>
         <p><bold>Criterion #12430</bold>:
-        <monospace>&lt;break&gt;</monospace> has no attributes and contains empty content.</p>
+        <monospace>&lt;break&gt;</monospace> elements have no attributes and contain empty content.</p>
       </sec>
       <sec id="code">
         <title>&lt;code&gt;</title>
@@ -399,7 +399,7 @@ by independent websites using Baseprint-compatible software.</p>
       <sec id="p-paragraph">
         <title>&lt;p&gt; (paragraph)</title>
         <p><bold>Definition</bold>:
-        <monospace>{P_CHILD}</monospace> denotes the set of elements</p>
+        <monospace>{P_CHILD}</monospace> denotes the set of elements:</p>
         <preformat>&lt;code&gt;
 &lt;def-list&gt;
 &lt;disp-quote&gt;
@@ -508,8 +508,9 @@ by independent websites using Baseprint-compatible software.</p>
     <sec id="content-elements">
       <title>Content elements</title>
       <p><bold>Definition</bold>:
-      <monospace>{P_LEVEL}</monospace> denotes the set of elements</p>
+      <monospace>{P_LEVEL}</monospace> denotes the set of elements:</p>
       <preformat>&lt;code&gt;
+&lt;def-list&gt;
 &lt;disp-quote&gt;
 &lt;list&gt;
 &lt;p&gt;

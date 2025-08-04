@@ -43,7 +43,7 @@ This specification is for interoperability
 with reference software implementations. As of 2024, the only
 reference implementation is the Python package [Epijats](https://gitlab.com/perm.pub/epijats).
 For this edition of this specification,
-version 2.0 of Epijats is the reference software.
+version 2.1 of Epijats is the reference software.
 Epijats is used by the authoring software
 [Baseprinter](https://gitlab.com/perm.pub/baseprinter),
 the Single-Page Application (SPA)
@@ -207,7 +207,7 @@ the level of interoperability it will achieve with the reference software of thi
 
 #### Element
 
-In this specification, the term "element" refers to a specific XML element within an XML
+In the definition of a criterion, the term "element" refers to an XML element within an XML
 document's parse tree. The notation `<foobar>` may refer to an XML tag or elements with
 that tag, depending on the context. When an element "has a tag" it never refers to a child element.
 
@@ -347,7 +347,7 @@ by NISO JATS [@jats_authoring].
 #### Hypertext
 
 **Definition**:
-The element set `{HYPERTEXT}` consists of the elements
+The element set `{HYPERTEXT}` consists of the elements:
 ```
 <bold>
 <ext-link>
@@ -384,7 +384,7 @@ The following elements contain mixed content with all child elements from the se
 #### Hypotext
 
 **Definition**:
-The element set `{HYPOTEXT}` consists of the elements
+The element set `{HYPOTEXT}` consists of the elements:
 ```
 <bold>~HYPO
 <italic>~HYPO
@@ -417,7 +417,7 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 ##### \<xref>~DEFAULT
 
 **Criterion #17683**:
-`<xref>~DEFAULT` has exactly one attribute, and it is `rid=`. 
+`<xref>~DEFAULT` elements have exactly one attribute, and it is `rid=`. 
 
 **Criterion #12342**:
 `<xref>~DEFAULT` contains mixed content with all child elements from the set `{HYPOTEXT}`.
@@ -428,7 +428,7 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 ##### \<break>
 
 **Criterion #12430**:
-`<break>` has no attributes and contains empty content.
+`<break>` elements have no attributes and contain empty content.
 
 ##### \<code>
 
@@ -441,7 +441,7 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 ##### \<p> (paragraph)
 
 **Definition**:
-`{P_CHILD}` denotes the set of elements
+`{P_CHILD}` denotes the set of elements:
 ```
 <code>
 <def-list>
@@ -572,9 +572,10 @@ expression:
 #### Content elements
 
 **Definition**:
-`{P_LEVEL}` denotes the set of elements
+`{P_LEVEL}` denotes the set of elements:
 ```
 <code>
+<def-list>
 <disp-quote>
 <list>
 <p>

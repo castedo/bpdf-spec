@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: "Generate baseprint and commit to autobaseprint branch"
-        uses: castedo/baseprinter-action@v13
+        uses: castedo/baseprinter-action@v14
         with:
           just-recipe: baseprint
           # do not use baseprint-path in sources
