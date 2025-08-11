@@ -29,9 +29,9 @@ These snapshots are immutable and
 are referenced using a <ext-link ext-link-type="uri" xlink:href="https://swhid.org">SoftWare Hash IDentifier (SWHID)</ext-link>.
 This format is designed for self-archived scientific
 and technical documents for long-term redistribution.
-The XML component of the format is a subset of the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML
-Article Authoring Tag Set</ext-link> and
-approximates XML found in <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/">PubMed Central</ext-link>.
+The XML component of the format is a small subset of
+<ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/">JATS XML</ext-link><sup><xref alt="1" rid="ref-jats" ref-type="bibr">1</xref></sup>
+and approximates XML found in <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/">PubMed Central</ext-link>.
 After archiving,
 document snapshots are rendered into HTML pages and PDF files
 by independent websites using Baseprint-compatible software.</p>
@@ -80,10 +80,10 @@ by independent websites using Baseprint-compatible software.</p>
   <sec id="document-dates">
     <title>Document Dates</title>
     <p>Like
-    <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML Article Authoring Tag Set</ext-link><sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>,
+    <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML Article Authoring Tag Set</ext-link><sup><xref alt="2" rid="ref-jats_authoring" ref-type="bibr">2</xref></sup>,
     BpDF does not store a date for a document.
     Instead, dates for a Baseprint document are recorded in the Git commit records of
-    the <ext-link ext-link-type="uri" xlink:href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</ext-link><sup><xref alt="2" rid="ref-dsgl" ref-type="bibr">2</xref></sup>.
+    the <ext-link ext-link-type="uri" xlink:href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</ext-link><sup><xref alt="3" rid="ref-dsgl" ref-type="bibr">3</xref></sup>.
     These dates are set when an author amends a succession in DSGL with a snapshot as a new
     edition.</p>
   </sec>
@@ -100,9 +100,8 @@ by independent websites using Baseprint-compatible software.</p>
   SWHID addressable directory in the <ext-link ext-link-type="uri" xlink:href="https://softwareheritage.org">Software Heritage Archive</ext-link>
   (or an equivalent tree in a Git repository).</p>
   <p>At the top level of a BpDF directory, a file named <monospace>article.xml</monospace>
-  is encoded in a subset of the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/">JATS Article Authoring Tag
-  Set</ext-link><sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>
-  and is inspired and influenced by JATS4R<sup><xref alt="3" rid="ref-jats4r_2015" ref-type="bibr">3</xref>,<xref alt="4" rid="ref-jats4r_2019" ref-type="bibr">4</xref></sup>.
+  is encoded in a subset of <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/">JATS XML</ext-link><sup><xref alt="2" rid="ref-jats_authoring" ref-type="bibr">2</xref></sup>
+  and is inspired and influenced by JATS4R<sup><xref alt="4" rid="ref-jats4r_2015" ref-type="bibr">4</xref>,<xref alt="5" rid="ref-jats4r_2019" ref-type="bibr">5</xref></sup>.
   Most of BpDF is a specification of this JATS XML file format,
   which will be referred to as <italic>Baseprint JATS XML</italic>.</p>
   <p>BpDF differs from the <ext-link ext-link-type="uri" xlink:href="https://meca.niso.org/">Manuscript Exchange Common Approach (MECA)</ext-link>
@@ -310,13 +309,13 @@ by independent websites using Baseprint-compatible software.</p>
     namespace <monospace>http://www.niso.org/schemas/ali/1.0/</monospace> by relying on the declaration</p>
     <preformat>xmlns:ali=&quot;http://www.niso.org/schemas/ali/1.0/&quot;</preformat>
     <p><italic>Note:</italic> A <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-ali.html">similar restriction is specified</ext-link>
-    by NISO JATS<sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>.</p>
+    by NISO JATS<sup><xref alt="2" rid="ref-jats_authoring" ref-type="bibr">2</xref></sup>.</p>
     <p><bold>Criterion #11855</bold>:
     The XML prefix <monospace>xlink</monospace> is used for any and all elements and attributes using the XML
     namespace <monospace>http://www.w3.org/1999/xlink</monospace> by relying on the declaration</p>
     <preformat>xmlns:xlink=&quot;http://www.w3.org/1999/xlink&quot;</preformat>
     <p><italic>Note:</italic> A <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-xlink.html">similar restriction is specified</ext-link>
-    by NISO JATS<sup><xref alt="1" rid="ref-jats_authoring" ref-type="bibr">1</xref></sup>.</p>
+    by NISO JATS<sup><xref alt="2" rid="ref-jats_authoring" ref-type="bibr">2</xref></sup>.</p>
   </sec>
   <sec id="html-like-content">
     <title>HTML-like content</title>
@@ -529,7 +528,7 @@ by independent websites using Baseprint-compatible software.</p>
         <p><bold>Criterion #10926</bold>:
         <monospace>&lt;abstract&gt;</monospace> contains element-only content with a sequence of child elements matching the
         regular expression:</p>
-        <p><monospace>(&lt;p&gt;)* (&lt;sec&gt;)*</monospace></p>
+        <p><monospace>({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
       </sec>
       <sec id="body">
         <title>&lt;body&gt;</title>
@@ -881,6 +880,16 @@ by independent websites using Baseprint-compatible software.</p>
   <back>
 <ref-list>
   <title>References</title>
+  <ref id="ref-jats">
+    <element-citation>
+      <person-group person-group-type="author">
+        <string-name>U.S. National Library of Medicine (NLM)</string-name>
+      </person-group>
+      <article-title>Journal Article Tag Suite</article-title>
+      <year iso-8601-date="2024">2024</year>
+      <uri>https://jats.nlm.nih.gov/</uri>
+    </element-citation>
+  </ref>
   <ref id="ref-jats_authoring">
     <element-citation>
       <person-group person-group-type="author">

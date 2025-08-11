@@ -11,9 +11,9 @@ abstract: |
     are referenced using a [SoftWare Hash IDentifier (SWHID)](https://swhid.org).
     This format is designed for self-archived scientific
     and technical documents for long-term redistribution.
-    The XML component of the format is a subset of the [JATS XML
-    Article Authoring Tag Set](https://jats.nlm.nih.gov/articleauthoring/) and
-    approximates XML found in [PubMed Central](https://pmc.ncbi.nlm.nih.gov/).
+    The XML component of the format is a small subset of
+    [JATS XML](https://jats.nlm.nih.gov/)[@jats]
+    and approximates XML found in [PubMed Central](https://pmc.ncbi.nlm.nih.gov/).
     After archiving,
     document snapshots are rendered into HTML pages and PDF files
     by independent websites using Baseprint-compatible software.
@@ -98,8 +98,7 @@ SWHID addressable directory in the [Software Heritage Archive](https://softwareh
 (or an equivalent tree in a Git repository).
 
 At the top level of a BpDF directory, a file named `article.xml`
-is encoded in a subset of the [JATS Article Authoring Tag
-Set](https://jats.nlm.nih.gov/articleauthoring/) [@jats_authoring]
+is encoded in a subset of [JATS XML](https://jats.nlm.nih.gov/)[@jats_authoring]
 and is inspired and influenced by JATS4R [@jats4r_2015; @jats4r_2019].
 Most of BpDF is a specification of this JATS XML file format,
 which will be referred to as *Baseprint JATS XML*.
@@ -599,7 +598,7 @@ expression:
 `<abstract>` contains element-only content with a sequence of child elements matching the
 regular expression:
 
-`(<p>)* (<sec>)*`
+`({P_LEVEL})* (<sec>)*`
 
 ##### \<body>
 
