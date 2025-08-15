@@ -395,8 +395,14 @@ by independent websites using Baseprint-compatible software.</p>
         <p><bold>Criterion #15943</bold>:
         <monospace>&lt;code&gt;</monospace> elements contain mixed content with child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
       </sec>
-      <sec id="p-paragraph">
-        <title>&lt;p&gt; (paragraph)</title>
+      <sec id="phtml-and-pflow-paragraph">
+        <title>&lt;p&gt;~HTML and &lt;p&gt;~FLOW (paragraph)</title>
+        <p><monospace>&lt;p&gt;</monospace> elements in JATS may contain block elements (e.g., <monospace>&lt;list&gt;</monospace>).
+        This is inconsistent with HTML where <monospace>&lt;p&gt;</monospace> contains only “phrasing content”,
+        which does not allow block elements.
+        In Baseprint XML, the element varieties <monospace>&lt;p&gt;~HTML</monospace> and <monospace>&lt;p&gt;~FLOW</monospace> distinguish
+        between <monospace>&lt;p&gt;</monospace> elements that are restricted to “phrasing content” like HTML and
+        <monospace>&lt;p&gt;</monospace> elements that may contain “flow content” (in the terminology of HTML).</p>
         <p><bold>Definition</bold>:
         <monospace>{P_CHILD}</monospace> denotes the set of elements:</p>
         <preformat>&lt;code&gt;
@@ -407,8 +413,10 @@ by independent websites using Baseprint-compatible software.</p>
 {HYPERTEXT}</preformat>
         <p><bold>Criterion #13912</bold>:
         <monospace>&lt;p&gt;</monospace> elements have no attributes.</p>
+        <p><bold>Criterion #14762</bold>:
+        <monospace>&lt;p&gt;~HTML</monospace> elements contain mixed content with all child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
         <p><bold>Criterion #17818</bold>:
-        <monospace>&lt;p&gt;</monospace> elements contain mixed content with all child elements from the set <monospace>{P_CHILD}</monospace>.</p>
+        <monospace>&lt;p&gt;~FLOW</monospace> elements contain mixed content with all child elements from the set <monospace>{P_CHILD}</monospace>.</p>
       </sec>
       <sec id="preformat">
         <title>&lt;preformat&gt;</title>
@@ -512,7 +520,7 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;def-list&gt;
 &lt;disp-quote&gt;
 &lt;list&gt;
-&lt;p&gt;
+&lt;p&gt;~HTML
 &lt;preformat&gt;</preformat>
       <sec id="disp-quote">
         <title>&lt;disp-quote&gt;</title>
