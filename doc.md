@@ -396,6 +396,8 @@ The element set `{HYPOTEXT}` consists of the elements:
 Elements from the set `{HYPOTEXT}` contain mixed content with all child elements from the set
 `{HYPOTEXT}`.
 
+<!-- copybreak off -->
+
 
 #### Hyperlinking elements
 
@@ -416,7 +418,7 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 ##### \<xref>~DEFAULT
 
 **Criterion #17683**:
-`<xref>~DEFAULT` elements have exactly one attribute, and it is `rid=`. 
+`<xref>~DEFAULT` elements have exactly one attribute, and it is `rid=`.
 
 **Criterion #12342**:
 `<xref>~DEFAULT` contains mixed content with all child elements from the set `{HYPOTEXT}`.
@@ -437,7 +439,14 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 **Criterion #15943**:
 `<code>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
-##### \<p> (paragraph)
+##### \<p>~HTML and \<p>~FLOW (paragraph)
+
+`<p>` elements in JATS may contain block elements (e.g., `<list>`).
+This is inconsistent with HTML where `<p>` contains only "phrasing content",
+which does not allow block elements.
+In Baseprint XML, the element varieties `<p>~HTML` and `<p>~FLOW` distinguish
+between `<p>` elements that are restricted to "phrasing content" like HTML and
+`<p>` elements that may contain "flow content" (in the terminology of HTML).
 
 **Definition**:
 `{P_CHILD}` denotes the set of elements:
@@ -453,8 +462,11 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 **Criterion #13912**:
 `<p>` elements have no attributes.
 
+**Criterion #14762**:
+`<p>~HTML` elements contain mixed content with all child elements from the set `{HYPERTEXT}`.
+
 **Criterion #17818**:
-`<p>` elements contain mixed content with all child elements from the set `{P_CHILD}`.
+`<p>~FLOW` elements contain mixed content with all child elements from the set `{P_CHILD}`.
 
 ##### \<preformat>
 
@@ -463,6 +475,8 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 
 **Criterion #16819**:
 `<preformat>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
+
+<!-- copybreak off -->
 
 
 #### List elements
@@ -577,7 +591,7 @@ expression:
 <def-list>
 <disp-quote>
 <list>
-<p>
+<p>~HTML
 <preformat>
 ```
 
