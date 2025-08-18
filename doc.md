@@ -129,9 +129,9 @@ interoperability with other JATS systems.
 Notable Features/Limitations
 ----------------------------
 
-### Tables, math, and images
+### Tables, math, images, and footnotes
 
-XML elements for tables, math, and images are absent from this edition of Baseprint JATS.
+XML elements for tables, math, images, and footnotes are absent from this edition of Baseprint JATS.
 These important features of JATS are planned for a future edition.
 
 ### Citation style
@@ -498,7 +498,12 @@ between `<p>` elements that are restricted to "phrasing content" like HTML and
 `<list-item>` elements have no attributes.
 
 **Criterion #12420**:
-`<list-item>` elements contain element-only content with child elements of either `<p>` or `<list>`.
+`<list-item>` elements contain element-only content with only child elements from the set:
+```
+<p>
+<list>
+<def-list>
+```
 
 ##### \<def-list>
 
