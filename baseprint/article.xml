@@ -121,9 +121,9 @@ by independent websites using Baseprint-compatible software.</p>
 </sec>
 <sec id="notable-featureslimitations">
   <title>Notable Features/Limitations</title>
-  <sec id="tables-math-and-images">
-    <title>Tables, math, and images</title>
-    <p>XML elements for tables, math, and images are absent from this edition of Baseprint JATS.
+  <sec id="tables-math-images-and-footnotes">
+    <title>Tables, math, images, and footnotes</title>
+    <p>XML elements for tables, math, images, and footnotes are absent from this edition of Baseprint JATS.
     These important features of JATS are planned for a future edition.</p>
   </sec>
   <sec id="citation-style">
@@ -442,7 +442,10 @@ by independent websites using Baseprint-compatible software.</p>
         <p><bold>Criterion #18148</bold>:
         <monospace>&lt;list-item&gt;</monospace> elements have no attributes.</p>
         <p><bold>Criterion #12420</bold>:
-        <monospace>&lt;list-item&gt;</monospace> elements contain element-only content with child elements of either <monospace>&lt;p&gt;</monospace> or <monospace>&lt;list&gt;</monospace>.</p>
+        <monospace>&lt;list-item&gt;</monospace> elements contain element-only content with only child elements from the set:</p>
+        <preformat>&lt;p&gt;
+&lt;list&gt;
+&lt;def-list&gt;</preformat>
       </sec>
       <sec id="def-list">
         <title>&lt;def-list&gt;</title>
