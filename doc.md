@@ -439,34 +439,34 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 **Criterion #15943**:
 `<code>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
-##### \<p>~HTML and \<p>~FLOW (paragraph)
+##### \<p>~HTML and \<p>~WRAPPER (paragraph)
 
 `<p>` elements in JATS may contain block elements (e.g., `<list>`).
 This is inconsistent with HTML where `<p>` contains only "phrasing content",
 which does not allow block elements.
-In Baseprint XML, the element varieties `<p>~HTML` and `<p>~FLOW` distinguish
-between `<p>` elements that are restricted to "phrasing content" like HTML and
-`<p>` elements that may contain "flow content" (in the terminology of HTML).
+In Baseprint XML, the element varieties `<p>~HTML` and `<p>~WRAPPER` distinguish
+between `<p>` elements like HTML, which may only contain <italic>phrasing content</italic>,
+and `<p>` elements that contain block elements.
 
-**Definition**:
-`{P_CHILD}` denotes the set of elements:
+**Criterion #13912**:
+`<p>~HTML` elements have no attributes.
+
+**Criterion #14762**:
+`<p>~HTML` elements contain mixed content with all child elements from the set `{HYPERTEXT}`.
+
+**Criterion #16648**:
+`<p>~WRAPPER` elements have exactly one attribute, and it is `specific-use="wrapper"`.
+
+**Criterion #17818**:
+`<p>~WRAPPER` elements contain element-only content with only child elements from the set:
+
 ```
 <code>
 <def-list>
 <disp-quote>
 <list>
 <preformat>
-{HYPERTEXT}
 ```
-
-**Criterion #13912**:
-`<p>` elements have no attributes.
-
-**Criterion #14762**:
-`<p>~HTML` elements contain mixed content with all child elements from the set `{HYPERTEXT}`.
-
-**Criterion #17818**:
-`<p>~FLOW` elements contain mixed content with all child elements from the set `{P_CHILD}`.
 
 ##### \<preformat>
 
