@@ -1,7 +1,12 @@
 Source files for the BpDF Living Technical Specification 
 ========================================================
 
-HTML pages and PDF file generated from these source files are at:
+Published (archived) editions of this specification are reachable with Document
+Succession Identifier (DSI):
+
+[DPRkAz3vwSj85mBCgG49DeyndaE](https://perm.pub/DPRkAz3vwSj85mBCgG49DeyndaE)
+
+Draft HTML pages and PDF file generated from these source files are at:
 
 [castedo.github.io/bpdf-spec/](https://castedo.github.io/bpdf-spec/)
 
