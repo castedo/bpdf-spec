@@ -249,20 +249,21 @@ by independent websites using Baseprint-compatible software.</p>
           <p>Some XML elements with the same tag have differing semantics depending on their location
       within an XML document tree.
       For this reason, some criteria in this specification are specified in terms of <italic>element varieties</italic>.
-      Specifically, the elements <monospace>&lt;bold&gt;</monospace>, <monospace>&lt;italic&gt;</monospace>, <monospace>&lt;monospace&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, <monospace>&lt;sup&gt;</monospace>, and <monospace>&lt;xref&gt;</monospace>
+      Specifically, the elements <monospace>&lt;bold&gt;</monospace>, <monospace>&lt;italic&gt;</monospace>, <monospace>&lt;monospace&gt;</monospace>, <monospace>&lt;p&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, <monospace>&lt;sup&gt;</monospace>, and <monospace>&lt;xref&gt;</monospace>
       have multiple <italic>varieties</italic>.
       For XML documents that satisfy the criteria of this specification, these elements will
       unambiguously belong to exactly one of their varieties.</p>
           <p>Elements with the following tags may be of the following varieties
       based on the criteria of this specification.</p>
-          <preformat>ELEMENT TAG      ELEMENT VARIETIES
------------      -----------------
-&lt;bold&gt;           ~HYPER  ~HYPO
-&lt;italic&gt;         ~HYPER  ~HYPO
-&lt;monospace&gt;      ~HYPER  ~HYPO
-&lt;sub&gt;            ~HYPER  ~HYPO
-&lt;sup&gt;            ~HYPER  ~HYPO  ~CITE
-&lt;xref&gt;           ~DEFAULT  ~CITE</preformat>
+          <preformat>ELEMENT TAG   ELEMENT VARIETIES
+-----------   -----------------
+&lt;bold&gt;        ~HYPER    ~HYPO
+&lt;italic&gt;      ~HYPER    ~HYPO
+&lt;monospace&gt;   ~HYPER    ~HYPO
+&lt;p&gt;           ~HTML     ~WRAPPER
+&lt;sub&gt;         ~HYPER    ~HYPO
+&lt;sup&gt;         ~HYPER    ~HYPO  ~CITE
+&lt;xref&gt;        ~DEFAULT  ~CITE</preformat>
           <p>The notation <monospace>&lt;foo&gt;~BAR</monospace> is used to denote a <monospace>&lt;foo&gt;</monospace> element of the <monospace>~BAR</monospace> variety.
       The notation of <monospace>&lt;foo&gt;</monospace> without any variety means a <monospace>&lt;foo&gt;</monospace> element of <italic>any</italic> variety.</p>
           <p>In theory, element varieties could be made unnecessary by using different XML tags.
@@ -345,6 +346,14 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;sub&gt;
 &lt;sup&gt;
 &lt;xref&gt;~DEFAULT</preformat>
+          <p><bold>Criterion #19521</bold>:
+      The following elements contain mixed content with all child elements from the set
+      <monospace>{HYPERTEXT}</monospace>:</p>
+          <preformat>&lt;bold&gt;~HYPER
+&lt;italic&gt;~HYPER
+&lt;monospace&gt;~HYPER
+&lt;sub&gt;~HYPER
+&lt;sup&gt;~HYPER</preformat>
           <p><bold>Criterion #18455</bold>:
       The following elements do not have any attributes:</p>
           <preformat>&lt;bold&gt;
@@ -352,15 +361,6 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;monospace&gt;
 &lt;sub&gt;
 &lt;sup&gt;</preformat>
-          <p><bold>Criterion #19521</bold>:
-      The following elements contain mixed content with all child elements from the set
-      <monospace>{HYPERTEXT}</monospace>:</p>
-          <preformat>&lt;bold&gt;~HYPER
-&lt;ext-link&gt;
-&lt;italic&gt;~HYPER
-&lt;monospace&gt;~HYPER
-&lt;sub&gt;~HYPER
-&lt;sup&gt;~HYPER</preformat>
         </sec>
         <sec id="hypotext">
           <title>Hypotext</title>
@@ -557,29 +557,29 @@ by independent websites using Baseprint-compatible software.</p>
           </sec>
           <sec id="body">
             <title>&lt;body&gt;</title>
+            <p><bold>Criterion #19029</bold>:
+        <monospace>&lt;body&gt;</monospace> has no attributes.</p>
             <p><bold>Criterion #18521</bold>:
         <monospace>&lt;body&gt;</monospace> contains element-only content with a sequence of child elements matching the regular
         expression:</p>
             <p><monospace>({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
-            <p><bold>Criterion #19029</bold>:
-        <monospace>&lt;body&gt;</monospace> has no attributes.</p>
           </sec>
           <sec id="sec">
             <title>&lt;sec&gt;</title>
+            <p><bold>Criterion #12620</bold>:
+        <monospace>&lt;sec&gt;</monospace> elements have no attributes or an <monospace>id=</monospace> attribute.</p>
             <p><bold>Criterion #18933</bold>:
         <monospace>&lt;sec&gt;</monospace> elements contain element-only content with a sequence of child elements matching the
         regular expression:</p>
             <p><monospace>(&lt;title&gt;)? ({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
-            <p><bold>Criterion #12620</bold>:
-        <monospace>&lt;sec&gt;</monospace> elements have no attributes or an <monospace>id=</monospace> attribute.</p>
           </sec>
           <sec id="title">
             <title>&lt;title&gt;</title>
+            <p><bold>Criterion #15129</bold>:
+        <monospace>&lt;title&gt;</monospace> elements have no attributes.</p>
             <p><bold>Criterion #16981</bold>:
         <monospace>&lt;title&gt;</monospace> elements contain mixed content with each child element either <monospace>&lt;break&gt;</monospace> or from
         the set <monospace>{HYPERTEXT}</monospace>.</p>
-            <p><bold>Criterion #15129</bold>:
-        <monospace>&lt;title&gt;</monospace> elements have no attributes.</p>
           </sec>
         </sec>
       </sec>
@@ -646,14 +646,14 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #17569</bold>:
         <monospace>&lt;surname&gt;</monospace>, <monospace>&lt;given-names&gt;</monospace>, and <monospace>&lt;suffix&gt;</monospace> have no attributes.</p>
             <p><bold>Criterion #17289</bold>:
-        <monospace>&lt;surname&gt;</monospace>, <monospace>&lt;given-names&gt;</monospace>, and <monospace>&lt;suffix&gt;</monospace> contain text content.</p>
+        <monospace>&lt;surname&gt;</monospace>, <monospace>&lt;given-names&gt;</monospace>, and <monospace>&lt;suffix&gt;</monospace> contain text-only content.</p>
           </sec>
           <sec id="contrib-id">
             <title>&lt;contrib-id&gt;</title>
             <p><bold>Criterion #13828</bold>:
         <monospace>&lt;contrib-id&gt;</monospace> has exactly one attribute with value <monospace>contrib-id-type="orcid"</monospace>.</p>
             <p><bold>Criterion #12150</bold>:
-        <monospace>&lt;contrib-id&gt;</monospace> contains only text content of a valid ORCID including the
+        <monospace>&lt;contrib-id&gt;</monospace> contains text-only content of a valid ORCID including the
         <monospace>https://orcid.org/</monospace> prefix.</p>
           </sec>
         </sec>
@@ -676,22 +676,22 @@ by independent websites using Baseprint-compatible software.</p>
           </sec>
           <sec id="license">
             <title>&lt;license&gt;</title>
-            <p><bold>Criterion #19475</bold>:
-        <monospace>&lt;license&gt;</monospace> contains element-only content with child elements <monospace>&lt;license-p&gt;</monospace> and/or <monospace>&lt;ali:license_ref&gt;</monospace>.</p>
             <p><bold>Criterion #19618</bold>:
         <monospace>&lt;license&gt;</monospace> has no attributes.</p>
+            <p><bold>Criterion #19475</bold>:
+        <monospace>&lt;license&gt;</monospace> contains element-only content with child elements <monospace>&lt;license-p&gt;</monospace> and/or <monospace>&lt;ali:license_ref&gt;</monospace>.</p>
           </sec>
           <sec id="license-p">
             <title>&lt;license-p&gt;</title>
-            <p><bold>Criterion #11028</bold>:
-        <monospace>&lt;license-p&gt;</monospace> contains mixed content with child elements of set <monospace>{HYPERTEXT}</monospace>.</p>
             <p><bold>Criterion #10671</bold>:
         <monospace>&lt;license-p&gt;</monospace> has no attributes.</p>
+            <p><bold>Criterion #11028</bold>:
+        <monospace>&lt;license-p&gt;</monospace> contains mixed content with child elements of set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
           <sec id="alilicense_ref">
             <title>&lt;ali:license_ref&gt;</title>
             <p><bold>Criterion #16170</bold>:
-        <monospace>&lt;ali:license_ref&gt;</monospace> contains text content of a URL.</p>
+        <monospace>&lt;ali:license_ref&gt;</monospace> contains text-only content of a URL.</p>
             <p><bold>Criterion #16811</bold>:
         <monospace>&lt;ali:license_ref&gt;</monospace> has no attribute or an attribute of <monospace>content-type=</monospace> with any one of
         the following values:</p>
@@ -765,12 +765,12 @@ by independent websites using Baseprint-compatible software.</p>
           <title>Bibliography</title>
           <sec id="ref-list">
             <title>&lt;ref-list&gt;</title>
+            <p><bold>Criterion #14165</bold>:
+        <monospace>&lt;ref-list&gt;</monospace> has no attributes.</p>
             <p><bold>Criterion #12136</bold>:
         <monospace>&lt;ref-list&gt;</monospace> contains element-only content with a sequence of child elements matching the
         regular expression:</p>
             <p><monospace>(&lt;title&gt;)? (&lt;ref&gt;)*</monospace></p>
-            <p><bold>Criterion #14165</bold>:
-        <monospace>&lt;ref-list&gt;</monospace> has no attributes.</p>
           </sec>
           <sec id="ref">
             <title>&lt;ref&gt;</title>
@@ -848,10 +848,10 @@ by independent websites using Baseprint-compatible software.</p>
           </sec>
           <sec id="etal">
             <title>&lt;etal&gt;</title>
-            <p><bold>Criterion #14180</bold>:
-        <monospace>&lt;person-group&gt;</monospace> elements have no more than one <monospace>&lt;etal/&gt;</monospace> child element.</p>
             <p><bold>Criterion #16837</bold>:
         <monospace>&lt;etal&gt;</monospace> elements have no attributes and contain empty content.</p>
+            <p><bold>Criterion #14180</bold>:
+        <monospace>&lt;person-group&gt;</monospace> elements have no more than one <monospace>&lt;etal/&gt;</monospace> child element.</p>
           </sec>
           <sec id="year-month-and-day-elements">
             <title>&lt;year&gt;, &lt;month&gt;, and &lt;day&gt; elements</title>
