@@ -43,7 +43,7 @@ This specification is for interoperability
 with reference software implementations. As of 2024, the only
 reference implementation is the Python package [Epijats](https://gitlab.com/perm.pub/epijats).
 For this edition of this specification,
-version 2.1 of Epijats is the reference software.
+version 2.2 of Epijats is the reference software.
 Epijats is used by the authoring software
 [Baseprinter](https://gitlab.com/perm.pub/baseprinter),
 the Single-Page Application (SPA)
