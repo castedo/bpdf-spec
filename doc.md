@@ -238,7 +238,7 @@ Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
 Some XML elements with the same tag have differing semantics depending on their location
 within an XML document tree.
 For this reason, some criteria in this specification are specified in terms of *element varieties*.
-Specifically, the elements `<bold>`, `<italic>`, `<monospace>`, `<sub>`, `<sup>`, and `<xref>`
+Specifically, the elements `<bold>`, `<italic>`, `<monospace>`, `<p>`, `<sub>`, `<sup>`, and `<xref>`
 have multiple *varieties*.
 For XML documents that satisfy the criteria of this specification, these elements will
 unambiguously belong to exactly one of their varieties.
@@ -247,14 +247,15 @@ Elements with the following tags may be of the following varieties
 based on the criteria of this specification.
 
 ```
-ELEMENT TAG      ELEMENT VARIETIES
------------      -----------------
-<bold>           ~HYPER  ~HYPO
-<italic>         ~HYPER  ~HYPO
-<monospace>      ~HYPER  ~HYPO
-<sub>            ~HYPER  ~HYPO
-<sup>            ~HYPER  ~HYPO  ~CITE
-<xref>           ~DEFAULT  ~CITE
+ELEMENT TAG   ELEMENT VARIETIES
+-----------   -----------------
+<bold>        ~HYPER    ~HYPO
+<italic>      ~HYPER    ~HYPO
+<monospace>   ~HYPER    ~HYPO
+<p>           ~HTML     ~WRAPPER
+<sub>         ~HYPER    ~HYPO
+<sup>         ~HYPER    ~HYPO  ~CITE
+<xref>        ~DEFAULT  ~CITE
 ```
 
 The notation `<foo>~BAR` is used to denote a `<foo>` element of the `~BAR` variety.
@@ -357,6 +358,17 @@ The element set `{HYPERTEXT}` consists of the elements:
 <xref>~DEFAULT
 ```
 
+**Criterion #19521**:
+The following elements contain mixed content with all child elements from the set
+`{HYPERTEXT}`:
+```
+<bold>~HYPER
+<italic>~HYPER
+<monospace>~HYPER
+<sub>~HYPER
+<sup>~HYPER
+```
+
 **Criterion #18455**:
 The following elements do not have any attributes:
 ```
@@ -365,18 +377,6 @@ The following elements do not have any attributes:
 <monospace>
 <sub>
 <sup>
-```
-
-**Criterion #19521**:
-The following elements contain mixed content with all child elements from the set
-`{HYPERTEXT}`:
-```
-<bold>~HYPER
-<ext-link>
-<italic>~HYPER
-<monospace>~HYPER
-<sub>~HYPER
-<sup>~HYPER
 ```
 
 
@@ -621,16 +621,19 @@ regular expression:
 
 ##### \<body>
 
+**Criterion #19029**:
+`<body>` has no attributes.
+
 **Criterion #18521**:
 `<body>` contains element-only content with a sequence of child elements matching the regular
 expression:
 
 `({P_LEVEL})* (<sec>)*`
 
-**Criterion #19029**:
-`<body>` has no attributes.
-
 ##### \<sec>
+
+**Criterion #12620**:
+`<sec>` elements have no attributes or an `id=` attribute.
 
 **Criterion #18933**:
 `<sec>` elements contain element-only content with a sequence of child elements matching the
@@ -638,17 +641,14 @@ regular expression:
 
 `(<title>)? ({P_LEVEL})* (<sec>)*`
 
-**Criterion #12620**:
-`<sec>` elements have no attributes or an `id=` attribute.
-
 ##### \<title>
+
+**Criterion #15129**:
+`<title>` elements have no attributes.
 
 **Criterion #16981**:
 `<title>` elements contain mixed content with each child element either `<break>` or from
 the set `{HYPERTEXT}`.
-
-**Criterion #15129**:
-`<title>` elements have no attributes.
 
 <!-- copybreak off -->
 
@@ -717,7 +717,7 @@ and at most one child element for each tag.
 `<surname>`, `<given-names>`, and `<suffix>` have no attributes.
 
 **Criterion #17289**:
-`<surname>`, `<given-names>`, and `<suffix>` contain text content.
+`<surname>`, `<given-names>`, and `<suffix>` contain text-only content.
 
 ##### \<contrib-id>
 
@@ -725,7 +725,7 @@ and at most one child element for each tag.
 `<contrib-id>` has exactly one attribute with value `contrib-id-type="orcid"`.
 
 **Criterion #12150**:
-`<contrib-id>` contains only text content of a valid ORCID including the
+`<contrib-id>` contains text-only content of a valid ORCID including the
 `https://orcid.org/` prefix.
 
 
@@ -750,24 +750,24 @@ and at most one child element for each tag.
 
 ##### \<license>
 
-**Criterion #19475**:
-`<license>` contains element-only content with child elements `<license-p>` and/or `<ali:license_ref>`.
-
 **Criterion #19618**:
 `<license>` has no attributes.
 
-##### \<license-p>
+**Criterion #19475**:
+`<license>` contains element-only content with child elements `<license-p>` and/or `<ali:license_ref>`.
 
-**Criterion #11028**:
-`<license-p>` contains mixed content with child elements of set `{HYPERTEXT}`.
+##### \<license-p>
 
 **Criterion #10671**:
 `<license-p>` has no attributes.
 
+**Criterion #11028**:
+`<license-p>` contains mixed content with child elements of set `{HYPERTEXT}`.
+
 ##### \<ali:license\_ref>
 
 **Criterion #16170**:
-`<ali:license_ref>` contains text content of a URL.
+`<ali:license_ref>` contains text-only content of a URL.
 
 **Criterion #16811**:
 `<ali:license_ref>` has no attribute or an attribute of `content-type=` with any one of
@@ -847,14 +847,14 @@ with an `id=` attribute value matching the `rid=` attribute value of the `<xref>
 
 ##### \<ref-list>
 
+**Criterion #14165**:
+`<ref-list>` has no attributes.
+
 **Criterion #12136**:
 `<ref-list>` contains element-only content with a sequence of child elements matching the
 regular expression:
 
 `(<title>)? (<ref>)*`
-
-**Criterion #14165**:
-`<ref-list>` has no attributes.
 
 ##### \<ref>
 
@@ -946,11 +946,11 @@ text-only content:
 
 ##### \<etal>
 
-**Criterion #14180**:
-`<person-group>` elements have no more than one `<etal/>` child element.
-
 **Criterion #16837**:
 `<etal>` elements have no attributes and contain empty content.
+
+**Criterion #14180**:
+`<person-group>` elements have no more than one `<etal/>` child element.
 
 ##### \<year>, \<month>, and \<day> elements
 
