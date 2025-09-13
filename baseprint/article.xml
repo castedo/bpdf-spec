@@ -32,8 +32,7 @@ and technical documents for long-term redistribution.
 The XML component of the format is a small subset of
 <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/">JATS XML</ext-link><sup>
             <xref rid="ref-jats" ref-type="bibr">1</xref>
-          </sup>
-and approximates XML found in <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/">PubMed Central</ext-link>.
+          </sup> and XHTML.
 After archiving,
 document snapshots are rendered into HTML pages and PDF files
 by independent websites using Baseprint-compatible software.</p>
@@ -94,8 +93,8 @@ by independent websites using Baseprint-compatible software.</p>
     edition.</p>
       </sec>
     </sec>
-    <sec id="jats-xml-in-a-directory">
-      <title>JATS XML in a Directory</title>
+    <sec id="jatsxhtml-xml-file-in-a-directory">
+      <title>JATS+XHTML XML File in a Directory</title>
       <p>Technically, BpDF is not a file format
   but rather a format for a directory-like data structure.
   This structure is addressable as a
@@ -105,45 +104,45 @@ by independent websites using Baseprint-compatible software.</p>
   However, for long-term public storage, BpDF data is preserved in a
   SWHID addressable directory in the <ext-link ext-link-type="uri" xlink:href="https://softwareheritage.org">Software Heritage Archive</ext-link>
   (or an equivalent tree in a Git repository).</p>
-      <p>At the top level of a BpDF directory, a file named <monospace>article.xml</monospace>
+      <p>At the top level of a BpDF directory, a <italic>Baseprint XML</italic> file named <monospace>article.xml</monospace>
   is encoded in a subset of <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/">JATS XML</ext-link><sup>
           <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
         </sup>
-  and is inspired and influenced by JATS4R<sup>
+  and XHTML.
+  Baseprint XML is inspired and influenced by JATS4R<sup>
           <xref rid="ref-jats4r_2015" ref-type="bibr">4</xref>,
           <xref rid="ref-jats4r_2019" ref-type="bibr">5</xref>
         </sup>.
-  Most of BpDF is a specification of this JATS XML file format,
-  which will be referred to as <italic>Baseprint JATS XML</italic>.</p>
+  Most of BpDF is a specification of this XML file format,
+  which is referred to as <italic>Baseprint XML</italic>.</p>
       <p>BpDF differs from the <ext-link ext-link-type="uri" xlink:href="https://meca.niso.org/">Manuscript Exchange Common Approach (MECA)</ext-link>
   in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
   and is not designed for a non-automated publishing process.</p>
-    </sec>
-    <sec id="restyling-to-jats4r">
-      <title>Restyling to JATS4R</title>
-      <p>Since the Baseprint JATS XML format is a small subset of JATS and is not intended for
-  real journal articles, a Baseprint JATS XML file can be restyled by adding fictitious data to
-  conform to the XML schema of a JATS4R validator or the <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/">PMC Style
-  Checker</ext-link>.</p>
-      <p>The <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">source code repository for Epijats</ext-link> includes
-  an XSLT file for such restyling. Some of the information that must be added is fictitious, such as
-  journal title. This restyling is for testing and facilitating possible
-  interoperability with other JATS systems.</p>
+      <sec id="jats-transformable">
+        <title>JATS-Transformable</title>
+        <p>A Baseprint XML file can be transformed into a JATS XML file that conforms
+    to the XML schema of a JATS4R validator or the <ext-link ext-link-type="uri" xlink:href="https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/">PMC Style
+    Checker</ext-link>.
+    The <ext-link ext-link-type="uri" xlink:href="https://gitlab.com/perm.pub/epijats">source code repository for Epijats</ext-link> includes
+    an XSL transformation file and script.
+    Some of the information that must be added is fictitious, such as
+    the journal title.</p>
+      </sec>
     </sec>
     <sec id="notable-featureslimitations">
       <title>Notable Features/Limitations</title>
       <sec id="tables-math-images-and-footnotes">
         <title>Tables, math, images, and footnotes</title>
-        <p>XML elements for tables, math, images, and footnotes are absent from this edition of Baseprint JATS.
-    These important features of JATS are planned for a future edition.</p>
+        <p>XML elements for tables, math, images, and footnotes are absent from this edition of BpDF.
+    These important features are planned for a future edition.</p>
       </sec>
       <sec id="citation-style">
         <title>Citation style</title>
-        <p>Citations and references in Baseprint JATS XML
+        <p>Citations and references in Baseprint XML
     are styled by viewer
     software that generates HTML pages and/or PDF files.
     Authors do not control the citation styling.
-    References are in <monospace>&lt;element-citation&gt;</monospace> elements and not <monospace>&lt;mixed-citation&gt;</monospace>.
+    References are in JATS <monospace>&lt;element-citation&gt;</monospace> elements and not JATS <monospace>&lt;mixed-citation&gt;</monospace>.
     Furthermore,
     there is no <monospace>publication-type</monospace> attribute.
     Depending on the bibliographic fields present inside the <monospace>&lt;element-citation&gt;</monospace>,
@@ -172,20 +171,20 @@ by independent websites using Baseprint-compatible software.</p>
         <p>Metadata in a typical JATS XML document is sourced from both authors and journal
     publishers. In this most common scenario, JATS XML serves as a vehicle for multiple
     sources of metadata.
-    Baseprint JATS XML differs from typical JATS XML documents in two ways:</p>
+    Baseprint XML differs from typical JATS XML documents in two ways:</p>
         <list list-type="order">
           <list-item>
             <p>a Baseprint document is designed for self-archiving/self-publishing by authors, and</p>
           </list-item>
           <list-item>
-            <p>Baseprint JATS XML is contained within an <italic>immutable</italic> document <italic>snapshot</italic>.</p>
+            <p>Baseprint XML is contained within an <italic>immutable</italic> document <italic>snapshot</italic>.</p>
           </list-item>
         </list>
         <p>With respect to a document snapshot, some metadata is <italic>internal</italic>, to be included in
-    Baseprint JATS XML, while other metadata is <italic>external</italic> and intentionally not included.
+    Baseprint XML, while other metadata is <italic>external</italic> and intentionally not included.
     For example, the JATS element
     <monospace>/article/front/article-meta/title-group/article-title</monospace> is internal metadata that is
-    sourced from an author and thus appropriately included in Baseprint JATS XML.
+    sourced from an author and thus appropriately included in Baseprint XML.
     In contrast, the JATS element
     <monospace>/article/front/article-meta/history</monospace> is external metadata, and does not make sense
     to store inside an immutable Baseprint document snapshot.</p>
@@ -219,7 +218,7 @@ by independent websites using Baseprint-compatible software.</p>
             <def-item>
               <term>empty</term>
               <def>
-                <p>content of an empty XML element (e.g., <monospace>&lt;break/&gt;</monospace>)</p>
+                <p>content of an empty XML element (e.g., <monospace>&lt;br/&gt;</monospace>)</p>
               </def>
             </def-item>
             <def-item>
@@ -305,7 +304,7 @@ by independent websites using Baseprint-compatible software.</p>
     <ext-link ext-link-type="uri" xlink:href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</ext-link>.</p>
         <p><bold>Criterion #12743</bold>:
     There is only one file in the directory and its filename is <monospace>article.xml</monospace>.
-    This file is in the Baseprint JATS XML format described in this specification.</p>
+    This file is in the Baseprint XML format described in this specification.</p>
         <p><bold>Criterion #14763</bold>:
     The directory (Git tree) entry for <monospace>article.xml</monospace> has a normal file mode in Git and does not
     have the executable bit set.</p>
@@ -315,7 +314,7 @@ by independent websites using Baseprint-compatible software.</p>
         <p><bold>Criterion #15719</bold>:
     The file <monospace>article.xml</monospace> is &#8220;well-formed&#8221; per the <ext-link ext-link-type="uri" xlink:href="https://www.w3.org/TR/REC-xml/">XML 1.0</ext-link> W3C recommendation.</p>
         <p><bold>Criterion #13799</bold>:
-    There is no parsing dependency on any external XML DTD (not even a dependency on an official JATS DTD).</p>
+    There is no parsing dependency on any external XML DTD.</p>
         <p><bold>Criterion #10192</bold>:
     The XML prefix <monospace>ali</monospace> is used for any and all elements and attributes using the XML
     namespace <monospace>http://www.niso.org/schemas/ali/1.0/</monospace> by relying on the declaration</p>
@@ -398,10 +397,10 @@ by independent websites using Baseprint-compatible software.</p>
         </sec>
         <sec id="other-elements">
           <title>Other elements</title>
-          <sec id="break">
-            <title>&lt;break&gt;</title>
-            <p><bold>Criterion #12430</bold>:
-        <monospace>&lt;break&gt;</monospace> elements have no attributes and contain empty content.</p>
+          <sec id="br">
+            <title>&lt;br&gt;</title>
+            <p><bold>Criterion #18396</bold>:
+        <monospace>&lt;br&gt;</monospace> elements have no attributes and contain empty content.</p>
           </sec>
           <sec id="code">
             <title>&lt;code&gt;</title>
@@ -578,7 +577,7 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #15129</bold>:
         <monospace>&lt;title&gt;</monospace> elements have no attributes.</p>
             <p><bold>Criterion #16981</bold>:
-        <monospace>&lt;title&gt;</monospace> elements contain mixed content with each child element either <monospace>&lt;break&gt;</monospace> or from
+        <monospace>&lt;title&gt;</monospace> elements contain mixed content with each child element either <monospace>&lt;br&gt;</monospace> or from
         the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
         </sec>
@@ -898,6 +897,20 @@ by independent websites using Baseprint-compatible software.</p>
         <monospace>&lt;pub-id&gt;</monospace> elements with the attribute value <monospace>pub-id-type="pmid"</monospace> have text-only content of a
         valid PubMed Identification Number.</p>
           </sec>
+        </sec>
+      </sec>
+    </sec>
+    <sec id="changes">
+      <title>Changes</title>
+      <sec id="from-edition-1-to-2">
+        <title>From Edition 1 to 2</title>
+        <sec id="html-like-jats-elements">
+          <title>HTML-like JATS Elements</title>
+          <p>The criteria for the following JATS elements from edition 1 have been replaced with criteria
+      for their corresponding XHTML elements in edition 2.</p>
+          <preformat>JATS          XHTML
+-----------   -----
+&lt;break/&gt;      &lt;br/&gt;</preformat>
         </sec>
       </sec>
     </sec>
