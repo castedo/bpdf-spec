@@ -12,8 +12,7 @@ abstract: |
     This format is designed for self-archived scientific
     and technical documents for long-term redistribution.
     The XML component of the format is a small subset of
-    [JATS XML](https://jats.nlm.nih.gov/)[@jats]
-    and approximates XML found in [PubMed Central](https://pmc.ncbi.nlm.nih.gov/).
+    [JATS XML](https://jats.nlm.nih.gov/)[@jats] and XHTML.
     After archiving,
     document snapshots are rendered into HTML pages and PDF files
     by independent websites using Baseprint-compatible software.
@@ -83,8 +82,8 @@ edition.
 <!-- copybreak off -->
 
 
-JATS XML in a Directory
------------------------
+JATS+XHTML XML File in a Directory
+----------------------------------
 
 Technically, BpDF is not a file format
 but rather a format for a directory-like data structure.
@@ -97,11 +96,12 @@ However, for long-term public storage, BpDF data is preserved in a
 SWHID addressable directory in the [Software Heritage Archive](https://softwareheritage.org)
 (or an equivalent tree in a Git repository).
 
-At the top level of a BpDF directory, a file named `article.xml`
+At the top level of a BpDF directory, a *Baseprint XML* file named `article.xml`
 is encoded in a subset of [JATS XML](https://jats.nlm.nih.gov/)[@jats_authoring]
-and is inspired and influenced by JATS4R [@jats4r_2015; @jats4r_2019].
-Most of BpDF is a specification of this JATS XML file format,
-which will be referred to as *Baseprint JATS XML*.
+and XHTML.
+Baseprint XML is inspired and influenced by JATS4R [@jats4r_2015; @jats4r_2019].
+Most of BpDF is a specification of this XML file format,
+which is referred to as *Baseprint XML*.
 
 BpDF differs from the [Manuscript Exchange Common Approach (MECA)](https://meca.niso.org/)
 in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
@@ -110,18 +110,15 @@ and is not designed for a non-automated publishing process.
 <!-- copybreak off -->
 
 
-Restyling to JATS4R
--------------------
+### JATS-Transformable
 
-Since the Baseprint JATS XML format is a small subset of JATS and is not intended for
-real journal articles, a Baseprint JATS XML file can be restyled by adding fictitious data to
-conform to the XML schema of a JATS4R validator or the [PMC Style
+A Baseprint XML file can be transformed into a JATS XML file that conforms
+to the XML schema of a JATS4R validator or the [PMC Style
 Checker](https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/).
-
 The [source code repository for Epijats](https://gitlab.com/perm.pub/epijats) includes
-an XSLT file for such restyling. Some of the information that must be added is fictitious, such as
-journal title. This restyling is for testing and facilitating possible
-interoperability with other JATS systems.
+an XSL transformation file and script.
+Some of the information that must be added is fictitious, such as
+the journal title.
 
 <!-- copybreak off -->
 
@@ -131,16 +128,16 @@ Notable Features/Limitations
 
 ### Tables, math, images, and footnotes
 
-XML elements for tables, math, images, and footnotes are absent from this edition of Baseprint JATS.
-These important features of JATS are planned for a future edition.
+XML elements for tables, math, images, and footnotes are absent from this edition of BpDF.
+These important features are planned for a future edition.
 
 ### Citation style
 
-Citations and references in Baseprint JATS XML
+Citations and references in Baseprint XML
 are styled by viewer
 software that generates HTML pages and/or PDF files.
 Authors do not control the citation styling.
-References are in `<element-citation>` elements and not `<mixed-citation>`.
+References are in JATS `<element-citation>` elements and not JATS `<mixed-citation>`.
 Furthermore,
 there is no `publication-type` attribute.
 Depending on the bibliographic fields present inside the `<element-citation>`,
@@ -171,16 +168,16 @@ and not necessarily superscripted text.
 Metadata in a typical JATS XML document is sourced from both authors and journal
 publishers. In this most common scenario, JATS XML serves as a vehicle for multiple
 sources of metadata.
-Baseprint JATS XML differs from typical JATS XML documents in two ways:
+Baseprint XML differs from typical JATS XML documents in two ways:
 
 1. a Baseprint document is designed for self-archiving/self-publishing by authors, and
-2. Baseprint JATS XML is contained within an *immutable* document *snapshot*.
+2. Baseprint XML is contained within an *immutable* document *snapshot*.
 
 With respect to a document snapshot, some metadata is *internal*, to be included in
-Baseprint JATS XML, while other metadata is *external* and intentionally not included.
+Baseprint XML, while other metadata is *external* and intentionally not included.
 For example, the JATS element 
 `/article/front/article-meta/title-group/article-title` is internal metadata that is
-sourced from an author and thus appropriately included in Baseprint JATS XML.
+sourced from an author and thus appropriately included in Baseprint XML.
 In contrast, the JATS element
 `/article/front/article-meta/history` is external metadata, and does not make sense
 to store inside an immutable Baseprint document snapshot.
@@ -217,7 +214,7 @@ that tag, depending on the context. When an element "has a tag" it never refers 
 The contents of XML elements fall into four categories:
 
 empty
-: content of an empty XML element (e.g., `<break/>`)
+: content of an empty XML element (e.g., `<br/>`)
 
 text-only
 : content of non-whitespace text with no child elements
@@ -301,7 +298,7 @@ the hash following the `swh:1:dir:` prefix of a
 
 **Criterion #12743**:
 There is only one file in the directory and its filename is `article.xml`.
-This file is in the Baseprint JATS XML format described in this specification.
+This file is in the Baseprint XML format described in this specification.
 
 **Criterion #14763**:
 The directory (Git tree) entry for `article.xml` has a normal file mode in Git and does not
@@ -316,7 +313,7 @@ have the executable bit set.
 The file `article.xml` is "well-formed" per the [XML 1.0](https://www.w3.org/TR/REC-xml/) W3C recommendation.
 
 **Criterion #13799**:
-There is no parsing dependency on any external XML DTD (not even a dependency on an official JATS DTD).
+There is no parsing dependency on any external XML DTD.
 
 **Criterion #10192**:
 The XML prefix `ali` is used for any and all elements and attributes using the XML
@@ -426,10 +423,10 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 
 #### Other elements
 
-##### \<break>
+##### \<br>
 
-**Criterion #12430**:
-`<break>` elements have no attributes and contain empty content.
+**Criterion #18396**:
+`<br>` elements have no attributes and contain empty content.
 
 ##### \<code>
 
@@ -647,7 +644,7 @@ regular expression:
 `<title>` elements have no attributes.
 
 **Criterion #16981**:
-`<title>` elements contain mixed content with each child element either `<break>` or from
+`<title>` elements contain mixed content with each child element either `<br>` or from
 the set `{HYPERTEXT}`.
 
 <!-- copybreak off -->
@@ -1006,3 +1003,22 @@ that starts with "10." and not "http".
 **Criterion #10955**:
 `<pub-id>` elements with the attribute value `pub-id-type="pmid"` have text-only content of a
 valid PubMed Identification Number.
+
+<!-- copybreak on -->
+
+
+Changes
+-------
+
+### From Edition 1 to 2
+
+#### HTML-like JATS Elements
+
+The criteria for the following JATS elements from edition 1 have been replaced with criteria
+for their corresponding XHTML elements in edition 2.
+
+```
+JATS          XHTML
+-----------   -----
+<break/>      <br/>
+```
