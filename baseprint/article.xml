@@ -259,7 +259,6 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;bold&gt;        ~HYPER    ~HYPO
 &lt;italic&gt;      ~HYPER    ~HYPO
 &lt;monospace&gt;   ~HYPER    ~HYPO
-&lt;p&gt;           ~HTML     ~WRAPPER
 &lt;sub&gt;         ~HYPER    ~HYPO
 &lt;sup&gt;         ~HYPER    ~HYPO  ~CITE
 &lt;xref&gt;        ~DEFAULT  ~CITE</preformat>
@@ -409,27 +408,15 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #15943</bold>:
         <monospace>&lt;code&gt;</monospace> elements contain mixed content with child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
-          <sec id="phtml-and-pwrapper-paragraph">
-            <title>&lt;p&gt;~HTML and &lt;p&gt;~WRAPPER (paragraph)</title>
-            <p><monospace>&lt;p&gt;</monospace> elements in JATS may contain block elements (e.g., <monospace>&lt;list&gt;</monospace>).
-        This is inconsistent with HTML where <monospace>&lt;p&gt;</monospace> contains only &#8220;phrasing content&#8221;,
-        which does not allow block elements.
-        In Baseprint XML, the element varieties <monospace>&lt;p&gt;~HTML</monospace> and <monospace>&lt;p&gt;~WRAPPER</monospace> distinguish
-        between <monospace>&lt;p&gt;</monospace> elements like HTML, which may only contain phrasing content,
-        and <monospace>&lt;p&gt;</monospace> elements that contain block elements.</p>
+          <sec id="p">
+            <title>&lt;p&gt;</title>
+            <p>The <monospace>&lt;p&gt;</monospace> element in this edition 2 is equivalent to the <monospace>&lt;p&gt;~HTML</monospace> element variety of
+        edition 1. The element variety distinction is no longer needed because all <monospace>&lt;p&gt;~WRAPPER</monospace>
+        related criteria have been dropped.</p>
             <p><bold>Criterion #13912</bold>:
-        <monospace>&lt;p&gt;~HTML</monospace> elements have no attributes.</p>
+        <monospace>&lt;p&gt;</monospace> elements have no attributes.</p>
             <p><bold>Criterion #14762</bold>:
-        <monospace>&lt;p&gt;~HTML</monospace> elements contain mixed content with all child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
-            <p><bold>Criterion #16648</bold>:
-        <monospace>&lt;p&gt;~WRAPPER</monospace> elements have exactly one attribute, and it is <monospace>specific-use="wrapper"</monospace>.</p>
-            <p><bold>Criterion #17818</bold>:
-        <monospace>&lt;p&gt;~WRAPPER</monospace> elements contain element-only content with only child elements from the set:</p>
-            <preformat>&lt;code&gt;
-&lt;def-list&gt;
-&lt;disp-quote&gt;
-&lt;list&gt;
-&lt;preformat&gt;</preformat>
+        <monospace>&lt;p&gt;</monospace> elements contain mixed content with all child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
           <sec id="preformat">
             <title>&lt;preformat&gt;</title>
@@ -454,11 +441,8 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;list-item&gt;</title>
             <p><bold>Criterion #18148</bold>:
         <monospace>&lt;list-item&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #12420</bold>:
-        <monospace>&lt;list-item&gt;</monospace> elements contain element-only content with only child elements from the set:</p>
-            <preformat>&lt;p&gt;
-&lt;list&gt;
-&lt;def-list&gt;</preformat>
+            <p><bold>Criterion #17268</bold>:
+        <monospace>&lt;list-item&gt;</monospace> elements contain element-only content with child elements from the set <monospace>{P_LEVEL}</monospace>.</p>
           </sec>
           <sec id="def-list">
             <title>&lt;def-list&gt;</title>
@@ -485,8 +469,8 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;def&gt;</title>
             <p><bold>Criterion #14358</bold>:
         <monospace>&lt;def&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #15807</bold>:
-        <monospace>&lt;def&gt;</monospace> elements contain element-only content with only <monospace>&lt;p&gt;</monospace> child elements.</p>
+            <p><bold>Criterion #17275</bold>:
+        <monospace>&lt;def&gt;</monospace> elements contain element-only content with child elements from the set <monospace>{P_LEVEL}</monospace>.</p>
           </sec>
         </sec>
       </sec>
@@ -536,7 +520,7 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;def-list&gt;
 &lt;disp-quote&gt;
 &lt;list&gt;
-&lt;p&gt;~HTML
+&lt;p&gt;
 &lt;preformat&gt;</preformat>
           <sec id="disp-quote">
             <title>&lt;disp-quote&gt;</title>
@@ -911,6 +895,26 @@ by independent websites using Baseprint-compatible software.</p>
           <preformat>JATS          XHTML
 -----------   -----
 &lt;break/&gt;      &lt;br/&gt;</preformat>
+        </sec>
+        <sec id="list-item-and-def-child-elements">
+          <title>&lt;list-item&gt; and &lt;def&gt; child elements</title>
+          <p>Consistent with the HTML standard,
+      <monospace>&lt;list-item&gt;</monospace> and <monospace>&lt;def&gt;</monospace> child elements can be any elements from the set <monospace>{P_LEVEL}</monospace>.
+      This is an intentional non-alignment with the NISO JATS standard.
+      The reference XST transform file will transform Baseprint XML to JATS XML,
+      moving required child elements to be under non-HTML JATS <monospace>&lt;p&gt;</monospace> child elements as required by
+      NISO JATS.</p>
+        </sec>
+        <sec id="elimination-of-non-html-jats-p">
+          <title>Elimination of Non-HTML JATS &lt;p&gt;</title>
+          <p>The JATS-specific <monospace>&lt;p&gt;~WRAPPER</monospace> element variety and all related criteria have been
+      eliminated or replaced.
+      The <monospace>&lt;p&gt;</monospace> element in this edition 2 is equivalent to the <monospace>&lt;p&gt;~HTML</monospace> element variety
+      of edition 1.</p>
+          <p>The <monospace>&lt;p&gt;</monospace> element in Baseprint XML is now aligned with the HTML standard.
+      This is an intentional non-alignment with the NISO JATS standard.
+      The reference XST transform file will transform Baseprint XML to JATS XML that does
+      include non-HTML-standard JATS <monospace>&lt;p&gt;</monospace> elements required by the NISO standard.</p>
         </sec>
       </sec>
     </sec>
