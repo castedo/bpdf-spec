@@ -249,7 +249,6 @@ ELEMENT TAG   ELEMENT VARIETIES
 <bold>        ~HYPER    ~HYPO
 <italic>      ~HYPER    ~HYPO
 <monospace>   ~HYPER    ~HYPO
-<p>           ~HTML     ~WRAPPER
 <sub>         ~HYPER    ~HYPO
 <sup>         ~HYPER    ~HYPO  ~CITE
 <xref>        ~DEFAULT  ~CITE
@@ -436,34 +435,18 @@ Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if presen
 **Criterion #15943**:
 `<code>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
-##### \<p>~HTML and \<p>~WRAPPER (paragraph)
+##### \<p>
 
-`<p>` elements in JATS may contain block elements (e.g., `<list>`).
-This is inconsistent with HTML where `<p>` contains only "phrasing content",
-which does not allow block elements.
-In Baseprint XML, the element varieties `<p>~HTML` and `<p>~WRAPPER` distinguish
-between `<p>` elements like HTML, which may only contain <italic>phrasing content</italic>,
-and `<p>` elements that contain block elements.
+The `<p>` element in this edition 2 is equivalent to the `<p>~HTML` element variety of
+edition 1. The element variety distinction is no longer needed because all `<p>~WRAPPER`
+related criteria have been dropped.
 
 **Criterion #13912**:
-`<p>~HTML` elements have no attributes.
+`<p>` elements have no attributes.
 
 **Criterion #14762**:
-`<p>~HTML` elements contain mixed content with all child elements from the set `{HYPERTEXT}`.
+`<p>` elements contain mixed content with all child elements from the set `{HYPERTEXT}`.
 
-**Criterion #16648**:
-`<p>~WRAPPER` elements have exactly one attribute, and it is `specific-use="wrapper"`.
-
-**Criterion #17818**:
-`<p>~WRAPPER` elements contain element-only content with only child elements from the set:
-
-```
-<code>
-<def-list>
-<disp-quote>
-<list>
-<preformat>
-```
 
 ##### \<preformat>
 
@@ -494,13 +477,8 @@ and `<p>` elements that contain block elements.
 **Criterion #18148**:
 `<list-item>` elements have no attributes.
 
-**Criterion #12420**:
-`<list-item>` elements contain element-only content with only child elements from the set:
-```
-<p>
-<list>
-<def-list>
-```
+**Criterion #17268**:
+`<list-item>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
 
 ##### \<def-list>
 
@@ -531,8 +509,8 @@ and `<p>` elements that contain block elements.
 **Criterion #14358**:
 `<def>` elements have no attributes.
 
-**Criterion #15807**:
-`<def>` elements contain element-only content with only `<p>` child elements.
+**Criterion #17275**:
+`<def>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
 
 <!-- copybreak off -->
 
@@ -593,7 +571,7 @@ expression:
 <def-list>
 <disp-quote>
 <list>
-<p>~HTML
+<p>
 <preformat>
 ```
 
@@ -1004,7 +982,7 @@ that starts with "10." and not "http".
 `<pub-id>` elements with the attribute value `pub-id-type="pmid"` have text-only content of a
 valid PubMed Identification Number.
 
-<!-- copybreak on -->
+<!-- copybreak off -->
 
 
 Changes
@@ -1022,3 +1000,24 @@ JATS          XHTML
 -----------   -----
 <break/>      <br/>
 ```
+
+#### \<list-item> and \<def> child elements
+
+Consistent with the HTML standard,
+`<list-item>` and `<def>` child elements can be any elements from the set `{P_LEVEL}`.
+This is an intentional non-alignment with the NISO JATS standard.
+The reference XST transform file will transform Baseprint XML to JATS XML,
+moving required child elements to be under non-HTML JATS `<p>` child elements as required by
+NISO JATS.
+
+#### Elimination of Non-HTML JATS \<p>
+
+The JATS-specific `<p>~WRAPPER` element variety and all related criteria have been
+eliminated or replaced.
+The `<p>` element in this edition 2 is equivalent to the `<p>~HTML` element variety
+of edition 1.
+
+The `<p>` element in Baseprint XML is now aligned with the HTML standard.
+This is an intentional non-alignment with the NISO JATS standard.
+The reference XST transform file will transform Baseprint XML to JATS XML that does
+include non-HTML-standard JATS `<p>` elements required by the NISO standard.
