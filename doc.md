@@ -461,24 +461,21 @@ related criteria have been dropped.
 
 #### List elements
 
-##### \<list>
+##### \<ol> & \<ul>
 
-**Criterion #14304**:
-`<list>` elements have no attributes or only an attribute of `list-type=`.
+**Criterion #13698**:
+`<ol>` and `<ul>` elements have no attributes.
 
-**Criterion #17495**:
-`<list>` element attributes of `list-type=` have the value `"bullet"` or `"order"`.
+**Criterion #17842**:
+`<ol>` and `<ul>` elements contain element-only content with only `<li>` child elements.
 
-**Criterion #13090**:
-`<list>` elements contain element-only content with only `<list-item>` child elements.
+##### \<li>
 
-##### \<list-item>
+**Criterion #18401**:
+`<li>` elements have no attributes.
 
-**Criterion #18148**:
-`<list-item>` elements have no attributes.
-
-**Criterion #17268**:
-`<list-item>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
+**Criterion #13486**:
+`<li>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
 
 ##### \<dl>
 
@@ -568,11 +565,12 @@ expression:
 `{P_LEVEL}` denotes the set of elements:
 ```
 <code>
-<dl>
 <disp-quote>
-<list>
+<dl>
+<ol>
 <p>
 <preformat>
+<ul>
 ```
 
 ##### \<disp-quote>
@@ -1002,13 +1000,14 @@ JATS          XHTML
 <def-item>    <div> (under <dl>)
 <def-list>    <dl>
 <def>         <dd>
+<list>        <ul> & <ol>
 <term>        <dt>
 ```
 
-#### \<list-item> and \<dd> child elements
+#### \<li> and \<dd> child elements
 
 Consistent with the HTML standard,
-`<list-item>` and `<dd>` child elements can be any elements from the set `{P_LEVEL}`.
+`<li>` and `<dd>` child elements can be any elements from the set `{P_LEVEL}`.
 This is an intentional non-alignment with the NISO JATS standard.
 The reference XST transform file will transform Baseprint XML to JATS XML,
 moving required child elements to be under non-HTML JATS `<p>` child elements as required by
