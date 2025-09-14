@@ -248,7 +248,7 @@ by independent websites using Baseprint-compatible software.</p>
           <p>Some XML elements with the same tag have differing semantics depending on their location
       within an XML document tree.
       For this reason, some criteria in this specification are specified in terms of <italic>element varieties</italic>.
-      Specifically, the elements <monospace>&lt;bold&gt;</monospace>, <monospace>&lt;italic&gt;</monospace>, <monospace>&lt;monospace&gt;</monospace>, <monospace>&lt;p&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, <monospace>&lt;sup&gt;</monospace>, and <monospace>&lt;xref&gt;</monospace>
+      Specifically, the elements <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;tt&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, <monospace>&lt;sup&gt;</monospace>, and <monospace>&lt;xref&gt;</monospace>
       have multiple <italic>varieties</italic>.
       For XML documents that satisfy the criteria of this specification, these elements will
       unambiguously belong to exactly one of their varieties.</p>
@@ -256,17 +256,16 @@ by independent websites using Baseprint-compatible software.</p>
       based on the criteria of this specification.</p>
           <preformat>ELEMENT TAG   ELEMENT VARIETIES
 -----------   -----------------
-&lt;bold&gt;        ~HYPER    ~HYPO
-&lt;italic&gt;      ~HYPER    ~HYPO
-&lt;monospace&gt;   ~HYPER    ~HYPO
+&lt;b&gt;           ~HYPER    ~HYPO
+&lt;i&gt;           ~HYPER    ~HYPO
+&lt;tt&gt;          ~HYPER    ~HYPO
 &lt;sub&gt;         ~HYPER    ~HYPO
 &lt;sup&gt;         ~HYPER    ~HYPO  ~CITE
 &lt;xref&gt;        ~DEFAULT  ~CITE</preformat>
           <p>The notation <monospace>&lt;foo&gt;~BAR</monospace> is used to denote a <monospace>&lt;foo&gt;</monospace> element of the <monospace>~BAR</monospace> variety.
       The notation of <monospace>&lt;foo&gt;</monospace> without any variety means a <monospace>&lt;foo&gt;</monospace> element of <italic>any</italic> variety.</p>
-          <p>In theory, element varieties could be made unnecessary by using different XML tags.
-      But due to backward compatibility with archived JATS XML files, changing XML tags is
-      not an option.</p>
+          <p>Element varieties could be made unnecessary by using different XML tag names,
+      but they would be non-standard tag names not found in HTML or JATS XML.</p>
           <p>As an example, consider the <monospace>&lt;sup&gt;</monospace> elements of the following JATS paragraph:</p>
           <preformat>&lt;p&gt;
     &lt;sup&gt;
@@ -337,26 +336,26 @@ by independent websites using Baseprint-compatible software.</p>
           <title>Hypertext</title>
           <p><bold>Definition</bold>:
       The element set <monospace>{HYPERTEXT}</monospace> consists of the elements:</p>
-          <preformat>&lt;bold&gt;
+          <preformat>&lt;b&gt;
 &lt;ext-link&gt;
-&lt;italic&gt;
-&lt;monospace&gt;
+&lt;i&gt;
+&lt;tt&gt;
 &lt;sub&gt;
 &lt;sup&gt;
 &lt;xref&gt;~DEFAULT</preformat>
-          <p><bold>Criterion #19521</bold>:
+          <p><bold>Criterion #13724</bold>:
       The following elements contain mixed content with all child elements from the set
       <monospace>{HYPERTEXT}</monospace>:</p>
-          <preformat>&lt;bold&gt;~HYPER
-&lt;italic&gt;~HYPER
-&lt;monospace&gt;~HYPER
+          <preformat>&lt;b&gt;~HYPER
+&lt;i&gt;~HYPER
+&lt;tt&gt;~HYPER
 &lt;sub&gt;~HYPER
 &lt;sup&gt;~HYPER</preformat>
-          <p><bold>Criterion #18455</bold>:
+          <p><bold>Criterion #19901</bold>:
       The following elements do not have any attributes:</p>
-          <preformat>&lt;bold&gt;
-&lt;italic&gt;
-&lt;monospace&gt;
+          <preformat>&lt;b&gt;
+&lt;i&gt;
+&lt;tt&gt;
 &lt;sub&gt;
 &lt;sup&gt;</preformat>
         </sec>
@@ -364,12 +363,12 @@ by independent websites using Baseprint-compatible software.</p>
           <title>Hypotext</title>
           <p><bold>Definition</bold>:
       The element set <monospace>{HYPOTEXT}</monospace> consists of the elements:</p>
-          <preformat>&lt;bold&gt;~HYPO
-&lt;italic&gt;~HYPO
-&lt;monospace&gt;~HYPO
+          <preformat>&lt;b&gt;~HYPO
+&lt;i&gt;~HYPO
+&lt;tt&gt;~HYPO
 &lt;sub&gt;~HYPO
 &lt;sup&gt;~HYPO</preformat>
-          <p><bold>Criterion #16382</bold>:
+          <p><bold>Criterion #10387</bold>:
       Elements from the set <monospace>{HYPOTEXT}</monospace> contain mixed content with all child elements from the set
       <monospace>{HYPOTEXT}</monospace>.</p>
         </sec>
@@ -418,12 +417,12 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #14762</bold>:
         <monospace>&lt;p&gt;</monospace> elements contain mixed content with all child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
-          <sec id="preformat">
-            <title>&lt;preformat&gt;</title>
-            <p><bold>Criterion #10279</bold>:
-        <monospace>&lt;preformat&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #16819</bold>:
-        <monospace>&lt;preformat&gt;</monospace> elements contain mixed content with child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
+          <sec id="pre">
+            <title>&lt;pre&gt;</title>
+            <p><bold>Criterion #10062</bold>:
+        <monospace>&lt;pre&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #18825</bold>:
+        <monospace>&lt;pre&gt;</monospace> elements contain mixed content with child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
         </sec>
         <sec id="list-elements">
@@ -515,18 +514,18 @@ by independent websites using Baseprint-compatible software.</p>
           <p><bold>Definition</bold>:
       <monospace>{P_LEVEL}</monospace> denotes the set of elements:</p>
           <preformat>&lt;code&gt;
-&lt;disp-quote&gt;
+&lt;blockquote&gt;
 &lt;dl&gt;
 &lt;ol&gt;
 &lt;p&gt;
-&lt;preformat&gt;
+&lt;pre&gt;
 &lt;ul&gt;</preformat>
-          <sec id="disp-quote">
-            <title>&lt;disp-quote&gt;</title>
-            <p><bold>Criterion #18135</bold>:
-        <monospace>&lt;disp-quote&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #18442</bold>:
-        <monospace>&lt;disp-quote&gt;</monospace> elements contain element-only content with only <monospace>&lt;p&gt;</monospace> child elements.</p>
+          <sec id="blockquote">
+            <title>&lt;blockquote&gt;</title>
+            <p><bold>Criterion #13925</bold>:
+        <monospace>&lt;blockquote&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #13249</bold>:
+        <monospace>&lt;blockquote&gt;</monospace> elements contain element-only content with only <monospace>&lt;p&gt;</monospace> child elements.</p>
           </sec>
           <sec id="abstract">
             <title>&lt;abstract&gt;</title>
@@ -893,11 +892,16 @@ by independent websites using Baseprint-compatible software.</p>
       for their corresponding XHTML elements in edition 2.</p>
           <preformat>JATS          XHTML
 -----------   -----
+&lt;bold&gt;        &lt;b&gt;
 &lt;break/&gt;      &lt;br/&gt;
 &lt;def-item&gt;    &lt;div&gt; (under &lt;dl&gt;)
 &lt;def-list&gt;    &lt;dl&gt;
 &lt;def&gt;         &lt;dd&gt;
+&lt;disp-quote&gt;  &lt;blockquote&gt;
+&lt;italic&gt;      &lt;i&gt;
 &lt;list&gt;        &lt;ul&gt; &amp; &lt;ol&gt;
+&lt;monospace&gt;   &lt;tt&gt;
+&lt;preformat&gt;   &lt;pre&gt;
 &lt;term&gt;        &lt;dt&gt;</preformat>
         </sec>
         <sec id="li-and-dd-child-elements">
@@ -905,7 +909,7 @@ by independent websites using Baseprint-compatible software.</p>
           <p>Consistent with the HTML standard,
       <monospace>&lt;li&gt;</monospace> and <monospace>&lt;dd&gt;</monospace> child elements can be any elements from the set <monospace>{P_LEVEL}</monospace>.
       This is an intentional non-alignment with the NISO JATS standard.
-      The reference XST transform file will transform Baseprint XML to JATS XML,
+      The reference XSL transform file will transform Baseprint XML to JATS XML,
       moving required child elements to be under non-HTML JATS <monospace>&lt;p&gt;</monospace> child elements as required by
       NISO JATS.</p>
         </sec>
@@ -917,7 +921,7 @@ by independent websites using Baseprint-compatible software.</p>
       of edition 1.</p>
           <p>The <monospace>&lt;p&gt;</monospace> element in Baseprint XML is now aligned with the HTML standard.
       This is an intentional non-alignment with the NISO JATS standard.
-      The reference XST transform file will transform Baseprint XML to JATS XML that does
+      The reference XSL transform file will transform Baseprint XML to JATS XML that does
       include non-HTML-standard JATS <monospace>&lt;p&gt;</monospace> elements required by the NISO standard.</p>
         </sec>
       </sec>
