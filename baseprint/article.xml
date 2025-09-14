@@ -444,33 +444,33 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #17268</bold>:
         <monospace>&lt;list-item&gt;</monospace> elements contain element-only content with child elements from the set <monospace>{P_LEVEL}</monospace>.</p>
           </sec>
-          <sec id="def-list">
-            <title>&lt;def-list&gt;</title>
-            <p><bold>Criterion #18543</bold>:
-        <monospace>&lt;def-list&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #14530</bold>:
-        <monospace>&lt;def-list&gt;</monospace> elements contain element-only content with only <monospace>&lt;def-item&gt;</monospace> child elements.</p>
+          <sec id="dl">
+            <title>&lt;dl&gt;</title>
+            <p><bold>Criterion #16653</bold>:
+        <monospace>&lt;dl&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #19568</bold>:
+        <monospace>&lt;dl&gt;</monospace> elements contain element-only content with only <monospace>&lt;div&gt;</monospace> child elements.</p>
           </sec>
-          <sec id="def-item">
-            <title>&lt;def-item&gt;</title>
-            <p><bold>Criterion #13583</bold>:
-        <monospace>&lt;def-item&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #10045</bold>:
-        <monospace>&lt;def-item&gt;</monospace> elements contain element-only content with child elements of either <monospace>&lt;term&gt;</monospace> or <monospace>&lt;def&gt;</monospace>.</p>
+          <sec id="div-child-element-of-dl">
+            <title>&lt;div&gt; child element of &lt;dl&gt;</title>
+            <p><bold>Criterion #13056</bold>:
+        <monospace>&lt;div&gt;</monospace> child elements of <monospace>&lt;dl&gt;</monospace> have no attributes.</p>
+            <p><bold>Criterion #11744</bold>:
+        <monospace>&lt;div&gt;</monospace> child elements of <monospace>&lt;dl&gt;</monospace> contain element-only content with child elements of either <monospace>&lt;dt&gt;</monospace> or <monospace>&lt;dd&gt;</monospace>.</p>
           </sec>
-          <sec id="term">
-            <title>&lt;term&gt;</title>
-            <p><bold>Criterion #11829</bold>:
-        <monospace>&lt;term&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #13735</bold>:
-        <monospace>&lt;term&gt;</monospace> elements contain mixed content with child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
+          <sec id="dt">
+            <title>&lt;dt&gt;</title>
+            <p><bold>Criterion #15106</bold>:
+        <monospace>&lt;dt&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #17876</bold>:
+        <monospace>&lt;dt&gt;</monospace> elements contain mixed content with child elements from the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
-          <sec id="def">
-            <title>&lt;def&gt;</title>
-            <p><bold>Criterion #14358</bold>:
-        <monospace>&lt;def&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #17275</bold>:
-        <monospace>&lt;def&gt;</monospace> elements contain element-only content with child elements from the set <monospace>{P_LEVEL}</monospace>.</p>
+          <sec id="dd">
+            <title>&lt;dd&gt;</title>
+            <p><bold>Criterion #18382</bold>:
+        <monospace>&lt;dd&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #13562</bold>:
+        <monospace>&lt;dd&gt;</monospace> elements contain element-only content with child elements from the set <monospace>{P_LEVEL}</monospace>.</p>
           </sec>
         </sec>
       </sec>
@@ -517,7 +517,7 @@ by independent websites using Baseprint-compatible software.</p>
           <p><bold>Definition</bold>:
       <monospace>{P_LEVEL}</monospace> denotes the set of elements:</p>
           <preformat>&lt;code&gt;
-&lt;def-list&gt;
+&lt;dl&gt;
 &lt;disp-quote&gt;
 &lt;list&gt;
 &lt;p&gt;
@@ -533,7 +533,7 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;abstract&gt;</title>
             <p><bold>Criterion #14631</bold>:
         <monospace>&lt;abstract&gt;</monospace> has no attributes.</p>
-            <p><bold>Criterion #10926</bold>:
+            <p><bold>Criterion #17433</bold>:
         <monospace>&lt;abstract&gt;</monospace> contains element-only content with a sequence of child elements matching the
         regular expression:</p>
             <p><monospace>({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
@@ -542,7 +542,7 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;body&gt;</title>
             <p><bold>Criterion #19029</bold>:
         <monospace>&lt;body&gt;</monospace> has no attributes.</p>
-            <p><bold>Criterion #18521</bold>:
+            <p><bold>Criterion #11247</bold>:
         <monospace>&lt;body&gt;</monospace> contains element-only content with a sequence of child elements matching the regular
         expression:</p>
             <p><monospace>({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
@@ -894,12 +894,16 @@ by independent websites using Baseprint-compatible software.</p>
       for their corresponding XHTML elements in edition 2.</p>
           <preformat>JATS          XHTML
 -----------   -----
-&lt;break/&gt;      &lt;br/&gt;</preformat>
+&lt;break/&gt;      &lt;br/&gt;
+&lt;def-item&gt;    &lt;div&gt; (under &lt;dl&gt;)
+&lt;def-list&gt;    &lt;dl&gt;
+&lt;def&gt;         &lt;dd&gt;
+&lt;term&gt;        &lt;dt&gt;</preformat>
         </sec>
-        <sec id="list-item-and-def-child-elements">
-          <title>&lt;list-item&gt; and &lt;def&gt; child elements</title>
+        <sec id="list-item-and-dd-child-elements">
+          <title>&lt;list-item&gt; and &lt;dd&gt; child elements</title>
           <p>Consistent with the HTML standard,
-      <monospace>&lt;list-item&gt;</monospace> and <monospace>&lt;def&gt;</monospace> child elements can be any elements from the set <monospace>{P_LEVEL}</monospace>.
+      <monospace>&lt;list-item&gt;</monospace> and <monospace>&lt;dd&gt;</monospace> child elements can be any elements from the set <monospace>{P_LEVEL}</monospace>.
       This is an intentional non-alignment with the NISO JATS standard.
       The reference XST transform file will transform Baseprint XML to JATS XML,
       moving required child elements to be under non-HTML JATS <monospace>&lt;p&gt;</monospace> child elements as required by

@@ -480,37 +480,37 @@ related criteria have been dropped.
 **Criterion #17268**:
 `<list-item>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
 
-##### \<def-list>
+##### \<dl>
 
-**Criterion #18543**:
-`<def-list>` elements have no attributes.
+**Criterion #16653**:
+`<dl>` elements have no attributes.
 
-**Criterion #14530**:
-`<def-list>` elements contain element-only content with only `<def-item>` child elements.
+**Criterion #19568**:
+`<dl>` elements contain element-only content with only `<div>` child elements.
 
-##### \<def-item>
+##### \<div> child element of \<dl>
 
-**Criterion #13583**:
-`<def-item>` elements have no attributes.
+**Criterion #13056**:
+`<div>` child elements of `<dl>` have no attributes.
 
-**Criterion #10045**:
-`<def-item>` elements contain element-only content with child elements of either `<term>` or `<def>`.
+**Criterion #11744**:
+`<div>` child elements of `<dl>` contain element-only content with child elements of either `<dt>` or `<dd>`.
 
-##### \<term>
+##### \<dt>
 
-**Criterion #11829**:
-`<term>` elements have no attributes.
+**Criterion #15106**:
+`<dt>` elements have no attributes.
 
-**Criterion #13735**:
-`<term>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
+**Criterion #17876**:
+`<dt>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
-##### \<def>
+##### \<dd>
 
-**Criterion #14358**:
-`<def>` elements have no attributes.
+**Criterion #18382**:
+`<dd>` elements have no attributes.
 
-**Criterion #17275**:
-`<def>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
+**Criterion #13562**:
+`<dd>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
 
 <!-- copybreak off -->
 
@@ -568,7 +568,7 @@ expression:
 `{P_LEVEL}` denotes the set of elements:
 ```
 <code>
-<def-list>
+<dl>
 <disp-quote>
 <list>
 <p>
@@ -588,7 +588,7 @@ expression:
 **Criterion #14631**:
 `<abstract>` has no attributes.
 
-**Criterion #10926**:
+**Criterion #17433**:
 `<abstract>` contains element-only content with a sequence of child elements matching the
 regular expression:
 
@@ -599,7 +599,7 @@ regular expression:
 **Criterion #19029**:
 `<body>` has no attributes.
 
-**Criterion #18521**:
+**Criterion #11247**:
 `<body>` contains element-only content with a sequence of child elements matching the regular
 expression:
 
@@ -999,12 +999,16 @@ for their corresponding XHTML elements in edition 2.
 JATS          XHTML
 -----------   -----
 <break/>      <br/>
+<def-item>    <div> (under <dl>)
+<def-list>    <dl>
+<def>         <dd>
+<term>        <dt>
 ```
 
-#### \<list-item> and \<def> child elements
+#### \<list-item> and \<dd> child elements
 
 Consistent with the HTML standard,
-`<list-item>` and `<def>` child elements can be any elements from the set `{P_LEVEL}`.
+`<list-item>` and `<dd>` child elements can be any elements from the set `{P_LEVEL}`.
 This is an intentional non-alignment with the NISO JATS standard.
 The reference XST transform file will transform Baseprint XML to JATS XML,
 moving required child elements to be under non-HTML JATS `<p>` child elements as required by
