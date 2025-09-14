@@ -235,7 +235,7 @@ Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
 Some XML elements with the same tag have differing semantics depending on their location
 within an XML document tree.
 For this reason, some criteria in this specification are specified in terms of *element varieties*.
-Specifically, the elements `<bold>`, `<italic>`, `<monospace>`, `<p>`, `<sub>`, `<sup>`, and `<xref>`
+Specifically, the elements `<b>`, `<i>`, `<tt>`, `<sub>`, `<sup>`, and `<xref>`
 have multiple *varieties*.
 For XML documents that satisfy the criteria of this specification, these elements will
 unambiguously belong to exactly one of their varieties.
@@ -246,9 +246,9 @@ based on the criteria of this specification.
 ```
 ELEMENT TAG   ELEMENT VARIETIES
 -----------   -----------------
-<bold>        ~HYPER    ~HYPO
-<italic>      ~HYPER    ~HYPO
-<monospace>   ~HYPER    ~HYPO
+<b>           ~HYPER    ~HYPO
+<i>           ~HYPER    ~HYPO
+<tt>          ~HYPER    ~HYPO
 <sub>         ~HYPER    ~HYPO
 <sup>         ~HYPER    ~HYPO  ~CITE
 <xref>        ~DEFAULT  ~CITE
@@ -257,9 +257,8 @@ ELEMENT TAG   ELEMENT VARIETIES
 The notation `<foo>~BAR` is used to denote a `<foo>` element of the `~BAR` variety.
 The notation of `<foo>` without any variety means a `<foo>` element of *any* variety.
 
-In theory, element varieties could be made unnecessary by using different XML tags.
-But due to backward compatibility with archived JATS XML files, changing XML tags is
-not an option.
+Element varieties could be made unnecessary by using different XML tag names,
+but they would be non-standard tag names not found in HTML or JATS XML.
 
 As an example, consider the `<sup>` elements of the following JATS paragraph:
 ```
@@ -345,32 +344,32 @@ by NISO JATS [@jats_authoring].
 **Definition**:
 The element set `{HYPERTEXT}` consists of the elements:
 ```
-<bold>
+<b>
 <ext-link>
-<italic>
-<monospace>
+<i>
+<tt>
 <sub>
 <sup>
 <xref>~DEFAULT
 ```
 
-**Criterion #19521**:
+**Criterion #13724**:
 The following elements contain mixed content with all child elements from the set
 `{HYPERTEXT}`:
 ```
-<bold>~HYPER
-<italic>~HYPER
-<monospace>~HYPER
+<b>~HYPER
+<i>~HYPER
+<tt>~HYPER
 <sub>~HYPER
 <sup>~HYPER
 ```
 
-**Criterion #18455**:
+**Criterion #19901**:
 The following elements do not have any attributes:
 ```
-<bold>
-<italic>
-<monospace>
+<b>
+<i>
+<tt>
 <sub>
 <sup>
 ```
@@ -381,14 +380,14 @@ The following elements do not have any attributes:
 **Definition**:
 The element set `{HYPOTEXT}` consists of the elements:
 ```
-<bold>~HYPO
-<italic>~HYPO
-<monospace>~HYPO
+<b>~HYPO
+<i>~HYPO
+<tt>~HYPO
 <sub>~HYPO
 <sup>~HYPO
 ```
 
-**Criterion #16382**:
+**Criterion #10387**:
 Elements from the set `{HYPOTEXT}` contain mixed content with all child elements from the set
 `{HYPOTEXT}`.
 
@@ -448,13 +447,13 @@ related criteria have been dropped.
 `<p>` elements contain mixed content with all child elements from the set `{HYPERTEXT}`.
 
 
-##### \<preformat>
+##### \<pre>
 
-**Criterion #10279**:
-`<preformat>` elements have no attributes.
+**Criterion #10062**:
+`<pre>` elements have no attributes.
 
-**Criterion #16819**:
-`<preformat>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
+**Criterion #18825**:
+`<pre>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
 <!-- copybreak off -->
 
@@ -565,21 +564,21 @@ expression:
 `{P_LEVEL}` denotes the set of elements:
 ```
 <code>
-<disp-quote>
+<blockquote>
 <dl>
 <ol>
 <p>
-<preformat>
+<pre>
 <ul>
 ```
 
-##### \<disp-quote>
+##### \<blockquote>
 
-**Criterion #18135**:
-`<disp-quote>` elements have no attributes.
+**Criterion #13925**:
+`<blockquote>` elements have no attributes.
 
-**Criterion #18442**:
-`<disp-quote>` elements contain element-only content with only `<p>` child elements.
+**Criterion #13249**:
+`<blockquote>` elements contain element-only content with only `<p>` child elements.
 
 ##### \<abstract>
 
@@ -996,11 +995,16 @@ for their corresponding XHTML elements in edition 2.
 ```
 JATS          XHTML
 -----------   -----
+<bold>        <b>
 <break/>      <br/>
 <def-item>    <div> (under <dl>)
 <def-list>    <dl>
 <def>         <dd>
+<disp-quote>  <blockquote>
+<italic>      <i>
 <list>        <ul> & <ol>
+<monospace>   <tt>
+<preformat>   <pre>
 <term>        <dt>
 ```
 
@@ -1009,7 +1013,7 @@ JATS          XHTML
 Consistent with the HTML standard,
 `<li>` and `<dd>` child elements can be any elements from the set `{P_LEVEL}`.
 This is an intentional non-alignment with the NISO JATS standard.
-The reference XST transform file will transform Baseprint XML to JATS XML,
+The reference XSL transform file will transform Baseprint XML to JATS XML,
 moving required child elements to be under non-HTML JATS `<p>` child elements as required by
 NISO JATS.
 
@@ -1022,5 +1026,5 @@ of edition 1.
 
 The `<p>` element in Baseprint XML is now aligned with the HTML standard.
 This is an intentional non-alignment with the NISO JATS standard.
-The reference XST transform file will transform Baseprint XML to JATS XML that does
+The reference XSL transform file will transform Baseprint XML to JATS XML that does
 include non-HTML-standard JATS `<p>` elements required by the NISO standard.
