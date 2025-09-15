@@ -151,12 +151,10 @@ or rely on services like [Crossref](https://www.crossref.org/)
 to get additional reference metadata
 absent from the document snapshot data.
 
-### Citation elements
+### Citation tuple elements
 
-Another notable restriction
-is `<xref ref-type="bibr">` XML elements
-being inside top-level `<sup>` elements,
-which are interpreted to have the semantic meaning
+`<sup>` elements containing `<xref ref-type="bibr">` elements
+are interpreted to have the semantic meaning
 of a group of citations
 to be styled together (e.g., `[7,11]`),
 and not necessarily superscripted text.
@@ -235,7 +233,7 @@ Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
 Some XML elements with the same tag have differing semantics depending on their location
 within an XML document tree.
 For this reason, some criteria in this specification are specified in terms of *element varieties*.
-Specifically, the elements `<b>`, `<i>`, `<tt>`, `<sub>`, `<sup>`, and `<xref>`
+Specifically, the elements `<b>`, `<i>`, `<tt>`, `<sub>`, and `<sup>`
 have multiple *varieties*.
 For XML documents that satisfy the criteria of this specification, these elements will
 unambiguously belong to exactly one of their varieties.
@@ -246,12 +244,11 @@ based on the criteria of this specification.
 ```
 ELEMENT TAG   ELEMENT VARIETIES
 -----------   -----------------
-<b>           ~HYPER    ~HYPO
-<i>           ~HYPER    ~HYPO
-<tt>          ~HYPER    ~HYPO
-<sub>         ~HYPER    ~HYPO
-<sup>         ~HYPER    ~HYPO  ~CITE
-<xref>        ~DEFAULT  ~CITE
+<b>           ~HYPER  ~HYPO
+<i>           ~HYPER  ~HYPO
+<tt>          ~HYPER  ~HYPO
+<sub>         ~HYPER  ~HYPO
+<sup>         ~HYPER  ~HYPO  ~CITE
 ```
 
 The notation `<foo>~BAR` is used to denote a `<foo>` element of the `~BAR` variety.
@@ -260,13 +257,13 @@ The notation of `<foo>` without any variety means a `<foo>` element of *any* var
 Element varieties could be made unnecessary by using different XML tag names,
 but they would be non-standard tag names not found in HTML or JATS XML.
 
-As an example, consider the `<sup>` elements of the following JATS paragraph:
+As an example, consider the `<sup>` elements of the following paragraph:
 ```
 <p>
     <sup>
-        <xref rid="definition-e">
+        <a href="#definition-e">
             e<sup>x</sup>
-        </xref>
+        </a>
     </sup>
     <sup>
          <xref rid="r1" rid-type="bibr">1</xref>
@@ -324,33 +321,22 @@ xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
 by NISO JATS [@jats_authoring].
 
 
-**Criterion #11855**:
-The XML prefix `xlink` is used for any and all elements and attributes using the XML
-namespace `http://www.w3.org/1999/xlink` by relying on the declaration
-```
-xmlns:xlink="http://www.w3.org/1999/xlink"
-```
-*Note:* A [similar restriction is specified](
-https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-xlink.html)
-by NISO JATS [@jats_authoring].
-
 <!-- copybreak off -->
 
 
-### HTML-like content
+### HTML content
 
 #### Hypertext
 
 **Definition**:
 The element set `{HYPERTEXT}` consists of the elements:
 ```
+<a>
 <b>
-<ext-link>
 <i>
 <tt>
 <sub>
 <sup>
-<xref>~DEFAULT
 ```
 
 **Criterion #13724**:
@@ -394,32 +380,26 @@ Elements from the set `{HYPOTEXT}` contain mixed content with all child elements
 <!-- copybreak off -->
 
 
-#### Hyperlinking elements
-
-##### \<ext-link>
-
-**Criterion #13099**:
-`<ext-link>` has an `xlink:href=` attribute with a URL as an attribute value.
-
-**Criterion #14614**:
-Every `<ext-link>` attribute `ext-link-type=` takes the value `"uri"` (if present).
-
-**Criterion #17431**:
-`<ext-link>` has no attributes other than `xlink:href=` and (optional) `ext-link-type=`.
-
-**Criterion #19236**:
-`<ext-link>` contains mixed content with all child elements from the set `{HYPOTEXT}`.
-
-##### \<xref>~DEFAULT
-
-**Criterion #17683**:
-`<xref>~DEFAULT` elements have exactly one attribute, and it is `rid=`.
-
-**Criterion #12342**:
-`<xref>~DEFAULT` contains mixed content with all child elements from the set `{HYPOTEXT}`.
-
-
 #### Other elements
+
+##### \<a>
+
+**Criterion #13984**:
+`<a>` elements have an `href=` attribute.
+
+**Criterion #12109**:
+`<a>` has no attributes other than `href=` and (optional) `rel=`.
+
+**Criterion #19871**:
+`<a>` contains mixed content with all child elements from the set `{HYPOTEXT}`.
+
+**Criterion #17248**:
+`<a>` elements without an `rel=` attribute have attribute `href=` equal to a '#' (hash
+symbol) followed by an identifier of the document (value `id=` attribute of another element).
+
+**Criterion #11997**:
+`<a>` elements with attribute `rel="external"` have attribute `href=` equal to an
+`https:` or `http:` URL.
 
 ##### \<br>
 
@@ -784,20 +764,20 @@ value:
 
 #### Citation
 
-##### \<xref>~CITE
+##### \<xref>
 
 **Criterion #14740**:
-`<xref>~CITE` elements have exactly two attributes: `rid=` and `ref-type=`.
+`<xref>` elements have exactly two attributes: `rid=` and `ref-type=`.
 
 **Criterion #11027**:
-`<xref>~CITE` elements have an attribute of `ref-type=` with the value `bibr`.
+`<xref>` elements have an attribute of `ref-type=` with the value `bibr`.
 
 **Criterion #12086**:
-`<xref>~CITE` elements have a value for `rid=` that
+`<xref>` elements have a value for `rid=` that
 matches the value of the attribute `id=` of a `<ref>` element.
 
 **Criterion #10484**:
-`<xref>~CITE` elements contain text-only content of
+`<xref>` elements contain text-only content of
 a single integer (surrounded by optional whitespace).
 The integer corresponds to the ordered position in `<ref-list>` of the `<ref>` element
 with an `id=` attribute value matching the `rid=` attribute value of the `<xref>` element.
@@ -805,7 +785,7 @@ with an `id=` attribute value matching the `rid=` attribute value of the `<xref>
 ##### \<sup>~CITE
 
 **Criterion #14278**:
-`<sup>~CITE` elements only have child elements of `<xref>~CITE`.
+`<sup>~CITE` elements only have child elements of `<xref>`.
 
 **Criterion #12352**:
 `<sup>~CITE` elements have mixed content with text-only content of:
@@ -1001,11 +981,13 @@ JATS          XHTML
 <def-list>    <dl>
 <def>         <dd>
 <disp-quote>  <blockquote>
+<ext-link>    <a ref="external">
 <italic>      <i>
 <list>        <ul> & <ol>
 <monospace>   <tt>
 <preformat>   <pre>
 <term>        <dt>
+<xref>        <a>   (only if xref ref-type is not "bibr")
 ```
 
 #### \<li> and \<dd> child elements
@@ -1028,3 +1010,8 @@ The `<p>` element in Baseprint XML is now aligned with the HTML standard.
 This is an intentional non-alignment with the NISO JATS standard.
 The reference XSL transform file will transform Baseprint XML to JATS XML that does
 include non-HTML-standard JATS `<p>` elements required by the NISO standard.
+
+#### Misc
+
+* `xmlns:xlink` namespace no longer needed since `<ext-link>` replaced with `<a>`
+* `<xref>` element in edition 2 is equivalent to `<xref>~CITE` of edition 1
