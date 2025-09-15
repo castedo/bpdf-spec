@@ -258,7 +258,8 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;i&gt;           ~HYPER  ~HYPO
 &lt;tt&gt;          ~HYPER  ~HYPO
 &lt;sub&gt;         ~HYPER  ~HYPO
-&lt;sup&gt;         ~HYPER  ~HYPO  ~CITE</preformat>
+&lt;sup&gt;         ~HYPER  ~HYPO  ~CITE
+&lt;section&gt;     ~2  ~3  ~4  ~5  ~6</preformat>
           <p>The notation <monospace>&lt;foo&gt;~BAR</monospace> is used to denote a <monospace>&lt;foo&gt;</monospace> element of the <monospace>~BAR</monospace> variety.
       The notation of <monospace>&lt;foo&gt;</monospace> without any variety means a <monospace>&lt;foo&gt;</monospace> element of <italic>any</italic> variety.</p>
           <p>Element varieties could be made unnecessary by using different XML tag names,
@@ -516,7 +517,7 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #17433</bold>:
         <monospace>&lt;abstract&gt;</monospace> contains element-only content with a sequence of child elements matching the
         regular expression:</p>
-            <p><monospace>({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
+            <p><monospace>({P_LEVEL})* (&lt;section&gt;~3)*</monospace></p>
           </sec>
           <sec id="body">
             <title>&lt;body&gt;</title>
@@ -525,22 +526,32 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #11247</bold>:
         <monospace>&lt;body&gt;</monospace> contains element-only content with a sequence of child elements matching the regular
         expression:</p>
-            <p><monospace>({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
+            <p><monospace>({P_LEVEL})* (&lt;section&gt;~2)*</monospace></p>
           </sec>
-          <sec id="sec">
-            <title>&lt;sec&gt;</title>
-            <p><bold>Criterion #12620</bold>:
-        <monospace>&lt;sec&gt;</monospace> elements have no attributes or an <monospace>id=</monospace> attribute.</p>
-            <p><bold>Criterion #18933</bold>:
-        <monospace>&lt;sec&gt;</monospace> elements contain element-only content with a sequence of child elements matching the
+          <sec id="section">
+            <title>&lt;section&gt;</title>
+            <p><bold>Criterion #12167</bold>:
+        <monospace>&lt;section&gt;</monospace> elements have no attributes or an <monospace>id=</monospace> attribute.</p>
+            <p><bold>Criterion #14586</bold>:
+        <monospace>&lt;section&gt;~N</monospace> elements contain element-only content with a sequence of child elements matching the
         regular expression:</p>
-            <p><monospace>(&lt;title&gt;)? ({P_LEVEL})* (&lt;sec&gt;)*</monospace></p>
+            <p><monospace>(&lt;hN&gt;)? ({P_LEVEL})* (&lt;section&gt;~(N+1))*</monospace></p>
+            <p>for <monospace>N</monospace> equal to 2, 3, 4, or 5.</p>
+            <p><bold>Criterion #18843</bold>:
+        <monospace>&lt;section&gt;~6</monospace> elements contain element-only content with a sequence of child elements matching the
+        regular expression:</p>
+            <p><monospace>(&lt;h6&gt;)? ({P_LEVEL})* (&lt;section&gt;~6)*</monospace></p>
+          </sec>
+          <sec id="h2-h3-h4-h5-h6">
+            <title>&lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;,</title>
+            <p><bold>Criterion #10699</bold>:
+        <monospace>&lt;h2&gt;</monospace>, <monospace>&lt;h3&gt;</monospace>, <monospace>&lt;h4&gt;</monospace>, <monospace>&lt;h5&gt;</monospace>, and <monospace>&lt;h6&gt;</monospace> elements have no attributes.</p>
           </sec>
           <sec id="title">
             <title>&lt;title&gt;</title>
             <p><bold>Criterion #15129</bold>:
         <monospace>&lt;title&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #16981</bold>:
+            <p><bold>Criterion #18183</bold>:
         <monospace>&lt;title&gt;</monospace> elements contain mixed content with each child element either <monospace>&lt;br&gt;</monospace> or from
         the set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
@@ -882,10 +893,11 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;disp-quote&gt;  &lt;blockquote&gt;
 &lt;ext-link&gt;    &lt;a ref="external"&gt;
 &lt;italic&gt;      &lt;i&gt;
-&lt;list&gt;        &lt;ul&gt; &amp; &lt;ol&gt;
+&lt;list&gt;        &lt;ul&gt; &lt;ol&gt;
 &lt;monospace&gt;   &lt;tt&gt;
 &lt;preformat&gt;   &lt;pre&gt;
 &lt;term&gt;        &lt;dt&gt;
+&lt;title&gt;       &lt;h2&gt; &lt;h3&gt; &lt;h4&gt; &lt;h5&gt; &lt;h6&gt; (under &lt;section&gt;)
 &lt;xref&gt;        &lt;a&gt;   (only if xref ref-type is not "bibr")</preformat>
         </sec>
         <sec id="li-and-dd-child-elements">
