@@ -156,12 +156,10 @@ by independent websites using Baseprint-compatible software.</p>
     to get additional reference metadata
     absent from the document snapshot data.</p>
       </sec>
-      <sec id="citation-elements">
-        <title>Citation elements</title>
-        <p>Another notable restriction
-    is <monospace>&lt;xref ref-type="bibr"&gt;</monospace> XML elements
-    being inside top-level <monospace>&lt;sup&gt;</monospace> elements,
-    which are interpreted to have the semantic meaning
+      <sec id="citation-tuple-elements">
+        <title>Citation tuple elements</title>
+        <p><monospace>&lt;sup&gt;</monospace> elements containing <monospace>&lt;xref ref-type="bibr"&gt;</monospace> elements
+    are interpreted to have the semantic meaning
     of a group of citations
     to be styled together (e.g., <monospace>[7,11]</monospace>),
     and not necessarily superscripted text.</p>
@@ -248,7 +246,7 @@ by independent websites using Baseprint-compatible software.</p>
           <p>Some XML elements with the same tag have differing semantics depending on their location
       within an XML document tree.
       For this reason, some criteria in this specification are specified in terms of <italic>element varieties</italic>.
-      Specifically, the elements <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;tt&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, <monospace>&lt;sup&gt;</monospace>, and <monospace>&lt;xref&gt;</monospace>
+      Specifically, the elements <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;tt&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>
       have multiple <italic>varieties</italic>.
       For XML documents that satisfy the criteria of this specification, these elements will
       unambiguously belong to exactly one of their varieties.</p>
@@ -256,22 +254,21 @@ by independent websites using Baseprint-compatible software.</p>
       based on the criteria of this specification.</p>
           <preformat>ELEMENT TAG   ELEMENT VARIETIES
 -----------   -----------------
-&lt;b&gt;           ~HYPER    ~HYPO
-&lt;i&gt;           ~HYPER    ~HYPO
-&lt;tt&gt;          ~HYPER    ~HYPO
-&lt;sub&gt;         ~HYPER    ~HYPO
-&lt;sup&gt;         ~HYPER    ~HYPO  ~CITE
-&lt;xref&gt;        ~DEFAULT  ~CITE</preformat>
+&lt;b&gt;           ~HYPER  ~HYPO
+&lt;i&gt;           ~HYPER  ~HYPO
+&lt;tt&gt;          ~HYPER  ~HYPO
+&lt;sub&gt;         ~HYPER  ~HYPO
+&lt;sup&gt;         ~HYPER  ~HYPO  ~CITE</preformat>
           <p>The notation <monospace>&lt;foo&gt;~BAR</monospace> is used to denote a <monospace>&lt;foo&gt;</monospace> element of the <monospace>~BAR</monospace> variety.
       The notation of <monospace>&lt;foo&gt;</monospace> without any variety means a <monospace>&lt;foo&gt;</monospace> element of <italic>any</italic> variety.</p>
           <p>Element varieties could be made unnecessary by using different XML tag names,
       but they would be non-standard tag names not found in HTML or JATS XML.</p>
-          <p>As an example, consider the <monospace>&lt;sup&gt;</monospace> elements of the following JATS paragraph:</p>
+          <p>As an example, consider the <monospace>&lt;sup&gt;</monospace> elements of the following paragraph:</p>
           <preformat>&lt;p&gt;
     &lt;sup&gt;
-        &lt;xref rid="definition-e"&gt;
+        &lt;a href="#definition-e"&gt;
             e&lt;sup&gt;x&lt;/sup&gt;
-        &lt;/xref&gt;
+        &lt;/a&gt;
     &lt;/sup&gt;
     &lt;sup&gt;
          &lt;xref rid="r1" rid-type="bibr"&gt;1&lt;/xref&gt;
@@ -321,28 +318,19 @@ by independent websites using Baseprint-compatible software.</p>
     by NISO JATS<sup>
             <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
           </sup>.</p>
-        <p><bold>Criterion #11855</bold>:
-    The XML prefix <monospace>xlink</monospace> is used for any and all elements and attributes using the XML
-    namespace <monospace>http://www.w3.org/1999/xlink</monospace> by relying on the declaration</p>
-        <preformat>xmlns:xlink="http://www.w3.org/1999/xlink"</preformat>
-        <p><italic>Note:</italic> A <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-xlink.html">similar restriction is specified</ext-link>
-    by NISO JATS<sup>
-            <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
-          </sup>.</p>
       </sec>
-      <sec id="html-like-content">
-        <title>HTML-like content</title>
+      <sec id="html-content">
+        <title>HTML content</title>
         <sec id="hypertext">
           <title>Hypertext</title>
           <p><bold>Definition</bold>:
       The element set <monospace>{HYPERTEXT}</monospace> consists of the elements:</p>
-          <preformat>&lt;b&gt;
-&lt;ext-link&gt;
+          <preformat>&lt;a&gt;
+&lt;b&gt;
 &lt;i&gt;
 &lt;tt&gt;
 &lt;sub&gt;
-&lt;sup&gt;
-&lt;xref&gt;~DEFAULT</preformat>
+&lt;sup&gt;</preformat>
           <p><bold>Criterion #13724</bold>:
       The following elements contain mixed content with all child elements from the set
       <monospace>{HYPERTEXT}</monospace>:</p>
@@ -372,29 +360,23 @@ by independent websites using Baseprint-compatible software.</p>
       Elements from the set <monospace>{HYPOTEXT}</monospace> contain mixed content with all child elements from the set
       <monospace>{HYPOTEXT}</monospace>.</p>
         </sec>
-        <sec id="hyperlinking-elements">
-          <title>Hyperlinking elements</title>
-          <sec id="ext-link">
-            <title>&lt;ext-link&gt;</title>
-            <p><bold>Criterion #13099</bold>:
-        <monospace>&lt;ext-link&gt;</monospace> has an <monospace>xlink:href=</monospace> attribute with a URL as an attribute value.</p>
-            <p><bold>Criterion #14614</bold>:
-        Every <monospace>&lt;ext-link&gt;</monospace> attribute <monospace>ext-link-type=</monospace> takes the value <monospace>"uri"</monospace> (if present).</p>
-            <p><bold>Criterion #17431</bold>:
-        <monospace>&lt;ext-link&gt;</monospace> has no attributes other than <monospace>xlink:href=</monospace> and (optional) <monospace>ext-link-type=</monospace>.</p>
-            <p><bold>Criterion #19236</bold>:
-        <monospace>&lt;ext-link&gt;</monospace> contains mixed content with all child elements from the set <monospace>{HYPOTEXT}</monospace>.</p>
-          </sec>
-          <sec id="xrefdefault">
-            <title>&lt;xref&gt;~DEFAULT</title>
-            <p><bold>Criterion #17683</bold>:
-        <monospace>&lt;xref&gt;~DEFAULT</monospace> elements have exactly one attribute, and it is <monospace>rid=</monospace>.</p>
-            <p><bold>Criterion #12342</bold>:
-        <monospace>&lt;xref&gt;~DEFAULT</monospace> contains mixed content with all child elements from the set <monospace>{HYPOTEXT}</monospace>.</p>
-          </sec>
-        </sec>
         <sec id="other-elements">
           <title>Other elements</title>
+          <sec id="a">
+            <title>&lt;a&gt;</title>
+            <p><bold>Criterion #13984</bold>:
+        <monospace>&lt;a&gt;</monospace> elements have an <monospace>href=</monospace> attribute.</p>
+            <p><bold>Criterion #12109</bold>:
+        <monospace>&lt;a&gt;</monospace> has no attributes other than <monospace>href=</monospace> and (optional) <monospace>rel=</monospace>.</p>
+            <p><bold>Criterion #19871</bold>:
+        <monospace>&lt;a&gt;</monospace> contains mixed content with all child elements from the set <monospace>{HYPOTEXT}</monospace>.</p>
+            <p><bold>Criterion #17248</bold>:
+        <monospace>&lt;a&gt;</monospace> elements without an <monospace>rel=</monospace> attribute have attribute <monospace>href=</monospace> equal to a &#8216;#&#8217; (hash
+        symbol) followed by an identifier of the document (value <monospace>id=</monospace> attribute of another element).</p>
+            <p><bold>Criterion #11997</bold>:
+        <monospace>&lt;a&gt;</monospace> elements with attribute <monospace>rel="external"</monospace> have attribute <monospace>href=</monospace> equal to an
+        <monospace>https:</monospace> or <monospace>http:</monospace> URL.</p>
+          </sec>
           <sec id="br">
             <title>&lt;br&gt;</title>
             <p><bold>Criterion #18396</bold>:
@@ -708,17 +690,17 @@ by independent websites using Baseprint-compatible software.</p>
         <title>Bibliographic elements</title>
         <sec id="citation">
           <title>Citation</title>
-          <sec id="xrefcite">
-            <title>&lt;xref&gt;~CITE</title>
+          <sec id="xref">
+            <title>&lt;xref&gt;</title>
             <p><bold>Criterion #14740</bold>:
-        <monospace>&lt;xref&gt;~CITE</monospace> elements have exactly two attributes: <monospace>rid=</monospace> and <monospace>ref-type=</monospace>.</p>
+        <monospace>&lt;xref&gt;</monospace> elements have exactly two attributes: <monospace>rid=</monospace> and <monospace>ref-type=</monospace>.</p>
             <p><bold>Criterion #11027</bold>:
-        <monospace>&lt;xref&gt;~CITE</monospace> elements have an attribute of <monospace>ref-type=</monospace> with the value <monospace>bibr</monospace>.</p>
+        <monospace>&lt;xref&gt;</monospace> elements have an attribute of <monospace>ref-type=</monospace> with the value <monospace>bibr</monospace>.</p>
             <p><bold>Criterion #12086</bold>:
-        <monospace>&lt;xref&gt;~CITE</monospace> elements have a value for <monospace>rid=</monospace> that
+        <monospace>&lt;xref&gt;</monospace> elements have a value for <monospace>rid=</monospace> that
         matches the value of the attribute <monospace>id=</monospace> of a <monospace>&lt;ref&gt;</monospace> element.</p>
             <p><bold>Criterion #10484</bold>:
-        <monospace>&lt;xref&gt;~CITE</monospace> elements contain text-only content of
+        <monospace>&lt;xref&gt;</monospace> elements contain text-only content of
         a single integer (surrounded by optional whitespace).
         The integer corresponds to the ordered position in <monospace>&lt;ref-list&gt;</monospace> of the <monospace>&lt;ref&gt;</monospace> element
         with an <monospace>id=</monospace> attribute value matching the <monospace>rid=</monospace> attribute value of the <monospace>&lt;xref&gt;</monospace> element.</p>
@@ -726,7 +708,7 @@ by independent websites using Baseprint-compatible software.</p>
           <sec id="supcite">
             <title>&lt;sup&gt;~CITE</title>
             <p><bold>Criterion #14278</bold>:
-        <monospace>&lt;sup&gt;~CITE</monospace> elements only have child elements of <monospace>&lt;xref&gt;~CITE</monospace>.</p>
+        <monospace>&lt;sup&gt;~CITE</monospace> elements only have child elements of <monospace>&lt;xref&gt;</monospace>.</p>
             <p><bold>Criterion #12352</bold>:
         <monospace>&lt;sup&gt;~CITE</monospace> elements have mixed content with text-only content of:</p>
             <list list-type="bullet">
@@ -898,11 +880,13 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;def-list&gt;    &lt;dl&gt;
 &lt;def&gt;         &lt;dd&gt;
 &lt;disp-quote&gt;  &lt;blockquote&gt;
+&lt;ext-link&gt;    &lt;a ref="external"&gt;
 &lt;italic&gt;      &lt;i&gt;
 &lt;list&gt;        &lt;ul&gt; &amp; &lt;ol&gt;
 &lt;monospace&gt;   &lt;tt&gt;
 &lt;preformat&gt;   &lt;pre&gt;
-&lt;term&gt;        &lt;dt&gt;</preformat>
+&lt;term&gt;        &lt;dt&gt;
+&lt;xref&gt;        &lt;a&gt;   (only if xref ref-type is not "bibr")</preformat>
         </sec>
         <sec id="li-and-dd-child-elements">
           <title>&lt;li&gt; and &lt;dd&gt; child elements</title>
@@ -923,6 +907,17 @@ by independent websites using Baseprint-compatible software.</p>
       This is an intentional non-alignment with the NISO JATS standard.
       The reference XSL transform file will transform Baseprint XML to JATS XML that does
       include non-HTML-standard JATS <monospace>&lt;p&gt;</monospace> elements required by the NISO standard.</p>
+        </sec>
+        <sec id="misc">
+          <title>Misc</title>
+          <list list-type="bullet">
+            <list-item>
+              <p><monospace>xmlns:xlink</monospace> namespace no longer needed since <monospace>&lt;ext-link&gt;</monospace> replaced with <monospace>&lt;a&gt;</monospace></p>
+            </list-item>
+            <list-item>
+              <p><monospace>&lt;xref&gt;</monospace> element in edition 2 is equivalent to <monospace>&lt;xref&gt;~CITE</monospace> of edition 1</p>
+            </list-item>
+          </list>
         </sec>
       </sec>
     </sec>
