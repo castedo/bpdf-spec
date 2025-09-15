@@ -249,6 +249,7 @@ ELEMENT TAG   ELEMENT VARIETIES
 <tt>          ~HYPER  ~HYPO
 <sub>         ~HYPER  ~HYPO
 <sup>         ~HYPER  ~HYPO  ~CITE
+<section>     ~2  ~3  ~4  ~5  ~6
 ```
 
 The notation `<foo>~BAR` is used to denote a `<foo>` element of the `~BAR` variety.
@@ -569,7 +570,7 @@ expression:
 `<abstract>` contains element-only content with a sequence of child elements matching the
 regular expression:
 
-`({P_LEVEL})* (<sec>)*`
+`({P_LEVEL})* (<section>~3)*`
 
 ##### \<body>
 
@@ -580,25 +581,38 @@ regular expression:
 `<body>` contains element-only content with a sequence of child elements matching the regular
 expression:
 
-`({P_LEVEL})* (<sec>)*`
+`({P_LEVEL})* (<section>~2)*`
 
-##### \<sec>
+##### \<section>
 
-**Criterion #12620**:
-`<sec>` elements have no attributes or an `id=` attribute.
+**Criterion #12167**:
+`<section>` elements have no attributes or an `id=` attribute.
 
-**Criterion #18933**:
-`<sec>` elements contain element-only content with a sequence of child elements matching the
+**Criterion #14586**:
+`<section>~N` elements contain element-only content with a sequence of child elements matching the
 regular expression:
 
-`(<title>)? ({P_LEVEL})* (<sec>)*`
+`(<hN>)? ({P_LEVEL})* (<section>~(N+1))*`
+
+for `N` equal to 2, 3, 4, or 5.
+
+**Criterion #18843**:
+`<section>~6` elements contain element-only content with a sequence of child elements matching the
+regular expression:
+
+`(<h6>)? ({P_LEVEL})* (<section>~6)*`
+
+##### \<h2>, \<h3>, \<h4>, \<h5>, \<h6>,
+
+**Criterion #10699**:
+`<h2>`, `<h3>`, `<h4>`, `<h5>`, and `<h6>` elements have no attributes.
 
 ##### \<title>
 
 **Criterion #15129**:
 `<title>` elements have no attributes.
 
-**Criterion #16981**:
+**Criterion #18183**:
 `<title>` elements contain mixed content with each child element either `<br>` or from
 the set `{HYPERTEXT}`.
 
@@ -983,10 +997,11 @@ JATS          XHTML
 <disp-quote>  <blockquote>
 <ext-link>    <a ref="external">
 <italic>      <i>
-<list>        <ul> & <ol>
+<list>        <ul> <ol>
 <monospace>   <tt>
 <preformat>   <pre>
 <term>        <dt>
+<title>       <h2> <h3> <h4> <h5> <h6> (under <section>)
 <xref>        <a>   (only if xref ref-type is not "bibr")
 ```
 
