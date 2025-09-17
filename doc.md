@@ -402,6 +402,11 @@ symbol) followed by an identifier of the document (value `id=` attribute of anot
 `<a>` elements with attribute `rel="external"` have attribute `href=` equal to an
 `https:` or `http:` URL.
 
+The [HTML Living Standard](https://html.spec.whatwg.org/multipage/links.html#link-type-external)[@html]
+and the [Internet Assigned Numbers
+Authority](https://www.iana.org/assignments/link-relations/link-relations.xhtml)
+specify `rel="external"`.
+
 ##### \<br>
 
 **Criterion #18396**:
@@ -636,8 +641,14 @@ the set `{HYPERTEXT}`.
 **Criterion #17019**:
 `<article-title>` has no attributes.
 
-**Criterion #16217**:
-`<article-title>` contains mixed content with child elements of set `{HYPERTEXT}`.
+**Criterion #11294**:
+`<article-title>` contains mixed content with child elements from the set:
+```
+<b>~HYPO
+<i>~HYPO
+<sub>~HYPO
+<sup>~HYPO
+```
 
 
 #### Contributors
@@ -1025,6 +1036,12 @@ The `<p>` element in Baseprint XML is now aligned with the HTML standard.
 This is an intentional non-alignment with the NISO JATS standard.
 The reference XSL transform file will transform Baseprint XML to JATS XML that does
 include non-HTML-standard JATS `<p>` elements required by the NISO standard.
+
+#### Restriction of \<article-title>
+
+Edition 2.1 changes the criteria on `<article-title>` to only contain the elements
+`<b>`, `<i>`, `<sub>`, and `<sup>`. See [Discussion #19 on GitHub](
+https://github.com/singlesourcepub/baseprints/discussions/19) for the rationale.
 
 #### Misc
 
