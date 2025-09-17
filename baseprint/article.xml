@@ -377,6 +377,12 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #11997</bold>:
         <monospace>&lt;a&gt;</monospace> elements with attribute <monospace>rel="external"</monospace> have attribute <monospace>href=</monospace> equal to an
         <monospace>https:</monospace> or <monospace>http:</monospace> URL.</p>
+            <p>The <ext-link ext-link-type="uri" xlink:href="https://html.spec.whatwg.org/multipage/links.html#link-type-external">HTML Living Standard</ext-link><sup>
+                <xref rid="ref-html" ref-type="bibr">6</xref>
+              </sup>
+        and the <ext-link ext-link-type="uri" xlink:href="https://www.iana.org/assignments/link-relations/link-relations.xhtml">Internet Assigned Numbers
+        Authority</ext-link>
+        specify <monospace>rel="external"</monospace>.</p>
           </sec>
           <sec id="br">
             <title>&lt;br&gt;</title>
@@ -572,8 +578,12 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;article-title&gt;</title>
             <p><bold>Criterion #17019</bold>:
         <monospace>&lt;article-title&gt;</monospace> has no attributes.</p>
-            <p><bold>Criterion #16217</bold>:
-        <monospace>&lt;article-title&gt;</monospace> contains mixed content with child elements of set <monospace>{HYPERTEXT}</monospace>.</p>
+            <p><bold>Criterion #11294</bold>:
+        <monospace>&lt;article-title&gt;</monospace> contains mixed content with child elements from the set:</p>
+            <preformat>&lt;b&gt;~HYPO
+&lt;i&gt;~HYPO
+&lt;sub&gt;~HYPO
+&lt;sup&gt;~HYPO</preformat>
           </sec>
         </sec>
         <sec id="contributors">
@@ -920,6 +930,11 @@ by independent websites using Baseprint-compatible software.</p>
       The reference XSL transform file will transform Baseprint XML to JATS XML that does
       include non-HTML-standard JATS <monospace>&lt;p&gt;</monospace> elements required by the NISO standard.</p>
         </sec>
+        <sec id="restriction-of-article-title">
+          <title>Restriction of &lt;article-title&gt;</title>
+          <p>Edition 2.1 changes the criteria on <monospace>&lt;article-title&gt;</monospace> to only contain the elements
+      <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>. See <ext-link ext-link-type="uri" xlink:href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</ext-link> for the rationale.</p>
+        </sec>
         <sec id="misc">
           <title>Misc</title>
           <list list-type="bullet">
@@ -1029,6 +1044,20 @@ by independent websites using Baseprint-compatible software.</p>
           <source>Journal Article Tag Suite Conference (JATS-Con)</source>
           <year>2019</year>
           <uri>https://www.ncbi.nlm.nih.gov/books/NBK540949/</uri>
+        </element-citation>
+      </ref>
+      <ref id="ref-html">
+        <element-citation>
+          <person-group person-group-type="author">
+            <string-name>WHATWG community</string-name>
+          </person-group>
+          <article-title>HTML Living Standard</article-title>
+          <date-in-citation content-type="access-date">
+            <year>2024</year>
+            <month>09</month>
+            <day>14</day>
+          </date-in-citation>
+          <uri>https://html.spec.whatwg.org/</uri>
         </element-citation>
       </ref>
     </ref-list>
