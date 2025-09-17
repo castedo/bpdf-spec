@@ -319,6 +319,8 @@ by independent websites using Baseprint-compatible software.</p>
     by NISO JATS<sup>
             <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
           </sup>.</p>
+        <p><italic>Note:</italic> Using XML namespaces is only needed if the XML file opts to use the XML
+    element <monospace>&lt;ali:license_ref&gt;</monospace> instead of <monospace>&lt;license_ref&gt;</monospace>.</p>
       </sec>
       <sec id="html-content">
         <title>HTML content</title>
@@ -662,8 +664,16 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;license&gt;</title>
             <p><bold>Criterion #19618</bold>:
         <monospace>&lt;license&gt;</monospace> has no attributes.</p>
-            <p><bold>Criterion #19475</bold>:
-        <monospace>&lt;license&gt;</monospace> contains element-only content with child elements <monospace>&lt;license-p&gt;</monospace> and/or <monospace>&lt;ali:license_ref&gt;</monospace>.</p>
+            <p><bold>Criterion #13667</bold>:
+        <monospace>&lt;license&gt;</monospace> contains element-only content with child elements from the set:</p>
+            <preformat>&lt;license-p&gt;
+&lt;license_ref&gt;
+&lt;ali:license_ref&gt;</preformat>
+            <p><bold>Criterion #15516</bold>:
+        <monospace>&lt;license&gt;</monospace> does not contains multiple child elements with the same tag.</p>
+            <p><bold>Criterion #16066</bold>:
+        <monospace>&lt;license&gt;</monospace> does not contains both a <monospace>&lt;license_ref&gt;</monospace> child element and a
+        <monospace>&lt;ali:license_ref&gt;</monospace> child element.</p>
           </sec>
           <sec id="license-p">
             <title>&lt;license-p&gt;</title>
@@ -934,6 +944,11 @@ by independent websites using Baseprint-compatible software.</p>
           <title>Restriction of &lt;article-title&gt;</title>
           <p>Edition 2.1 changes the criteria on <monospace>&lt;article-title&gt;</monospace> to only contain the elements
       <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>. See <ext-link ext-link-type="uri" xlink:href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</ext-link> for the rationale.</p>
+        </sec>
+        <sec id="xml-namespace-not-required">
+          <title>XML namespace not required</title>
+          <p>In edition 2, <monospace>&lt;license_ref&gt;</monospace> is an acceptable alternative to <monospace>&lt;ali:license_ref&gt;</monospace>, which
+      is the only Baseprint XML element that would require an XML namespace if used.</p>
         </sec>
         <sec id="misc">
           <title>Misc</title>

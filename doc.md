@@ -321,6 +321,8 @@ xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
 ](https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-ali.html)
 by NISO JATS [@jats_authoring].
 
+*Note:* Using XML namespaces is only needed if the XML file opts to use the XML
+element `<ali:license_ref>` instead of `<license_ref>`.
 
 <!-- copybreak off -->
 
@@ -730,8 +732,21 @@ and at most one child element for each tag.
 **Criterion #19618**:
 `<license>` has no attributes.
 
-**Criterion #19475**:
-`<license>` contains element-only content with child elements `<license-p>` and/or `<ali:license_ref>`.
+**Criterion #13667**:
+`<license>` contains element-only content with child elements from the set:
+```
+<license-p>
+<license_ref>
+<ali:license_ref>
+```
+
+**Criterion #15516**:
+`<license>` does not contains multiple child elements with the same tag.
+
+**Criterion #16066**:
+`<license>` does not contains both a `<license_ref>` child element and a
+`<ali:license_ref>` child element.
+
 
 ##### \<license-p>
 
@@ -1042,6 +1057,11 @@ include non-HTML-standard JATS `<p>` elements required by the NISO standard.
 Edition 2.1 changes the criteria on `<article-title>` to only contain the elements
 `<b>`, `<i>`, `<sub>`, and `<sup>`. See [Discussion #19 on GitHub](
 https://github.com/singlesourcepub/baseprints/discussions/19) for the rationale.
+
+#### XML namespace not required
+
+In edition 2, `<license_ref>` is an acceptable alternative to `<ali:license_ref>`, which
+is the only Baseprint XML element that would require an XML namespace if used.
 
 #### Misc
 
