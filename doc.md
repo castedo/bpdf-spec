@@ -574,10 +574,8 @@ expression:
 `<abstract>` has no attributes.
 
 **Criterion #17433**:
-`<abstract>` contains element-only content with a sequence of child elements matching the
-regular expression:
-
-`({P_LEVEL})* (<section>~3)*`
+`<abstract>` contains element-only content with all child elements from the set
+`{P_LEVEL}`.
 
 ##### \<body>
 
@@ -999,6 +997,22 @@ that starts with "10." and not "http".
 `<pub-id>` elements with the attribute value `pub-id-type="pmid"` have text-only content of a
 valid PubMed Identification Number.
 
+<!-- copybreak on -->
+
+Discussion
+----------
+
+### XML Namespaces
+
+An XML file can satisfy all the criteria of this specification without using XML
+namespaces[@xmlns]. If an XML file has a `<license_ref>` element it can satisfy the
+applicable criteria with or without using the namespace:
+
+`http://www.niso.org/schemas/ali/1.0/`
+
+When transforming to NISO JATS XML, the `ali` XML namespace prefix must be added if not
+already used with `license_ref`. 
+
 <!-- copybreak off -->
 
 
@@ -1057,6 +1071,11 @@ include non-HTML-standard JATS `<p>` elements required by the NISO standard.
 Edition 2.1 changes the criteria on `<article-title>` to only contain the elements
 `<b>`, `<i>`, `<sub>`, and `<sup>`. See [Discussion #19 on GitHub](
 https://github.com/singlesourcepub/baseprints/discussions/19) for the rationale.
+
+#### Restriction of \<abstract>
+
+Criteria for `<abstract>` content now require only `{P_LEVEL}` child elements and no
+subsections.
 
 #### XML namespace not required
 
