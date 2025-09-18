@@ -523,9 +523,8 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #14631</bold>:
         <monospace>&lt;abstract&gt;</monospace> has no attributes.</p>
             <p><bold>Criterion #17433</bold>:
-        <monospace>&lt;abstract&gt;</monospace> contains element-only content with a sequence of child elements matching the
-        regular expression:</p>
-            <p><monospace>({P_LEVEL})* (&lt;section&gt;~3)*</monospace></p>
+        <monospace>&lt;abstract&gt;</monospace> contains element-only content with all child elements from the set
+        <monospace>{P_LEVEL}</monospace>.</p>
           </sec>
           <sec id="body">
             <title>&lt;body&gt;</title>
@@ -895,6 +894,20 @@ by independent websites using Baseprint-compatible software.</p>
         </sec>
       </sec>
     </sec>
+    <sec id="discussion">
+      <title>Discussion</title>
+      <sec id="xml-namespaces">
+        <title>XML Namespaces</title>
+        <p>An XML file can satisfy all the criteria of this specification without using XML
+    namespaces<sup>
+            <xref rid="ref-xmlns" ref-type="bibr">7</xref>
+          </sup>. If an XML file has a <monospace>&lt;license_ref&gt;</monospace> element it can satisfy the
+    applicable criteria with or without using the namespace:</p>
+        <p><monospace>http://www.niso.org/schemas/ali/1.0/</monospace></p>
+        <p>When transforming to NISO JATS XML, the <monospace>ali</monospace> XML namespace prefix must be added if not
+    already used with <monospace>license_ref</monospace>.</p>
+      </sec>
+    </sec>
     <sec id="changes">
       <title>Changes</title>
       <sec id="from-edition-1-to-2">
@@ -944,6 +957,11 @@ by independent websites using Baseprint-compatible software.</p>
           <title>Restriction of &lt;article-title&gt;</title>
           <p>Edition 2.1 changes the criteria on <monospace>&lt;article-title&gt;</monospace> to only contain the elements
       <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>. See <ext-link ext-link-type="uri" xlink:href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</ext-link> for the rationale.</p>
+        </sec>
+        <sec id="restriction-of-abstract">
+          <title>Restriction of &lt;abstract&gt;</title>
+          <p>Criteria for <monospace>&lt;abstract&gt;</monospace> content now require only <monospace>{P_LEVEL}</monospace> child elements and no
+      subsections.</p>
         </sec>
         <sec id="xml-namespace-not-required">
           <title>XML namespace not required</title>
@@ -1073,6 +1091,27 @@ by independent websites using Baseprint-compatible software.</p>
             <day>14</day>
           </date-in-citation>
           <uri>https://html.spec.whatwg.org/</uri>
+        </element-citation>
+      </ref>
+      <ref id="ref-xmlns">
+        <element-citation>
+          <person-group person-group-type="author">
+            <name>
+              <surname>Bray</surname>
+              <given-names>Tim</given-names>
+            </name>
+            <name>
+              <surname>Hollander</surname>
+              <given-names>Dave</given-names>
+            </name>
+            <name>
+              <surname>Layman</surname>
+              <given-names>Andrew</given-names>
+            </name>
+          </person-group>
+          <article-title>Namespaces in XML 1.0</article-title>
+          <year>1999</year>
+          <uri>https://www.w3.org/TR/1999/REC-xml-names-19990114/</uri>
         </element-citation>
       </ref>
     </ref-list>
