@@ -205,7 +205,7 @@ In the definition of a criterion, the term "element" refers to an XML element wi
 document's parse tree. The notation `<foobar>` may refer to an XML tag or elements with
 that tag, depending on the context. When an element "has a tag" it never refers to a child element.
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 #### Content
 
@@ -233,7 +233,8 @@ Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
 Some XML elements with the same tag have differing semantics depending on their location
 within an XML document tree.
 For this reason, some criteria in this specification are specified in terms of *element varieties*.
-Specifically, the elements `<b>`, `<i>`, `<tt>`, `<sub>`, and `<sup>`
+Specifically, the elements
+`<a>`, `<article-title>`, `<b>`, `<i>`, `<tt>`, `<sub>`, and `<sup>`
 have multiple *varieties*.
 For XML documents that satisfy the criteria of this specification, these elements will
 unambiguously belong to exactly one of their varieties.
@@ -242,14 +243,16 @@ Elements with the following tags may be of the following varieties
 based on the criteria of this specification.
 
 ```
-ELEMENT TAG   ELEMENT VARIETIES
------------   -----------------
-<b>           ~HYPER  ~HYPO
-<i>           ~HYPER  ~HYPO
-<tt>          ~HYPER  ~HYPO
-<sub>         ~HYPER  ~HYPO
-<sup>         ~HYPER  ~HYPO  ~CITE
-<section>     ~2  ~3  ~4  ~5  ~6
+ELEMENT TAG      ELEMENT VARIETIES
+-----------      -----------------
+<a>              ~OUT    ~IN
+<article-title>  ~SELF   ~REF
+<b>              ~HYPER  ~COPY  ~HYPO  ~MINI
+<i>              ~HYPER  ~COPY  ~HYPO  ~MINI
+<tt>             ~HYPER  ~COPY  ~HYPO
+<sub>            ~HYPER  ~COPY  ~HYPO  ~MINI
+<sup>            ~HYPER  ~COPY  ~HYPO  ~MINI  ~CITE
+<section>        ~2  ~3  ~4  ~5  ~6
 ```
 
 The notation `<foo>~BAR` is used to denote a `<foo>` element of the `~BAR` variety.
@@ -324,10 +327,58 @@ by NISO JATS [@jats_authoring].
 *Note:* Using XML namespaces is only needed if the XML file opts to use the XML
 element `<ali:license_ref>` instead of `<license_ref>`.
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 
 ### HTML content
+
+#### Minimally formatted text
+
+**Definition**:
+Elements of variety `~MINI` have tag `<b>`, `<i>`, `<sub>`, or `<sup>`.
+
+**Definition**:
+The element set `{MINITEXT}` consists of the elements:
+```
+<b>~MINI
+<i>~MINI
+<sub>~MINI
+<sup>~MINI
+```
+
+**Criterion #18662**:
+Elements of variety `~MINI` contain mixed content with all child elements from
+the set `{MINITEXT}`.
+
+*Comment*: {MINITEXT} is used by `<article-title>~SELF`.
+
+#### Copyable hypertext
+
+Copyable hypertext is used by `<copyright-statement>` and `<license-p>`.
+There are no citations, internal links, or cross references,
+which would not make sense if copied out of the document.
+
+**Definition**:
+Elements of variety `~COPY` have tag `<b>`, `<i>`, `<tt>`, `<sub>`, or `<sup>`.
+
+**Definition**:
+The element set `{COPYTEXT}` consists of the elements:
+```
+<a>~OUT
+<b>~COPY
+<i>~COPY
+<tt>~COPY
+<sub>~COPY
+<sup>~COPY
+```
+
+**Criterion #11694**:
+Elements of variety `~COPY` contain mixed content with all child elements from the set
+`{COPYTEXT}`.
+
+*Comment*: The `{COPYTEXT}` element set is motivated by interoperability with Crossref,
+which uses the [JATS publishing schema for `<copyright-statement>`](
+https://jats.nlm.nih.gov/publishing/tag-library/1.4/element/copyright-statement.html).
 
 #### Hypertext
 
@@ -363,7 +414,6 @@ The following elements do not have any attributes:
 <sup>
 ```
 
-
 #### Hypotext
 
 **Definition**:
@@ -380,28 +430,25 @@ The element set `{HYPOTEXT}` consists of the elements:
 Elements from the set `{HYPOTEXT}` contain mixed content with all child elements from the set
 `{HYPOTEXT}`.
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 
 #### Other elements
 
 ##### \<a>
 
-**Criterion #13984**:
-`<a>` elements have an `href=` attribute.
-
-**Criterion #12109**:
-`<a>` has no attributes other than `href=` and (optional) `rel=`.
-
 **Criterion #19871**:
 `<a>` contains mixed content with all child elements from the set `{HYPOTEXT}`.
 
+**Criterion #10107**:
+`<a>` elements are of variety `<a>~OUT` or `<a>~IN`.
+
 **Criterion #17248**:
-`<a>` elements without an `rel=` attribute have attribute `href=` equal to a '#' (hash
-symbol) followed by an identifier of the document (value `id=` attribute of another element).
+`<a>~IN` elements have only attribute `href=` and it equals a '#' (hash symbol)
+followed by the value of an `id=` attribute of another element.
 
 **Criterion #11997**:
-`<a>` elements with attribute `rel="external"` have attribute `href=` equal to an
+`<a>~OUT` elements have only attribute `rel="external"` and attribute `href=` equal to an
 `https:` or `http:` URL.
 
 The [HTML Living Standard](https://html.spec.whatwg.org/multipage/links.html#link-type-external)[@html]
@@ -409,7 +456,7 @@ and the [Internet Assigned Numbers
 Authority](https://www.iana.org/assignments/link-relations/link-relations.xhtml)
 specify `rel="external"`.
 
-##### \<br>
+##### \<br/>
 
 **Criterion #18396**:
 `<br>` elements have no attributes and contain empty content.
@@ -607,19 +654,22 @@ regular expression:
 
 `(<h6>)? ({P_LEVEL})* (<section>~6)*`
 
-##### \<h2>, \<h3>, \<h4>, \<h5>, \<h6>,
+##### \<h2>, \<h3>, \<h4>, \<h5>, \<h6>
 
 **Criterion #10699**:
 `<h2>`, `<h3>`, `<h4>`, `<h5>`, and `<h6>` elements have no attributes.
+
+**Criterion #14064**:
+`<h2>`, `<h3>`, `<h4>`, `<h5>`, and `<h6>` elements contain mixed content with each child
+element either `<br/>` or of the element set `{HYPERTEXT}`.
 
 ##### \<title>
 
 **Criterion #15129**:
 `<title>` elements have no attributes.
 
-**Criterion #18183**:
-`<title>` elements contain mixed content with each child element either `<br>` or from
-the set `{HYPERTEXT}`.
+**Criterion #19904**:
+`<title>` elements contain text-only content.
 
 <!-- copybreak off -->
 
@@ -634,22 +684,20 @@ the set `{HYPERTEXT}`.
 `<title-group>` has no attributes.
 
 **Criterion #19365**:
-`<title-group>` contains element-only content with exactly one child element `<article-title>`.
+`<title-group>` contains element-only content with exactly one child element
+`<article-title>~SELF`.
 
 ##### \<article-title>
 
 **Criterion #17019**:
-`<article-title>` has no attributes.
+`<article-title>` elements have no attributes.
+
+**Criterion #10037**:
+`<article-title>` elements are either `<article-title>~SELF` or `<article-title>~REF`.
 
 **Criterion #11294**:
-`<article-title>` contains mixed content with child elements from the set:
-```
-<b>~HYPO
-<i>~HYPO
-<sub>~HYPO
-<sup>~HYPO
-```
-
+`<article-title>~SELF` contains mixed content with child elements from the set
+`{MINITEXT}`.
 
 #### Contributors
 
@@ -722,8 +770,8 @@ and at most one child element for each tag.
 **Criterion #13932**:
 `<copyright-statement>` has no attributes.
 
-**Criterion #13317**:
-`<copyright-statement>` contains mixed content with child elements of set `{HYPERTEXT}`.
+**Criterion #17441**:
+`<copyright-statement>` contains mixed content with child elements of set `{COPYTEXT}`.
 
 ##### \<license>
 
@@ -751,8 +799,8 @@ and at most one child element for each tag.
 **Criterion #10671**:
 `<license-p>` has no attributes.
 
-**Criterion #11028**:
-`<license-p>` contains mixed content with child elements of set `{HYPERTEXT}`.
+**Criterion #10974**:
+`<license-p>` contains mixed content with child elements of set `{COPYTEXT}`.
 
 ##### \<ali:license\_ref>
 
@@ -862,7 +910,7 @@ regular expression:
 **Criterion #14559**:
 `<element-citation>` contains element-only content with child elements from the set:
 ```
-<article-title>
+<article-title>~REF
 <comment>
 <date-in-citation>
 <day>
@@ -911,9 +959,7 @@ text-only content:
 ```
 
 **Criterion #10807**:
-`<article-title>` elements, *when under* `<element-citation>`, contain text-only content.
-
-**Note:** Criterion #10807 does not apply to `<article-title>` under `<title-group>`.
+`<article-title>~REF` elements contain text-only content.
 
 ##### \<person-group>
 
@@ -1013,7 +1059,7 @@ applicable criteria with or without using the namespace:
 When transforming to NISO JATS XML, the `ali` XML namespace prefix must be added if not
 already used with `license_ref`. 
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 
 Changes
@@ -1040,9 +1086,10 @@ JATS          XHTML
 <list>        <ul> <ol>
 <monospace>   <tt>
 <preformat>   <pre>
+<sec>         <section>
 <term>        <dt>
-<title>       <h2> <h3> <h4> <h5> <h6> (under <section>)
-<xref>        <a>   (only if xref ref-type is not "bibr")
+<title>       <h2> <h3> <h4> <h5> <h6> (under <section>, not <ref-list>)
+<xref>        <a>   (only when xref ref-type is not "bibr")
 ```
 
 #### \<li> and \<dd> child elements
@@ -1066,16 +1113,26 @@ This is an intentional non-alignment with the NISO JATS standard.
 The reference XSL transform file will transform Baseprint XML to JATS XML that does
 include non-HTML-standard JATS `<p>` elements required by the NISO standard.
 
-#### Restriction of \<article-title>
+#### Stronger content criteria
 
-Edition 2.1 changes the criteria on `<article-title>` to only contain the elements
-`<b>`, `<i>`, `<sub>`, and `<sup>`. See [Discussion #19 on GitHub](
-https://github.com/singlesourcepub/baseprints/discussions/19) for the rationale.
+\<article-title>
+: changed to only contain the elements `<b>`, `<i>`, `<sub>`, and `<sup>`.
+  See [Discussion #19 on GitHub](
+  https://github.com/singlesourcepub/baseprints/discussions/19) for the rationale.
 
-#### Restriction of \<abstract>
+\<abstract>
+: content criteria require only `{P_LEVEL}` child elements and no subsections.
 
-Criteria for `<abstract>` content now require only `{P_LEVEL}` child elements and no
-subsections.
+\<copyright-statement>
+: changed to contain `{COPYTEXT}` instead of `{HYPERTEXT}`.
+
+\<license-p>
+: changed to contain `{COPYTEXT}` instead of `{HYPERTEXT}`.
+
+\<title>
+: changed to only contain text-only content.
+  With edition 2, `<title>` is only found under `<ref-list>`
+  as section titles use HTML elements `<h2>` ... `<h6>`.
 
 #### XML namespace not required
 
