@@ -246,20 +246,23 @@ by independent websites using Baseprint-compatible software.</p>
           <p>Some XML elements with the same tag have differing semantics depending on their location
       within an XML document tree.
       For this reason, some criteria in this specification are specified in terms of <italic>element varieties</italic>.
-      Specifically, the elements <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;tt&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>
+      Specifically, the elements
+      <monospace>&lt;a&gt;</monospace>, <monospace>&lt;article-title&gt;</monospace>, <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;tt&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>
       have multiple <italic>varieties</italic>.
       For XML documents that satisfy the criteria of this specification, these elements will
       unambiguously belong to exactly one of their varieties.</p>
           <p>Elements with the following tags may be of the following varieties
       based on the criteria of this specification.</p>
-          <preformat>ELEMENT TAG   ELEMENT VARIETIES
------------   -----------------
-&lt;b&gt;           ~HYPER  ~HYPO
-&lt;i&gt;           ~HYPER  ~HYPO
-&lt;tt&gt;          ~HYPER  ~HYPO
-&lt;sub&gt;         ~HYPER  ~HYPO
-&lt;sup&gt;         ~HYPER  ~HYPO  ~CITE
-&lt;section&gt;     ~2  ~3  ~4  ~5  ~6</preformat>
+          <preformat>ELEMENT TAG      ELEMENT VARIETIES
+-----------      -----------------
+&lt;a&gt;              ~OUT    ~IN
+&lt;article-title&gt;  ~SELF   ~REF
+&lt;b&gt;              ~HYPER  ~COPY  ~HYPO  ~MINI
+&lt;i&gt;              ~HYPER  ~COPY  ~HYPO  ~MINI
+&lt;tt&gt;             ~HYPER  ~COPY  ~HYPO
+&lt;sub&gt;            ~HYPER  ~COPY  ~HYPO  ~MINI
+&lt;sup&gt;            ~HYPER  ~COPY  ~HYPO  ~MINI  ~CITE
+&lt;section&gt;        ~2  ~3  ~4  ~5  ~6</preformat>
           <p>The notation <monospace>&lt;foo&gt;~BAR</monospace> is used to denote a <monospace>&lt;foo&gt;</monospace> element of the <monospace>~BAR</monospace> variety.
       The notation of <monospace>&lt;foo&gt;</monospace> without any variety means a <monospace>&lt;foo&gt;</monospace> element of <italic>any</italic> variety.</p>
           <p>Element varieties could be made unnecessary by using different XML tag names,
@@ -324,6 +327,42 @@ by independent websites using Baseprint-compatible software.</p>
       </sec>
       <sec id="html-content">
         <title>HTML content</title>
+        <sec id="minimally-formatted-text">
+          <title>Minimally formatted text</title>
+          <p><bold>Definition</bold>:
+      Elements of variety <monospace>~MINI</monospace> have tag <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, or <monospace>&lt;sup&gt;</monospace>.</p>
+          <p><bold>Definition</bold>:
+      The element set <monospace>{MINITEXT}</monospace> consists of the elements:</p>
+          <preformat>&lt;b&gt;~MINI
+&lt;i&gt;~MINI
+&lt;sub&gt;~MINI
+&lt;sup&gt;~MINI</preformat>
+          <p><bold>Criterion #18662</bold>:
+      Elements of variety <monospace>~MINI</monospace> contain mixed content with all child elements from
+      the set <monospace>{MINITEXT}</monospace>.</p>
+          <p><italic>Comment</italic>: {MINITEXT} is used by <monospace>&lt;article-title&gt;~SELF</monospace>.</p>
+        </sec>
+        <sec id="copyable-hypertext">
+          <title>Copyable hypertext</title>
+          <p>Copyable hypertext is used by <monospace>&lt;copyright-statement&gt;</monospace> and <monospace>&lt;license-p&gt;</monospace>.
+      There are no citations, internal links, or cross references,
+      which would not make sense if copied out of the document.</p>
+          <p><bold>Definition</bold>:
+      Elements of variety <monospace>~COPY</monospace> have tag <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;tt&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, or <monospace>&lt;sup&gt;</monospace>.</p>
+          <p><bold>Definition</bold>:
+      The element set <monospace>{COPYTEXT}</monospace> consists of the elements:</p>
+          <preformat>&lt;a&gt;~OUT
+&lt;b&gt;~COPY
+&lt;i&gt;~COPY
+&lt;tt&gt;~COPY
+&lt;sub&gt;~COPY
+&lt;sup&gt;~COPY</preformat>
+          <p><bold>Criterion #11694</bold>:
+      Elements of variety <monospace>~COPY</monospace> contain mixed content with all child elements from the set
+      <monospace>{COPYTEXT}</monospace>.</p>
+          <p><italic>Comment</italic>: The <monospace>{COPYTEXT}</monospace> element set is motivated by interoperability with Crossref,
+      which uses the <ext-link ext-link-type="uri" xlink:href="https://jats.nlm.nih.gov/publishing/tag-library/1.4/element/copyright-statement.html">JATS publishing schema for <monospace>&lt;copyright-statement&gt;</monospace></ext-link>.</p>
+        </sec>
         <sec id="hypertext">
           <title>Hypertext</title>
           <p><bold>Definition</bold>:
@@ -367,17 +406,15 @@ by independent websites using Baseprint-compatible software.</p>
           <title>Other elements</title>
           <sec id="a">
             <title>&lt;a&gt;</title>
-            <p><bold>Criterion #13984</bold>:
-        <monospace>&lt;a&gt;</monospace> elements have an <monospace>href=</monospace> attribute.</p>
-            <p><bold>Criterion #12109</bold>:
-        <monospace>&lt;a&gt;</monospace> has no attributes other than <monospace>href=</monospace> and (optional) <monospace>rel=</monospace>.</p>
             <p><bold>Criterion #19871</bold>:
         <monospace>&lt;a&gt;</monospace> contains mixed content with all child elements from the set <monospace>{HYPOTEXT}</monospace>.</p>
+            <p><bold>Criterion #10107</bold>:
+        <monospace>&lt;a&gt;</monospace> elements are of variety <monospace>&lt;a&gt;~OUT</monospace> or <monospace>&lt;a&gt;~IN</monospace>.</p>
             <p><bold>Criterion #17248</bold>:
-        <monospace>&lt;a&gt;</monospace> elements without an <monospace>rel=</monospace> attribute have attribute <monospace>href=</monospace> equal to a &#8216;#&#8217; (hash
-        symbol) followed by an identifier of the document (value <monospace>id=</monospace> attribute of another element).</p>
+        <monospace>&lt;a&gt;~IN</monospace> elements have only attribute <monospace>href=</monospace> and it equals a &#8216;#&#8217; (hash symbol)
+        followed by the value of an <monospace>id=</monospace> attribute of another element.</p>
             <p><bold>Criterion #11997</bold>:
-        <monospace>&lt;a&gt;</monospace> elements with attribute <monospace>rel="external"</monospace> have attribute <monospace>href=</monospace> equal to an
+        <monospace>&lt;a&gt;~OUT</monospace> elements have only attribute <monospace>rel="external"</monospace> and attribute <monospace>href=</monospace> equal to an
         <monospace>https:</monospace> or <monospace>http:</monospace> URL.</p>
             <p>The <ext-link ext-link-type="uri" xlink:href="https://html.spec.whatwg.org/multipage/links.html#link-type-external">HTML Living Standard</ext-link><sup>
                 <xref rid="ref-html" ref-type="bibr">6</xref>
@@ -387,7 +424,7 @@ by independent websites using Baseprint-compatible software.</p>
         specify <monospace>rel="external"</monospace>.</p>
           </sec>
           <sec id="br">
-            <title>&lt;br&gt;</title>
+            <title>&lt;br/&gt;</title>
             <p><bold>Criterion #18396</bold>:
         <monospace>&lt;br&gt;</monospace> elements have no attributes and contain empty content.</p>
           </sec>
@@ -550,17 +587,19 @@ by independent websites using Baseprint-compatible software.</p>
             <p><monospace>(&lt;h6&gt;)? ({P_LEVEL})* (&lt;section&gt;~6)*</monospace></p>
           </sec>
           <sec id="h2-h3-h4-h5-h6">
-            <title>&lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;,</title>
+            <title>&lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;</title>
             <p><bold>Criterion #10699</bold>:
         <monospace>&lt;h2&gt;</monospace>, <monospace>&lt;h3&gt;</monospace>, <monospace>&lt;h4&gt;</monospace>, <monospace>&lt;h5&gt;</monospace>, and <monospace>&lt;h6&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #14064</bold>:
+        <monospace>&lt;h2&gt;</monospace>, <monospace>&lt;h3&gt;</monospace>, <monospace>&lt;h4&gt;</monospace>, <monospace>&lt;h5&gt;</monospace>, and <monospace>&lt;h6&gt;</monospace> elements contain mixed content with each child
+        element either <monospace>&lt;br/&gt;</monospace> or of the element set <monospace>{HYPERTEXT}</monospace>.</p>
           </sec>
           <sec id="title">
             <title>&lt;title&gt;</title>
             <p><bold>Criterion #15129</bold>:
         <monospace>&lt;title&gt;</monospace> elements have no attributes.</p>
-            <p><bold>Criterion #18183</bold>:
-        <monospace>&lt;title&gt;</monospace> elements contain mixed content with each child element either <monospace>&lt;br&gt;</monospace> or from
-        the set <monospace>{HYPERTEXT}</monospace>.</p>
+            <p><bold>Criterion #19904</bold>:
+        <monospace>&lt;title&gt;</monospace> elements contain text-only content.</p>
           </sec>
         </sec>
       </sec>
@@ -573,18 +612,18 @@ by independent websites using Baseprint-compatible software.</p>
             <p><bold>Criterion #15574</bold>:
         <monospace>&lt;title-group&gt;</monospace> has no attributes.</p>
             <p><bold>Criterion #19365</bold>:
-        <monospace>&lt;title-group&gt;</monospace> contains element-only content with exactly one child element <monospace>&lt;article-title&gt;</monospace>.</p>
+        <monospace>&lt;title-group&gt;</monospace> contains element-only content with exactly one child element
+        <monospace>&lt;article-title&gt;~SELF</monospace>.</p>
           </sec>
           <sec id="article-title-1">
             <title>&lt;article-title&gt;</title>
             <p><bold>Criterion #17019</bold>:
-        <monospace>&lt;article-title&gt;</monospace> has no attributes.</p>
+        <monospace>&lt;article-title&gt;</monospace> elements have no attributes.</p>
+            <p><bold>Criterion #10037</bold>:
+        <monospace>&lt;article-title&gt;</monospace> elements are either <monospace>&lt;article-title&gt;~SELF</monospace> or <monospace>&lt;article-title&gt;~REF</monospace>.</p>
             <p><bold>Criterion #11294</bold>:
-        <monospace>&lt;article-title&gt;</monospace> contains mixed content with child elements from the set:</p>
-            <preformat>&lt;b&gt;~HYPO
-&lt;i&gt;~HYPO
-&lt;sub&gt;~HYPO
-&lt;sup&gt;~HYPO</preformat>
+        <monospace>&lt;article-title&gt;~SELF</monospace> contains mixed content with child elements from the set
+        <monospace>{MINITEXT}</monospace>.</p>
           </sec>
         </sec>
         <sec id="contributors">
@@ -656,8 +695,8 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;copyright-statement&gt;</title>
             <p><bold>Criterion #13932</bold>:
         <monospace>&lt;copyright-statement&gt;</monospace> has no attributes.</p>
-            <p><bold>Criterion #13317</bold>:
-        <monospace>&lt;copyright-statement&gt;</monospace> contains mixed content with child elements of set <monospace>{HYPERTEXT}</monospace>.</p>
+            <p><bold>Criterion #17441</bold>:
+        <monospace>&lt;copyright-statement&gt;</monospace> contains mixed content with child elements of set <monospace>{COPYTEXT}</monospace>.</p>
           </sec>
           <sec id="license">
             <title>&lt;license&gt;</title>
@@ -678,8 +717,8 @@ by independent websites using Baseprint-compatible software.</p>
             <title>&lt;license-p&gt;</title>
             <p><bold>Criterion #10671</bold>:
         <monospace>&lt;license-p&gt;</monospace> has no attributes.</p>
-            <p><bold>Criterion #11028</bold>:
-        <monospace>&lt;license-p&gt;</monospace> contains mixed content with child elements of set <monospace>{HYPERTEXT}</monospace>.</p>
+            <p><bold>Criterion #10974</bold>:
+        <monospace>&lt;license-p&gt;</monospace> contains mixed content with child elements of set <monospace>{COPYTEXT}</monospace>.</p>
           </sec>
           <sec id="alilicense_ref">
             <title>&lt;ali:license_ref&gt;</title>
@@ -778,7 +817,7 @@ by independent websites using Baseprint-compatible software.</p>
         <monospace>&lt;element-citation&gt;</monospace> elements have no attributes.</p>
             <p><bold>Criterion #14559</bold>:
         <monospace>&lt;element-citation&gt;</monospace> contains element-only content with child elements from the set:</p>
-            <preformat>&lt;article-title&gt;
+            <preformat>&lt;article-title&gt;~REF
 &lt;comment&gt;
 &lt;date-in-citation&gt;
 &lt;day&gt;
@@ -820,8 +859,7 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;uri&gt;
 &lt;volume&gt;</preformat>
             <p><bold>Criterion #10807</bold>:
-        <monospace>&lt;article-title&gt;</monospace> elements, <italic>when under</italic> <monospace>&lt;element-citation&gt;</monospace>, contain text-only content.</p>
-            <p><bold>Note:</bold> Criterion #10807 does not apply to <monospace>&lt;article-title&gt;</monospace> under <monospace>&lt;title-group&gt;</monospace>.</p>
+        <monospace>&lt;article-title&gt;~REF</monospace> elements contain text-only content.</p>
           </sec>
           <sec id="person-group">
             <title>&lt;person-group&gt;</title>
@@ -929,9 +967,10 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;list&gt;        &lt;ul&gt; &lt;ol&gt;
 &lt;monospace&gt;   &lt;tt&gt;
 &lt;preformat&gt;   &lt;pre&gt;
+&lt;sec&gt;         &lt;section&gt;
 &lt;term&gt;        &lt;dt&gt;
-&lt;title&gt;       &lt;h2&gt; &lt;h3&gt; &lt;h4&gt; &lt;h5&gt; &lt;h6&gt; (under &lt;section&gt;)
-&lt;xref&gt;        &lt;a&gt;   (only if xref ref-type is not "bibr")</preformat>
+&lt;title&gt;       &lt;h2&gt; &lt;h3&gt; &lt;h4&gt; &lt;h5&gt; &lt;h6&gt; (under &lt;section&gt;, not &lt;ref-list&gt;)
+&lt;xref&gt;        &lt;a&gt;   (only when xref ref-type is not "bibr")</preformat>
         </sec>
         <sec id="li-and-dd-child-elements">
           <title>&lt;li&gt; and &lt;dd&gt; child elements</title>
@@ -953,15 +992,43 @@ by independent websites using Baseprint-compatible software.</p>
       The reference XSL transform file will transform Baseprint XML to JATS XML that does
       include non-HTML-standard JATS <monospace>&lt;p&gt;</monospace> elements required by the NISO standard.</p>
         </sec>
-        <sec id="restriction-of-article-title">
-          <title>Restriction of &lt;article-title&gt;</title>
-          <p>Edition 2.1 changes the criteria on <monospace>&lt;article-title&gt;</monospace> to only contain the elements
-      <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>. See <ext-link ext-link-type="uri" xlink:href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</ext-link> for the rationale.</p>
-        </sec>
-        <sec id="restriction-of-abstract">
-          <title>Restriction of &lt;abstract&gt;</title>
-          <p>Criteria for <monospace>&lt;abstract&gt;</monospace> content now require only <monospace>{P_LEVEL}</monospace> child elements and no
-      subsections.</p>
+        <sec id="stronger-content-criteria">
+          <title>Stronger content criteria</title>
+          <def-list>
+            <def-item>
+              <term>&lt;article-title&gt;</term>
+              <def>
+                <p>changed to only contain the elements <monospace>&lt;b&gt;</monospace>, <monospace>&lt;i&gt;</monospace>, <monospace>&lt;sub&gt;</monospace>, and <monospace>&lt;sup&gt;</monospace>.
+            See <ext-link ext-link-type="uri" xlink:href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</ext-link> for the rationale.</p>
+              </def>
+            </def-item>
+            <def-item>
+              <term>&lt;abstract&gt;</term>
+              <def>
+                <p>content criteria require only <monospace>{P_LEVEL}</monospace> child elements and no subsections.</p>
+              </def>
+            </def-item>
+            <def-item>
+              <term>&lt;copyright-statement&gt;</term>
+              <def>
+                <p>changed to contain <monospace>{COPYTEXT}</monospace> instead of <monospace>{HYPERTEXT}</monospace>.</p>
+              </def>
+            </def-item>
+            <def-item>
+              <term>&lt;license-p&gt;</term>
+              <def>
+                <p>changed to contain <monospace>{COPYTEXT}</monospace> instead of <monospace>{HYPERTEXT}</monospace>.</p>
+              </def>
+            </def-item>
+            <def-item>
+              <term>&lt;title&gt;</term>
+              <def>
+                <p>changed to only contain text-only content.
+            With edition 2, <monospace>&lt;title&gt;</monospace> is only found under <monospace>&lt;ref-list&gt;</monospace>
+            as section titles use HTML elements <monospace>&lt;h2&gt;</monospace> &#8230; <monospace>&lt;h6&gt;</monospace>.</p>
+              </def>
+            </def-item>
+          </def-list>
         </sec>
         <sec id="xml-namespace-not-required">
           <title>XML namespace not required</title>
