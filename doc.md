@@ -663,14 +663,6 @@ regular expression:
 `<h2>`, `<h3>`, `<h4>`, `<h5>`, and `<h6>` elements contain mixed content with each child
 element either `<br/>` or of the element set `{HYPERTEXT}`.
 
-##### \<title>
-
-**Criterion #15129**:
-`<title>` elements have no attributes.
-
-**Criterion #19904**:
-`<title>` elements contain text-only content.
-
 <!-- copybreak off -->
 
 
@@ -889,10 +881,7 @@ with an `id=` attribute value matching the `rid=` attribute value of the `<xref>
 `<ref-list>` has no attributes.
 
 **Criterion #12136**:
-`<ref-list>` contains element-only content with a sequence of child elements matching the
-regular expression:
-
-`(<title>)? (<ref>)*`
+`<ref-list>` contains element-only content with only `<ref>` child elements.
 
 ##### \<ref>
 
@@ -1088,7 +1077,7 @@ JATS          XHTML
 <preformat>   <pre>
 <sec>         <section>
 <term>        <dt>
-<title>       <h2> <h3> <h4> <h5> <h6> (under <section>, not <ref-list>)
+<title>       <h2> <h3> <h4> <h5> <h6>
 <xref>        <a>   (only when xref ref-type is not "bibr")
 ```
 
@@ -1129,15 +1118,20 @@ include non-HTML-standard JATS `<p>` elements required by the NISO standard.
 \<license-p>
 : changed to contain `{COPYTEXT}` instead of `{HYPERTEXT}`.
 
-\<title>
-: changed to only contain text-only content.
-  With edition 2, `<title>` is only found under `<ref-list>`
-  as section titles use HTML elements `<h2>` ... `<h6>`.
-
 #### XML namespace not required
 
 In edition 2, `<license_ref>` is an acceptable alternative to `<ali:license_ref>`, which
 is the only Baseprint XML element that would require an XML namespace if used.
+
+#### Elimination ref-list/title
+
+`<title>` under `<ref-list>` has been removed. This tag name is also used in HTML.
+This title has only been set to "References" in both all existing Baseprint documents
+and the vast majority of recent PubMed Central JATS XML files.
+This element also resulted in a more complex parsing model being at the same level as a
+sequence of `<ref>` child elements.
+If customization of reference title is ever needed, a different tag name and
+location are likely to be chosen for Baseprint XML.
 
 #### Misc
 
