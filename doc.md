@@ -1,4 +1,4 @@
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 ---
 title: "Baseprint Document Format (BpDF)"
@@ -7,12 +7,12 @@ abstract: |
 
     The Baseprint Document Format
     is the digital encoding of a Baseprint document snapshot.
-    These snapshots are immutable and
+    These immutable snapshots
     are referenced using a [SoftWare Hash IDentifier (SWHID)](https://swhid.org).
     This format is designed for self-archived scientific
     and technical documents for long-term redistribution.
-    The XML component of the format is a small subset of
-    [JATS XML](https://jats.nlm.nih.gov/)[@jats] and XHTML.
+    BpDF contains an `article.xml` file that is HTML compatible and
+    transformable to [JATS XML](https://jats.nlm.nih.gov/)[@jats].
     After archiving,
     document snapshots are rendered into HTML pages and PDF files
     by independent websites using Baseprint-compatible software.
@@ -209,26 +209,30 @@ that tag, depending on the context. When an element "has a tag" it never refers 
 
 #### Content
 
-The contents of XML elements fall into four categories:
+The contents of Baseprint XML elements fall into five categories:
 
-empty
-: content of an empty XML element (e.g., `<br/>`)
+mixed content
+: both text and child elements
 
-text-only
-: content of non-whitespace text with no child elements
+element-only content
+: only child elements
 
-element-only
-: content of only child elements (and optional whitespace text)
+text-only content
+: text with no child elements
 
-mixed
-: content of both text and child elements
+whitespace-only content
+: non-empty whitespace content between a start and end tags (e.g., `<etal> </etal>`)
+
+HTML void element[@void_element; @html] pseudo-content
+: the absence of content implied by an element serialized in the XML self-closing tag
+  syntax (e.g., `<br/>`)
 
 Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
 (10), vertical tab (11), formfeed (12), carriage return (13), and space (32).
 
 <!-- copybreak off -->
 
-#### Element Varieties
+#### Element varieties
 
 Some XML elements with the same tag have differing semantics depending on their location
 within an XML document tree.
@@ -303,10 +307,10 @@ This file is in the Baseprint XML format described in this specification.
 The directory (Git tree) entry for `article.xml` has a normal file mode in Git and does not
 have the executable bit set.
 
-<!-- copybreak off -->
+<!-- copybreak on -->
 
 
-### XML Basics
+### XML/HTML/CSS interoperability
 
 **Criterion #15719**:
 The file `article.xml` is "well-formed" per the [XML 1.0](https://www.w3.org/TR/REC-xml/) W3C recommendation.
@@ -314,18 +318,48 @@ The file `article.xml` is "well-formed" per the [XML 1.0](https://www.w3.org/TR/
 **Criterion #13799**:
 There is no parsing dependency on any external XML DTD.
 
-**Criterion #10192**:
-The XML prefix `ali` is used for any and all elements and attributes using the XML
-namespace `http://www.niso.org/schemas/ali/1.0/` by relying on the declaration
-```
-xmlns:ali="http://www.niso.org/schemas/ali/1.0/"
-```
-*Note:* A [similar restriction is specified
-](https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-ali.html)
-by NISO JATS [@jats_authoring].
+**Criterion #13652**:
+The only XML/HTML/SGML entities used are SGML numeric character references and the five
+predefined entities of XML.
 
-*Note:* Using XML namespaces is only needed if the XML file opts to use the XML
-element `<ali:license_ref>` instead of `<license_ref>`.
+*Note*: Use of convenient HTML entities such as `&nbsp;` and `&copy;` do not satisfy
+criterion #13652.
+
+**Criterion #14199**:
+No XML namespaces are necessary to parse `article.xml`.
+
+*Comment:* XML namespace prefixes are not compatible with CSS.
+JATS elements using XML namespace prefixes are avoided in
+Baseprint XML by using HTML tags rather than JATS tags for HTML-like elements and tag name
+`<license-ref>` instead of `<ali:license_ref>`.
+
+**Criterion #18620**:
+HTML void elements[@void_element; @html] (e.g., `<br/>`, `<col />`, ...) are serialized
+with the self-closing XML syntax and not a pair of adjacent start and end tags (e.g.,
+`<br/>` and not `<br></br>`).
+
+**Criterion #15105**:
+No elements other than HTML void elements[@void_element; @html] use the self-closing XML
+syntax (e.g., `<br/>`).
+
+**Criterion #11095**:
+No XML elements are serialized as a pair of adjacent start and end tags (e.g.,
+`<etal></etal>`). All XML elements that are not HTML void elements contain
+some whitespace content (e.g. `<etal> </etal>`) or some text or some child elements.
+
+*Comment:* The equivalency in XML of self-closing tag syntax (e.g., `<br/>`) and empty
+content between start/close tags syntax (e.g., `<br></br>`) is incompatible with HTML
+parsers. HTML parsers ignore the `/>` syntax and only rely on tag name to determine when
+to expect a close tag. Some XML parsers do not support distinguishing between these two
+XML syntaxes. Avoiding empty content between start/close tags avoids these parsing
+incompatibilities.
+
+
+**Criterion #10825**:
+The element tree structure and contents of `article.xml` are preserved when parsed as
+type `text/html` by the `DOMParser` object of the Web API of widely available web browsers.
+
+*Note:* Criterion #10825 above is implied by the rest of the criteria of this specification.
 
 <!-- copybreak on -->
 
@@ -459,7 +493,7 @@ specify `rel="external"`.
 ##### \<br/>
 
 **Criterion #18396**:
-`<br>` elements have no attributes and contain empty content.
+`<br/>` elements have no attributes and contain empty content.
 
 ##### \<code>
 
@@ -562,7 +596,7 @@ related criteria have been dropped.
 `<article>` contains element-only content with a sequence of child elements matching the regular
 expression:
 ```
-(<front>) (<body>) (<back>)?
+(<front>) (<article-body>) (<back>)?
 ```
 
 ##### \<front>
@@ -624,13 +658,13 @@ expression:
 `<abstract>` contains element-only content with all child elements from the set
 `{P_LEVEL}`.
 
-##### \<body>
+##### \<article-body>
 
 **Criterion #19029**:
-`<body>` has no attributes.
+`<article-body>` has no attributes.
 
 **Criterion #11247**:
-`<body>` contains element-only content with a sequence of child elements matching the regular
+`<article-body>` contains element-only content with a sequence of child elements matching the regular
 expression:
 
 `({P_LEVEL})* (<section>~2)*`
@@ -915,7 +949,7 @@ with an `id=` attribute value matching the `rid=` attribute value of the `<xref>
 <pub-id>
 <publisher-loc>
 <publisher-name>
-<source>
+<source-title>
 <uri>
 <volume>
 <year>
@@ -942,7 +976,7 @@ text-only content:
 <lpage>
 <publisher-loc>
 <publisher-name>
-<source>
+<source-title>
 <uri>
 <volume>
 ```
@@ -1034,22 +1068,6 @@ valid PubMed Identification Number.
 
 <!-- copybreak on -->
 
-Discussion
-----------
-
-### XML Namespaces
-
-An XML file can satisfy all the criteria of this specification without using XML
-namespaces[@xmlns]. If an XML file has a `<license_ref>` element it can satisfy the
-applicable criteria with or without using the namespace:
-
-`http://www.niso.org/schemas/ali/1.0/`
-
-When transforming to NISO JATS XML, the `ali` XML namespace prefix must be added if not
-already used with `license_ref`. 
-
-<!-- copybreak on -->
-
 
 Changes
 -------
@@ -1081,6 +1099,17 @@ JATS          XHTML
 <xref>        <a>   (only when xref ref-type is not "bibr")
 ```
 
+#### JATS tags renamed for HTML/CSS-compatibility
+
+The following JATS tags are renamed:
+
+* `<body>` to `<article-body>`
+* `<source>` to `<source-title>`
+* `<ali:license_ref>` to `<license-ref>`
+
+These renames achieve HTML/CSS/XML interoperability by satifiying criteria #10825,
+#18620, and #14199.
+
 #### \<li> and \<dd> child elements
 
 Consistent with the HTML standard,
@@ -1090,7 +1119,7 @@ The reference XSL transform file will transform Baseprint XML to JATS XML,
 moving required child elements to be under non-HTML JATS `<p>` child elements as required by
 NISO JATS.
 
-#### Elimination of Non-HTML JATS \<p>
+#### Elimination of non-HTML JATS \<p>
 
 The JATS-specific `<p>~WRAPPER` element variety and all related criteria have been
 eliminated or replaced.
@@ -1117,11 +1146,6 @@ include non-HTML-standard JATS `<p>` elements required by the NISO standard.
 
 \<license-p>
 : changed to contain `{COPYTEXT}` instead of `{HYPERTEXT}`.
-
-#### XML namespace not required
-
-In edition 2, `<license_ref>` is an acceptable alternative to `<ali:license_ref>`, which
-is the only Baseprint XML element that would require an XML namespace if used.
 
 #### Elimination ref-list/title
 

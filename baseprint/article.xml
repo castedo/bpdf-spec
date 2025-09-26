@@ -25,14 +25,14 @@
         <p><b>DOCUMENT TYPE</b>: Living Technical Specification</p>
         <p>The Baseprint Document Format
 is the digital encoding of a Baseprint document snapshot.
-These snapshots are immutable and
+These immutable snapshots
 are referenced using a <a rel="external" href="https://swhid.org">SoftWare Hash IDentifier (SWHID)</a>.
 This format is designed for self-archived scientific
 and technical documents for long-term redistribution.
-The XML component of the format is a small subset of
-<a rel="external" href="https://jats.nlm.nih.gov/">JATS XML</a><sup>
+BpDF contains an <tt>article.xml</tt> file that is HTML compatible and
+transformable to <a rel="external" href="https://jats.nlm.nih.gov/">JATS XML</a><sup>
             <xref rid="ref-jats" ref-type="bibr">1</xref>
-          </sup> and XHTML.
+          </sup>.
 After archiving,
 document snapshots are rendered into HTML pages and PDF files
 by independent websites using Baseprint-compatible software.</p>
@@ -211,30 +211,40 @@ by independent websites using Baseprint-compatible software.</p>
         </section>
         <section id="content">
           <h4>Content</h4>
-          <p>The contents of XML elements fall into four categories:</p>
+          <p>The contents of Baseprint XML elements fall into five categories:</p>
           <dl>
             <div>
-              <dt>empty</dt>
+              <dt>mixed content</dt>
               <dd>
-                <p>content of an empty XML element (e.g., <tt>&lt;br/&gt;</tt>)</p>
+                <p>both text and child elements</p>
               </dd>
             </div>
             <div>
-              <dt>text-only</dt>
+              <dt>element-only content</dt>
               <dd>
-                <p>content of non-whitespace text with no child elements</p>
+                <p>only child elements</p>
               </dd>
             </div>
             <div>
-              <dt>element-only</dt>
+              <dt>text-only content</dt>
               <dd>
-                <p>content of only child elements (and optional whitespace text)</p>
+                <p>text with no child elements</p>
               </dd>
             </div>
             <div>
-              <dt>mixed</dt>
+              <dt>whitespace-only content</dt>
               <dd>
-                <p>content of both text and child elements</p>
+                <p>non-empty whitespace content between a start and end tags (e.g., <tt>&lt;etal&gt; &lt;/etal&gt;</tt>)</p>
+              </dd>
+            </div>
+            <div>
+              <dt>HTML void element<sup>
+                  <xref rid="ref-void_element" ref-type="bibr">6</xref>,
+                  <xref rid="ref-html" ref-type="bibr">7</xref>
+                </sup> pseudo-content</dt>
+              <dd>
+                <p>the absence of content implied by an element serialized in the XML self-closing tag
+            syntax (e.g., <tt>&lt;br/&gt;</tt>)</p>
               </dd>
             </div>
           </dl>
@@ -242,7 +252,7 @@ by independent websites using Baseprint-compatible software.</p>
       (10), vertical tab (11), formfeed (12), carriage return (13), and space (32).</p>
         </section>
         <section id="element-varieties">
-          <h4>Element Varieties</h4>
+          <h4>Element varieties</h4>
           <p>Some XML elements with the same tag have differing semantics depending on their location
       within an XML document tree.
       For this reason, some criteria in this specification are specified in terms of <i>element varieties</i>.
@@ -308,22 +318,50 @@ by independent websites using Baseprint-compatible software.</p>
     The directory (Git tree) entry for <tt>article.xml</tt> has a normal file mode in Git and does not
     have the executable bit set.</p>
       </section>
-      <section id="xml-basics">
-        <h3>XML Basics</h3>
+      <section id="xmlhtmlcss-interoperability">
+        <h3>XML/HTML/CSS interoperability</h3>
         <p><b>Criterion #15719</b>:
     The file <tt>article.xml</tt> is &#8220;well-formed&#8221; per the <a rel="external" href="https://www.w3.org/TR/REC-xml/">XML 1.0</a> W3C recommendation.</p>
         <p><b>Criterion #13799</b>:
     There is no parsing dependency on any external XML DTD.</p>
-        <p><b>Criterion #10192</b>:
-    The XML prefix <tt>ali</tt> is used for any and all elements and attributes using the XML
-    namespace <tt>http://www.niso.org/schemas/ali/1.0/</tt> by relying on the declaration</p>
-        <pre>xmlns:ali="http://www.niso.org/schemas/ali/1.0/"</pre>
-        <p><i>Note:</i> A <a rel="external" href="https://jats.nlm.nih.gov/articleauthoring/tag-library/1.4/attribute/xmlns-ali.html">similar restriction is specified</a>
-    by NISO JATS<sup>
-            <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
-          </sup>.</p>
-        <p><i>Note:</i> Using XML namespaces is only needed if the XML file opts to use the XML
-    element <tt>&lt;ali:license_ref&gt;</tt> instead of <tt>&lt;license_ref&gt;</tt>.</p>
+        <p><b>Criterion #13652</b>:
+    The only XML/HTML/SGML entities used are SGML numeric character references and the five
+    predefined entities of XML.</p>
+        <p><i>Note</i>: Use of convenient HTML entities such as <tt>&amp;nbsp;</tt> and <tt>&amp;copy;</tt> do not satisfy
+    criterion #13652.</p>
+        <p><b>Criterion #14199</b>:
+    No XML namespaces are necessary to parse <tt>article.xml</tt>.</p>
+        <p><i>Comment:</i> XML namespace prefixes are not compatible with CSS.
+    JATS elements using XML namespace prefixes are avoided in
+    Baseprint XML by using HTML tags rather than JATS tags for HTML-like elements and tag name
+    <tt>&lt;license-ref&gt;</tt> instead of <tt>&lt;ali:license_ref&gt;</tt>.</p>
+        <p><b>Criterion #18620</b>:
+    HTML void elements<sup>
+            <xref rid="ref-void_element" ref-type="bibr">6</xref>,
+            <xref rid="ref-html" ref-type="bibr">7</xref>
+          </sup> (e.g., <tt>&lt;br/&gt;</tt>, <tt>&lt;col /&gt;</tt>, &#8230;) are serialized
+    with the self-closing XML syntax and not a pair of adjacent start and end tags (e.g.,
+    <tt>&lt;br/&gt;</tt> and not <tt>&lt;br&gt;&lt;/br&gt;</tt>).</p>
+        <p><b>Criterion #15105</b>:
+    No elements other than HTML void elements<sup>
+            <xref rid="ref-void_element" ref-type="bibr">6</xref>,
+            <xref rid="ref-html" ref-type="bibr">7</xref>
+          </sup> use the self-closing XML
+    syntax (e.g., <tt>&lt;br/&gt;</tt>).</p>
+        <p><b>Criterion #11095</b>:
+    No XML elements are serialized as a pair of adjacent start and end tags (e.g.,
+    <tt>&lt;etal&gt;&lt;/etal&gt;</tt>). All XML elements that are not HTML void elements contain
+    some whitespace content (e.g.&#160;<tt>&lt;etal&gt; &lt;/etal&gt;</tt>) or some text or some child elements.</p>
+        <p><i>Comment:</i> The equivalency in XML of self-closing tag syntax (e.g., <tt>&lt;br/&gt;</tt>) and empty
+    content between start/close tags syntax (e.g., <tt>&lt;br&gt;&lt;/br&gt;</tt>) is incompatible with HTML
+    parsers. HTML parsers ignore the <tt>/&gt;</tt> syntax and only rely on tag name to determine when
+    to expect a close tag. Some XML parsers do not support distinguishing between these two
+    XML syntaxes. Avoiding empty content between start/close tags avoids these parsing
+    incompatibilities.</p>
+        <p><b>Criterion #10825</b>:
+    The element tree structure and contents of <tt>article.xml</tt> are preserved when parsed as
+    type <tt>text/html</tt> by the <tt>DOMParser</tt> object of the Web API of widely available web browsers.</p>
+        <p><i>Note:</i> Criterion #10825 above is implied by the rest of the criteria of this specification.</p>
       </section>
       <section id="html-content">
         <h3>HTML content</h3>
@@ -417,7 +455,7 @@ by independent websites using Baseprint-compatible software.</p>
         <tt>&lt;a&gt;~OUT</tt> elements have only attribute <tt>rel="external"</tt> and attribute <tt>href=</tt> equal to an
         <tt>https:</tt> or <tt>http:</tt> URL.</p>
             <p>The <a rel="external" href="https://html.spec.whatwg.org/multipage/links.html#link-type-external">HTML Living Standard</a><sup>
-                <xref rid="ref-html" ref-type="bibr">6</xref>
+                <xref rid="ref-html" ref-type="bibr">7</xref>
               </sup>
         and the <a rel="external" href="https://www.iana.org/assignments/link-relations/link-relations.xhtml">Internet Assigned Numbers
         Authority</a>
@@ -426,7 +464,7 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="br">
             <h5>&lt;br/&gt;</h5>
             <p><b>Criterion #18396</b>:
-        <tt>&lt;br&gt;</tt> elements have no attributes and contain empty content.</p>
+        <tt>&lt;br/&gt;</tt> elements have no attributes and contain empty content.</p>
           </section>
           <section id="code">
             <h5>&lt;code&gt;</h5>
@@ -512,7 +550,7 @@ by independent websites using Baseprint-compatible software.</p>
             <p><b>Criterion #16641</b>:
         <tt>&lt;article&gt;</tt> contains element-only content with a sequence of child elements matching the regular
         expression:</p>
-            <pre>(&lt;front&gt;) (&lt;body&gt;) (&lt;back&gt;)?</pre>
+            <pre>(&lt;front&gt;) (&lt;article-body&gt;) (&lt;back&gt;)?</pre>
           </section>
           <section id="front">
             <h5>&lt;front&gt;</h5>
@@ -563,12 +601,12 @@ by independent websites using Baseprint-compatible software.</p>
         <tt>&lt;abstract&gt;</tt> contains element-only content with all child elements from the set
         <tt>{P_LEVEL}</tt>.</p>
           </section>
-          <section id="body">
-            <h5>&lt;body&gt;</h5>
+          <section id="article-body">
+            <h5>&lt;article-body&gt;</h5>
             <p><b>Criterion #19029</b>:
-        <tt>&lt;body&gt;</tt> has no attributes.</p>
+        <tt>&lt;article-body&gt;</tt> has no attributes.</p>
             <p><b>Criterion #11247</b>:
-        <tt>&lt;body&gt;</tt> contains element-only content with a sequence of child elements matching the regular
+        <tt>&lt;article-body&gt;</tt> contains element-only content with a sequence of child elements matching the regular
         expression:</p>
             <p><tt>({P_LEVEL})* (&lt;section&gt;~2)*</tt></p>
           </section>
@@ -824,7 +862,7 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;pub-id&gt;
 &lt;publisher-loc&gt;
 &lt;publisher-name&gt;
-&lt;source&gt;
+&lt;source-title&gt;
 &lt;uri&gt;
 &lt;volume&gt;
 &lt;year&gt;</pre>
@@ -846,7 +884,7 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;lpage&gt;
 &lt;publisher-loc&gt;
 &lt;publisher-name&gt;
-&lt;source&gt;
+&lt;source-title&gt;
 &lt;uri&gt;
 &lt;volume&gt;</pre>
             <p><b>Criterion #10807</b>:
@@ -923,20 +961,6 @@ by independent websites using Baseprint-compatible software.</p>
         </section>
       </section>
     </section>
-    <section id="discussion">
-      <h2>Discussion</h2>
-      <section id="xml-namespaces">
-        <h3>XML Namespaces</h3>
-        <p>An XML file can satisfy all the criteria of this specification without using XML
-    namespaces<sup>
-            <xref rid="ref-xmlns" ref-type="bibr">7</xref>
-          </sup>. If an XML file has a <tt>&lt;license_ref&gt;</tt> element it can satisfy the
-    applicable criteria with or without using the namespace:</p>
-        <p><tt>http://www.niso.org/schemas/ali/1.0/</tt></p>
-        <p>When transforming to NISO JATS XML, the <tt>ali</tt> XML namespace prefix must be added if not
-    already used with <tt>license_ref</tt>.</p>
-      </section>
-    </section>
     <section id="changes">
       <h2>Changes</h2>
       <section id="from-edition-1-to-2">
@@ -963,6 +987,23 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;title&gt;       &lt;h2&gt; &lt;h3&gt; &lt;h4&gt; &lt;h5&gt; &lt;h6&gt;
 &lt;xref&gt;        &lt;a&gt;   (only when xref ref-type is not "bibr")</pre>
         </section>
+        <section id="jats-tags-renamed-for-htmlcss-compatibility">
+          <h4>JATS tags renamed for HTML/CSS-compatibility</h4>
+          <p>The following JATS tags are renamed:</p>
+          <ul>
+            <li>
+              <p><tt>&lt;body&gt;</tt> to <tt>&lt;article-body&gt;</tt></p>
+            </li>
+            <li>
+              <p><tt>&lt;source&gt;</tt> to <tt>&lt;source-title&gt;</tt></p>
+            </li>
+            <li>
+              <p><tt>&lt;ali:license_ref&gt;</tt> to <tt>&lt;license-ref&gt;</tt></p>
+            </li>
+          </ul>
+          <p>These renames achieve HTML/CSS/XML interoperability by satifiying criteria #10825,
+      #18620, and #14199.</p>
+        </section>
         <section id="li-and-dd-child-elements">
           <h4>&lt;li&gt; and &lt;dd&gt; child elements</h4>
           <p>Consistent with the HTML standard,
@@ -973,7 +1014,7 @@ by independent websites using Baseprint-compatible software.</p>
       NISO JATS.</p>
         </section>
         <section id="elimination-of-non-html-jats-p">
-          <h4>Elimination of Non-HTML JATS &lt;p&gt;</h4>
+          <h4>Elimination of non-HTML JATS &lt;p&gt;</h4>
           <p>The JATS-specific <tt>&lt;p&gt;~WRAPPER</tt> element variety and all related criteria have been
       eliminated or replaced.
       The <tt>&lt;p&gt;</tt> element in this edition 2 is equivalent to the <tt>&lt;p&gt;~HTML</tt> element variety
@@ -1012,11 +1053,6 @@ by independent websites using Baseprint-compatible software.</p>
               </dd>
             </div>
           </dl>
-        </section>
-        <section id="xml-namespace-not-required">
-          <h4>XML namespace not required</h4>
-          <p>In edition 2, <tt>&lt;license_ref&gt;</tt> is an acceptable alternative to <tt>&lt;ali:license_ref&gt;</tt>, which
-      is the only Baseprint XML element that would require an XML namespace if used.</p>
         </section>
         <section id="elimination-ref-listtitle">
           <h4>Elimination ref-list/title</h4>
@@ -1138,6 +1174,20 @@ by independent websites using Baseprint-compatible software.</p>
           <uri>https://www.ncbi.nlm.nih.gov/books/NBK540949/</uri>
         </element-citation>
       </ref>
+      <ref id="ref-void_element">
+        <element-citation>
+          <person-group person-group-type="author">
+            <string-name>MDN team</string-name>
+          </person-group>
+          <article-title>Void element</article-title>
+          <date-in-citation content-type="access-date">
+            <year>2025</year>
+            <month>09</month>
+            <day>24</day>
+          </date-in-citation>
+          <uri>https://developer.mozilla.org/en-US/docs/Glossary/Void_element</uri>
+        </element-citation>
+      </ref>
       <ref id="ref-html">
         <element-citation>
           <person-group person-group-type="author">
@@ -1150,27 +1200,6 @@ by independent websites using Baseprint-compatible software.</p>
             <day>14</day>
           </date-in-citation>
           <uri>https://html.spec.whatwg.org/</uri>
-        </element-citation>
-      </ref>
-      <ref id="ref-xmlns">
-        <element-citation>
-          <person-group person-group-type="author">
-            <name>
-              <surname>Bray</surname>
-              <given-names>Tim</given-names>
-            </name>
-            <name>
-              <surname>Hollander</surname>
-              <given-names>Dave</given-names>
-            </name>
-            <name>
-              <surname>Layman</surname>
-              <given-names>Andrew</given-names>
-            </name>
-          </person-group>
-          <article-title>Namespaces in XML 1.0</article-title>
-          <year>1999</year>
-          <uri>https://www.w3.org/TR/1999/REC-xml-names-19990114/</uri>
         </element-citation>
       </ref>
     </ref-list>
