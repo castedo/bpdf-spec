@@ -1,5 +1,6 @@
 input-file: ${.}/doc.md
 bibliography: ${.}/references.bib
+wrap: preserve
 metadata:
   author:
   - surname: Ellerman

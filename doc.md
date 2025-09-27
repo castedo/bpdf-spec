@@ -590,13 +590,14 @@ related criteria have been dropped.
 `<article>` is the root element of the XML document.
 
 **Criterion #10864**:
-`<article>` has no attributes (apart from pseudo-attributes for XML namespaces).
+`<article>` has no attributes.
 
 **Criterion #16641**:
-`<article>` contains element-only content with a sequence of child elements matching the regular
-expression:
+`<article>` contains element-only content with at most one child element per tag from the set:
 ```
-(<front>) (<article-body>) (<back>)?
+<front>
+<article-body>
+<back>
 ```
 
 ##### \<front>
@@ -605,7 +606,7 @@ expression:
 `<front>` has no attributes.
 
 **Criterion #12640**:
-`<front>` contains element-only content with exactly one child element `<article-meta>`.
+`<front>` contains element-only content with at most one child element of `<article-meta>`.
 
 ##### \<article-meta> element tree
 
@@ -613,9 +614,12 @@ expression:
 `<article-meta>` has no attributes.
 
 **Criterion #11553**:
-`<article-meta>` contains element-only content with a sequence of child elements matching the regular expression:
+`<article-meta>` contains element-only content with at most one child element per tag from the set:
 ```
-(<title-group>) (<contrib-group>) (<permissions>)? (<abstract>)
+<title-group>
+<contrib-group>
+<permissions>
+<abstract>
 ```
 
 ##### \<back> element tree
@@ -710,7 +714,7 @@ element either `<br/>` or of the element set `{HYPERTEXT}`.
 `<title-group>` has no attributes.
 
 **Criterion #19365**:
-`<title-group>` contains element-only content with exactly one child element
+`<title-group>` contains element-only content with at most one child element
 `<article-title>~SELF`.
 
 ##### \<article-title>
