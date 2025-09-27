@@ -546,26 +546,30 @@ by independent websites using Baseprint-compatible software.</p>
             <p><b>Criterion #15199</b>:
         <tt>&lt;article&gt;</tt> is the root element of the XML document.</p>
             <p><b>Criterion #10864</b>:
-        <tt>&lt;article&gt;</tt> has no attributes (apart from pseudo-attributes for XML namespaces).</p>
+        <tt>&lt;article&gt;</tt> has no attributes.</p>
             <p><b>Criterion #16641</b>:
-        <tt>&lt;article&gt;</tt> contains element-only content with a sequence of child elements matching the regular
-        expression:</p>
-            <pre>(&lt;front&gt;) (&lt;article-body&gt;) (&lt;back&gt;)?</pre>
+        <tt>&lt;article&gt;</tt> contains element-only content with at most one child element per tag from the set:</p>
+            <pre>&lt;front&gt;
+&lt;article-body&gt;
+&lt;back&gt;</pre>
           </section>
           <section id="front">
             <h5>&lt;front&gt;</h5>
             <p><b>Criterion #14001</b>:
         <tt>&lt;front&gt;</tt> has no attributes.</p>
             <p><b>Criterion #12640</b>:
-        <tt>&lt;front&gt;</tt> contains element-only content with exactly one child element <tt>&lt;article-meta&gt;</tt>.</p>
+        <tt>&lt;front&gt;</tt> contains element-only content with at most one child element of <tt>&lt;article-meta&gt;</tt>.</p>
           </section>
           <section id="article-meta-element-tree">
             <h5>&lt;article-meta&gt; element tree</h5>
             <p><b>Criterion #13284</b>:
         <tt>&lt;article-meta&gt;</tt> has no attributes.</p>
             <p><b>Criterion #11553</b>:
-        <tt>&lt;article-meta&gt;</tt> contains element-only content with a sequence of child elements matching the regular expression:</p>
-            <pre>(&lt;title-group&gt;) (&lt;contrib-group&gt;) (&lt;permissions&gt;)? (&lt;abstract&gt;)</pre>
+        <tt>&lt;article-meta&gt;</tt> contains element-only content with at most one child element per tag from the set:</p>
+            <pre>&lt;title-group&gt;
+&lt;contrib-group&gt;
+&lt;permissions&gt;
+&lt;abstract&gt;</pre>
           </section>
           <section id="back-element-tree">
             <h5>&lt;back&gt; element tree</h5>
@@ -643,7 +647,7 @@ by independent websites using Baseprint-compatible software.</p>
             <p><b>Criterion #15574</b>:
         <tt>&lt;title-group&gt;</tt> has no attributes.</p>
             <p><b>Criterion #19365</b>:
-        <tt>&lt;title-group&gt;</tt> contains element-only content with exactly one child element
+        <tt>&lt;title-group&gt;</tt> contains element-only content with at most one child element
         <tt>&lt;article-title&gt;~SELF</tt>.</p>
           </section>
           <section id="article-title-1">
