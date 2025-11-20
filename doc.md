@@ -252,6 +252,7 @@ ELEMENT TAG      ELEMENT VARIETIES
 <a>              ~OUT    ~IN
 <article-title>  ~SELF   ~REF
 <b>              ~HYPER  ~COPY  ~HYPO  ~MINI
+<div>            ~PARA   ~DITEM
 <i>              ~HYPER  ~COPY  ~HYPO  ~MINI
 <tt>             ~HYPER  ~COPY  ~HYPO
 <sub>            ~HYPER  ~COPY  ~HYPO  ~MINI
@@ -538,8 +539,8 @@ related criteria have been dropped.
 **Criterion #18401**:
 `<li>` elements have no attributes.
 
-**Criterion #13486**:
-`<li>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
+**Criterion #15700**:
+`<li>` elements contain biform content.
 
 ##### \<dl>
 
@@ -547,15 +548,16 @@ related criteria have been dropped.
 `<dl>` elements have no attributes.
 
 **Criterion #19568**:
-`<dl>` elements contain element-only content with only `<div>` child elements.
+`<dl>` elements contain element-only content with only `<div>~DITEM` child elements.
 
-##### \<div> child element of \<dl>
+##### \<div>~DITEM
 
 **Criterion #13056**:
-`<div>` child elements of `<dl>` have no attributes.
+`<div>~DITEM` elements have no attributes.
 
-**Criterion #11744**:
-`<div>` child elements of `<dl>` contain element-only content with child elements of either `<dt>` or `<dd>`.
+**Criterion #14716**:
+`<div>~DITEM` elements contain element-only content of one `<dt>` child element
+followed by zero or more `<dd>` child elements.
 
 ##### \<dt>
 
@@ -570,8 +572,8 @@ related criteria have been dropped.
 **Criterion #18382**:
 `<dd>` elements have no attributes.
 
-**Criterion #13562**:
-`<dd>` elements contain element-only content with child elements from the set `{P_LEVEL}`.
+**Criterion #19626**:
+`<dd>` elements contain biform content.
 
 <!-- copybreak off -->
 
@@ -630,9 +632,10 @@ related criteria have been dropped.
 #### Content elements
 
 **Definition**:
-`{P_LEVEL}` denotes the set of elements:
+`{BLOCK}` denotes the set of elements:
 ```
 <blockquote>
+<div>~PARA
 <dl>
 <ol>
 <p>
@@ -640,22 +643,34 @@ related criteria have been dropped.
 <ul>
 ```
 
+**Definition**:
+*Biform content* is either element-only content with elements from the set
+`{BLOCK}` or mixed content with child elements from the set `{HYPERTEXT}`.
+
 ##### \<blockquote>
 
 **Criterion #13925**:
 `<blockquote>` elements have no attributes.
 
-**Criterion #13249**:
-`<blockquote>` elements contain element-only content with only `<p>` child elements.
+**Criterion #18123**:
+`<blockquote>` elements contain biform content.
+
+##### \<div>~PARA
+
+**Criterion #16024**:
+`<div>~PARA` elements have no attributes.
+
+**Criterion #10714**:
+`<div>~PARA` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
 ##### \<abstract>
 
 **Criterion #14631**:
 `<abstract>` has no attributes.
 
-**Criterion #17433**:
+**Criterion #19837**:
 `<abstract>` contains element-only content with all child elements from the set
-`{P_LEVEL}`.
+`{BLOCK}`.
 
 ##### \<article-body>
 
@@ -666,7 +681,7 @@ related criteria have been dropped.
 `<article-body>` contains element-only content with a sequence of child elements matching the regular
 expression:
 
-`({P_LEVEL})* (<section>~2)*`
+`({BLOCK})* (<section>~2)*`
 
 ##### \<section>
 
@@ -677,7 +692,7 @@ expression:
 `<section>~N` elements contain element-only content with a sequence of child elements matching the
 regular expression:
 
-`(<hN>)? ({P_LEVEL})* (<section>~(N+1))*`
+`(<hN>)? ({BLOCK})* (<section>~(N+1))*`
 
 for `N` equal to 2, 3, 4, or 5.
 
@@ -685,7 +700,7 @@ for `N` equal to 2, 3, 4, or 5.
 `<section>~6` elements contain element-only content with a sequence of child elements matching the
 regular expression:
 
-`(<h6>)? ({P_LEVEL})* (<section>~6)*`
+`(<h6>)? ({BLOCK})* (<section>~6)*`
 
 ##### \<h2>, \<h3>, \<h4>, \<h5>, \<h6>
 
@@ -1081,7 +1096,7 @@ JATS          XHTML
 -----------   -----
 <bold>        <b>
 <break/>      <br/>
-<def-item>    <div> (under <dl>)
+<def-item>    <div>~DITEM
 <def-list>    <dl>
 <def>         <dd>
 <disp-quote>  <blockquote>
@@ -1110,7 +1125,8 @@ These renames achieve HTML/CSS/XML interoperability by satifiying criteria #1082
 #### \<li> and \<dd> child elements
 
 Consistent with the HTML standard,
-`<li>` and `<dd>` child elements can be any elements from the set `{P_LEVEL}`.
+`<li>` and `<dd>` child elements contain a simplifed variant of HTML *flow content*,
+defined as *biform content* in this specification.
 This is an intentional non-alignment with the NISO JATS standard.
 The reference XSL transform file will transform Baseprint XML to JATS XML,
 moving required child elements to be under non-HTML JATS `<p>` child elements as required by
@@ -1136,7 +1152,7 @@ include non-HTML-standard JATS `<p>` elements required by the NISO standard.
   https://github.com/singlesourcepub/baseprints/discussions/19) for the rationale.
 
 \<abstract>
-: content criteria require only `{P_LEVEL}` child elements and no subsections.
+: content criteria require only `{BLOCK}` child elements and no subsections.
 
 \<copyright-statement>
 : changed to contain `{COPYTEXT}` instead of `{HYPERTEXT}`.
@@ -1164,3 +1180,6 @@ like in JATS.
 * `xmlns:xlink` namespace no longer needed since `<ext-link>` replaced with `<a>`
 * `<xref>` element in edition 2 is equivalent to `<xref>~CITE` of edition 1
 * JATS `<elocation-id>` eliminated (use `<fpage>` for better CSLJSON interoperability)
+* replaced element set `{P_LEVEL}` with `{BLOCK}`
+* added `<div>~PARA` element variety
+* defined *biform content* for elements `<li>`, `<dd>`, and `blockquote`.
