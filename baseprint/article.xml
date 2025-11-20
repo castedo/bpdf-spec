@@ -56,7 +56,7 @@ to render Baseprint document snapshots into HTML pages and PDF files.</p>
 with reference software implementations. As of 2024, the only
 reference implementation is the Python package <a rel="external" href="https://gitlab.com/perm.pub/epijats">Epijats</a>.
 For this edition of this specification,
-version 2.2 of Epijats is the reference software.
+version 3.2 of Epijats is the reference software.
 Epijats is used by the authoring software
 <a rel="external" href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</a>,
 the Single-Page Application (SPA)
@@ -370,22 +370,25 @@ The element set <tt>{HYPERTEXT}</tt> consists of the elements:</p>
 &lt;i&gt;
 &lt;tt&gt;
 &lt;sub&gt;
-&lt;sup&gt;</pre>
-          <p><b>Criterion #13724</b>:
+&lt;sup&gt;
+&lt;code&gt;</pre>
+          <p><b>Criterion #14511</b>:
 The following elements contain mixed content with all child elements from the set
 <tt>{HYPERTEXT}</tt>:</p>
           <pre>&lt;b&gt;~HYPER
 &lt;i&gt;~HYPER
 &lt;tt&gt;~HYPER
 &lt;sub&gt;~HYPER
-&lt;sup&gt;~HYPER</pre>
-          <p><b>Criterion #19901</b>:
+&lt;sup&gt;~HYPER
+&lt;code&gt;</pre>
+          <p><b>Criterion #11253</b>:
 The following elements do not have any attributes:</p>
           <pre>&lt;b&gt;
 &lt;i&gt;
 &lt;tt&gt;
 &lt;sub&gt;
-&lt;sup&gt;</pre>
+&lt;sup&gt;
+&lt;code&gt;</pre>
         </section>
         <section id="hypotext">
           <h4>Hypotext</h4>
@@ -423,13 +426,6 @@ specify <tt>rel="external"</tt>.</p>
             <h5>&lt;br/&gt;</h5>
             <p><b>Criterion #18396</b>:
 <tt>&lt;br/&gt;</tt> elements have no attributes and contain empty content.</p>
-          </section>
-          <section id="code">
-            <h5>&lt;code&gt;</h5>
-            <p><b>Criterion #13634</b>:
-<tt>&lt;code&gt;</tt> elements have no attributes.</p>
-            <p><b>Criterion #15943</b>:
-<tt>&lt;code&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           </section>
           <section id="p">
             <h5>&lt;p&gt;</h5>
@@ -541,8 +537,7 @@ related criteria have been dropped.</p>
           <h4>Content elements</h4>
           <p><b>Definition</b>:
 <tt>{P_LEVEL}</tt> denotes the set of elements:</p>
-          <pre>&lt;code&gt;
-&lt;blockquote&gt;
+          <pre>&lt;blockquote&gt;
 &lt;dl&gt;
 &lt;ol&gt;
 &lt;p&gt;
@@ -997,6 +992,11 @@ This element also resulted in a more complex parsing model being at the same lev
 sequence of <tt>&lt;ref&gt;</tt> child elements.
 If customization of reference title is ever needed, a different tag name and
 location are likely to be chosen for Baseprint XML.</p>
+        </section>
+        <section id="alignment-of-code-with-html-instead-of-jats">
+          <h4>Alignment of <tt>&lt;code&gt;</tt> with HTML instead of JATS</h4>
+          <p>The Baseprint <tt>&lt;code&gt;</tt> element is an inline element like HTML and not a block element
+like in JATS.</p>
         </section>
         <section id="misc">
           <h4>Misc</h4>

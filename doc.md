@@ -42,7 +42,7 @@ This specification is for interoperability
 with reference software implementations. As of 2024, the only
 reference implementation is the Python package [Epijats](https://gitlab.com/perm.pub/epijats).
 For this edition of this specification,
-version 2.2 of Epijats is the reference software.
+version 3.2 of Epijats is the reference software.
 Epijats is used by the authoring software
 [Baseprinter](https://gitlab.com/perm.pub/baseprinter),
 the Single-Page Application (SPA)
@@ -425,9 +425,10 @@ The element set `{HYPERTEXT}` consists of the elements:
 <tt>
 <sub>
 <sup>
+<code>
 ```
 
-**Criterion #13724**:
+**Criterion #14511**:
 The following elements contain mixed content with all child elements from the set
 `{HYPERTEXT}`:
 ```
@@ -436,9 +437,10 @@ The following elements contain mixed content with all child elements from the se
 <tt>~HYPER
 <sub>~HYPER
 <sup>~HYPER
+<code>
 ```
 
-**Criterion #19901**:
+**Criterion #11253**:
 The following elements do not have any attributes:
 ```
 <b>
@@ -446,6 +448,7 @@ The following elements do not have any attributes:
 <tt>
 <sub>
 <sup>
+<code>
 ```
 
 #### Hypotext
@@ -495,13 +498,6 @@ specify `rel="external"`.
 **Criterion #18396**:
 `<br/>` elements have no attributes and contain empty content.
 
-##### \<code>
-
-**Criterion #13634**:
-`<code>` elements have no attributes.
-
-**Criterion #15943**:
-`<code>` elements contain mixed content with child elements from the set `{HYPERTEXT}`.
 
 ##### \<p>
 
@@ -636,7 +632,6 @@ related criteria have been dropped.
 **Definition**:
 `{P_LEVEL}` denotes the set of elements:
 ```
-<code>
 <blockquote>
 <dl>
 <ol>
@@ -1158,6 +1153,11 @@ This element also resulted in a more complex parsing model being at the same lev
 sequence of `<ref>` child elements.
 If customization of reference title is ever needed, a different tag name and
 location are likely to be chosen for Baseprint XML.
+
+#### Alignment of `<code>` with HTML instead of JATS
+
+The Baseprint `<code>` element is an inline element like HTML and not a block element
+like in JATS.
 
 #### Misc
 
