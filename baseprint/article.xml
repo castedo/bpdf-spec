@@ -30,9 +30,7 @@ are referenced using a <a rel="external" href="https://swhid.org">SoftWare Hash 
 This format is designed for self-archived scientific
 and technical documents for long-term redistribution.
 BpDF contains an <tt>article.xml</tt> file that is HTML compatible and
-transformable to <a rel="external" href="https://jats.nlm.nih.gov/">JATS XML</a><sup>
-            <xref rid="ref-jats" ref-type="bibr">1</xref>
-          </sup>.
+transformable to <a rel="external" href="https://jats.nlm.nih.gov/">JATS XML</a><sup><xref rid="jats" ref-type="bibr">1</xref></sup>.
 After archiving,
 document snapshots are rendered into HTML pages and PDF files
 by independent websites using Baseprint-compatible software.</p>
@@ -43,90 +41,81 @@ by independent websites using Baseprint-compatible software.</p>
     <section id="feedback">
       <h2>Feedback</h2>
       <p>In addition to email,
-  feedback can also be communicated through the GitHub repository of the source files for this
-  edition at <a rel="external" href="https://github.com/castedo/bpdf-spec/">github.com/castedo/bpdf-spec/</a>.
-  The online forum at <a rel="external" href="https://baseprints.singlesource.pub">https://baseprints.singlesource.pub</a> is also available for
-  discussions related to Baseprint topics and specifications.</p>
+feedback can also be communicated through the GitHub repository of the source files for this
+edition at <a rel="external" href="https://github.com/castedo/bpdf-spec/">github.com/castedo/bpdf-spec/</a>.
+The online forum at <a rel="external" href="https://baseprints.singlesource.pub">https://baseprints.singlesource.pub</a> is also available for
+discussions related to Baseprint topics and specifications.</p>
     </section>
     <section id="interoperability">
       <h2>Interoperability</h2>
       <p>Websites such as <a rel="external" href="https://lens.perm.pub">https://lens.perm.pub</a> and <a rel="external" href="https://pilot.perm.pub">https://pilot.perm.pub</a>
-  use free open-source software, like the Python package
-  <a rel="external" href="https://gitlab.com/perm.pub/epijats">Epijats</a>,
-  to render Baseprint document snapshots into HTML pages and PDF files.</p>
+use free open-source software, like the Python package
+<a rel="external" href="https://gitlab.com/perm.pub/epijats">Epijats</a>,
+to render Baseprint document snapshots into HTML pages and PDF files.</p>
       <p>This specification is for interoperability
-  with reference software implementations. As of 2024, the only
-  reference implementation is the Python package <a rel="external" href="https://gitlab.com/perm.pub/epijats">Epijats</a>.
-  For this edition of this specification,
-  version 2.2 of Epijats is the reference software.
-  Epijats is used by the authoring software
-  <a rel="external" href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</a>,
-  the Single-Page Application (SPA)
-  <a rel="external" href="https://gitlab.com/perm.pub/baseprintlens">BaseprintLens</a>,
-  and the website generation software
-  <a rel="external" href="https://gitlab.com/perm.pub/baseprintpress">BaseprintPress</a>.</p>
+with reference software implementations. As of 2024, the only
+reference implementation is the Python package <a rel="external" href="https://gitlab.com/perm.pub/epijats">Epijats</a>.
+For this edition of this specification,
+version 2.2 of Epijats is the reference software.
+Epijats is used by the authoring software
+<a rel="external" href="https://gitlab.com/perm.pub/baseprinter">Baseprinter</a>,
+the Single-Page Application (SPA)
+<a rel="external" href="https://gitlab.com/perm.pub/baseprintlens">BaseprintLens</a>,
+and the website generation software
+<a rel="external" href="https://gitlab.com/perm.pub/baseprintpress">BaseprintPress</a>.</p>
     </section>
     <section id="snapshots-vs.-successions">
       <h2>Snapshots vs.&#160;Successions</h2>
       <p>This specification of the Baseprint Document Format (BpDF) is for
-  Baseprint document <i>snapshots</i> rather than Baseprint document <i>successions</i>.
-  Snapshots are archived and redistributed as part of a
-  <i>Baseprint document successions</i> whose digital encoding format is specified by the
-  separate specification,
-  the <a rel="external" href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</a>.
-  While snapshots are immutable, successions, in contrast, can be amended.
-  The SWHID for a snapshot is distinct from the
-  <a rel="external" href="https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo">Document Succession Identifier (DSI)</a>
-  used to identify a succession.</p>
+Baseprint document <i>snapshots</i> rather than Baseprint document <i>successions</i>.
+Snapshots are archived and redistributed as part of a
+<i>Baseprint document successions</i> whose digital encoding format is specified by the
+separate specification,
+the <a rel="external" href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</a>.
+While snapshots are immutable, successions, in contrast, can be amended.
+The SWHID for a snapshot is distinct from the
+<a rel="external" href="https://perm.pub/1wFGhvmv8XZfPx0O5Hya2e9AyXo">Document Succession Identifier (DSI)</a>
+used to identify a succession.</p>
       <section id="document-dates">
         <h3>Document Dates</h3>
         <p>Like
-    <a rel="external" href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML Article Authoring Tag Set</a><sup>
-            <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
-          </sup>,
-    BpDF does not store a date for a document.
-    Instead, dates for a Baseprint document are recorded in the Git commit records of
-    the <a rel="external" href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</a><sup>
-            <xref rid="ref-dsgl" ref-type="bibr">3</xref>
-          </sup>.
-    These dates are set when an author amends a succession in DSGL with a snapshot as a new
-    edition.</p>
+<a rel="external" href="https://jats.nlm.nih.gov/articleauthoring/">JATS XML Article Authoring Tag Set</a><sup><xref rid="jats_authoring" ref-type="bibr">2</xref></sup>,
+BpDF does not store a date for a document.
+Instead, dates for a Baseprint document are recorded in the Git commit records of
+the <a rel="external" href="https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8">Document Succession Git Layout (DSGL)</a><sup><xref rid="dsgl" ref-type="bibr">3</xref></sup>.
+These dates are set when an author amends a succession in DSGL with a snapshot as a new
+edition.</p>
       </section>
     </section>
     <section id="jatsxhtml-xml-file-in-a-directory">
       <h2>JATS+XHTML XML File in a Directory</h2>
       <p>Technically, BpDF is not a file format
-  but rather a format for a directory-like data structure.
-  This structure is addressable as a
-  <a rel="external" href="https://swhid.org">SWHID</a> version 1 directory
-  (equivalent to a <a rel="external" href="https://en.wikipedia.org/wiki/Git">Git</a> tree).</p>
+but rather a format for a directory-like data structure.
+This structure is addressable as a
+<a rel="external" href="https://swhid.org">SWHID</a> version 1 directory
+(equivalent to a <a rel="external" href="https://en.wikipedia.org/wiki/Git">Git</a> tree).</p>
       <p>When generating BpDF data, it is temporarily stored in a file system directory.
-  However, for long-term public storage, BpDF data is preserved in a
-  SWHID addressable directory in the <a rel="external" href="https://softwareheritage.org">Software Heritage Archive</a>
-  (or an equivalent tree in a Git repository).</p>
+However, for long-term public storage, BpDF data is preserved in a
+SWHID addressable directory in the <a rel="external" href="https://softwareheritage.org">Software Heritage Archive</a>
+(or an equivalent tree in a Git repository).</p>
       <p>At the top level of a BpDF directory, a <i>Baseprint XML</i> file named <tt>article.xml</tt>
-  is encoded in a subset of <a rel="external" href="https://jats.nlm.nih.gov/">JATS XML</a><sup>
-          <xref rid="ref-jats_authoring" ref-type="bibr">2</xref>
-        </sup>
-  and XHTML.
-  Baseprint XML is inspired and influenced by JATS4R<sup>
-          <xref rid="ref-jats4r_2015" ref-type="bibr">4</xref>,
-          <xref rid="ref-jats4r_2019" ref-type="bibr">5</xref>
-        </sup>.
-  Most of BpDF is a specification of this XML file format,
-  which is referred to as <i>Baseprint XML</i>.</p>
+is encoded in a subset of <a rel="external" href="https://jats.nlm.nih.gov/">JATS XML</a><sup><xref rid="jats_authoring" ref-type="bibr">2</xref></sup>
+and XHTML.
+Baseprint XML is inspired and influenced by JATS4R<sup><xref rid="jats4r_2015" ref-type="bibr">4</xref>,<xref rid="jats4r_2019" ref-type="bibr">5</xref></sup>.
+Most of BpDF is a specification of this XML file format,
+which is referred to as <i>Baseprint XML</i>.</p>
       <p>BpDF differs from the <a rel="external" href="https://meca.niso.org/">Manuscript Exchange Common Approach (MECA)</a>
-  in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
-  and is not designed for a non-automated publishing process.</p>
+in that a BpDF snapshot is automatically rendered into HTML pages and PDF files,
+and is not designed for a non-automated publishing process.</p>
       <section id="jats-transformable">
         <h3>JATS-Transformable</h3>
         <p>A Baseprint XML file can be transformed into a JATS XML file that conforms
-    to the XML schema of a JATS4R validator or the <a rel="external" href="https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/">PMC Style
-    Checker</a>.
-    The <a rel="external" href="https://gitlab.com/perm.pub/epijats">source code repository for Epijats</a> includes
-    an XSL transformation file and script.
-    Some of the information that must be added is fictitious, such as
-    the journal title.</p>
+to the XML schema of a JATS4R validator or the <a rel="external" href="https://pmc.ncbi.nlm.nih.gov/tools/stylechecker/">PMC Style
+Checker</a>.
+The <a rel="external" href="https://gitlab.com/perm.pub/epijats">source code repository for Epijats</a> includes
+an XSL transformation file and script.
+Some of the information that must be added is fictitious, such as
+the journal title.</p>
       </section>
     </section>
     <section id="notable-featureslimitations">
@@ -134,58 +123,54 @@ by independent websites using Baseprint-compatible software.</p>
       <section id="tables-math-images-and-footnotes">
         <h3>Tables, math, images, and footnotes</h3>
         <p>XML elements for tables, math, images, and footnotes are absent from this edition of BpDF.
-    These important features are planned for a future edition.</p>
+These important features are planned for a future edition.</p>
       </section>
       <section id="citation-style">
         <h3>Citation style</h3>
         <p>Citations and references in Baseprint XML
-    are styled by viewer
-    software that generates HTML pages and/or PDF files.
-    Authors do not control the citation styling.
-    References are in JATS <tt>&lt;element-citation&gt;</tt> elements and not JATS <tt>&lt;mixed-citation&gt;</tt>.
-    Furthermore,
-    there is no <tt>publication-type</tt> attribute.
-    Depending on the bibliographic fields present inside the <tt>&lt;element-citation&gt;</tt>,
-    viewer software must choose appropriate styling.
-    If the <tt>&lt;element-citation&gt;</tt> &#8220;looks&#8221; like a journal reference,
-    then viewer software should style it like a journal reference.
-    This means
-    it is challenging for viewer software to exactly match popular citation styles.
-    Software can approximate these styles
-    or rely on services like <a rel="external" href="https://www.crossref.org/">Crossref</a>
-    to get additional reference metadata
-    absent from the document snapshot data.</p>
+are styled by viewer
+software that generates HTML pages and/or PDF files.
+Authors do not control the citation styling.
+References are in JATS <tt>&lt;element-citation&gt;</tt> elements and not JATS <tt>&lt;mixed-citation&gt;</tt>.
+Furthermore,
+there is no <tt>publication-type</tt> attribute.
+Depending on the bibliographic fields present inside the <tt>&lt;element-citation&gt;</tt>,
+viewer software must choose appropriate styling.
+If the <tt>&lt;element-citation&gt;</tt> &#8220;looks&#8221; like a journal reference,
+then viewer software should style it like a journal reference.
+This means
+it is challenging for viewer software to exactly match popular citation styles.
+Software can approximate these styles
+or rely on services like <a rel="external" href="https://www.crossref.org/">Crossref</a>
+to get additional reference metadata
+absent from the document snapshot data.</p>
       </section>
       <section id="citation-tuple-elements">
         <h3>Citation tuple elements</h3>
         <p><tt>&lt;sup&gt;</tt> elements containing <tt>&lt;xref ref-type="bibr"&gt;</tt> elements
-    are interpreted to have the semantic meaning
-    of a group of citations
-    to be styled together (e.g., <tt>[7,11]</tt>),
-    and not necessarily superscripted text.</p>
+are interpreted to have the semantic meaning
+of a group of citations
+to be styled together (e.g., <tt>[7,11]</tt>),
+and not necessarily superscripted text.</p>
       </section>
       <section id="external-metadata">
         <h3>External Metadata</h3>
         <p>Metadata in a typical JATS XML document is sourced from both authors and journal
-    publishers. In this most common scenario, JATS XML serves as a vehicle for multiple
-    sources of metadata.
-    Baseprint XML differs from typical JATS XML documents in two ways:</p>
+publishers. In this most common scenario, JATS XML serves as a vehicle for multiple
+sources of metadata.
+Baseprint XML differs from typical JATS XML documents in two ways:</p>
         <ol>
-          <li>
-            <p>a Baseprint document is designed for self-archiving/self-publishing by authors, and</p>
-          </li>
-          <li>
-            <p>Baseprint XML is contained within an <i>immutable</i> document <i>snapshot</i>.</p>
-          </li>
+          <li>a Baseprint document is designed for self-archiving/self-publishing by authors, and</li>
+          <li>Baseprint XML is contained within an <i>immutable</i> document <i>snapshot</i>.</li>
         </ol>
         <p>With respect to a document snapshot, some metadata is <i>internal</i>, to be included in
-    Baseprint XML, while other metadata is <i>external</i> and intentionally not included.
-    For example, the JATS element
-    <tt>/article/front/article-meta/title-group/article-title</tt> is internal metadata that is
-    sourced from an author and thus appropriately included in Baseprint XML.
-    In contrast, the JATS element
-    <tt>/article/front/article-meta/history</tt> is external metadata, and does not make sense
-    to store inside an immutable Baseprint document snapshot.</p>
+Baseprint XML, while other metadata is <i>external</i> and intentionally not included.
+For example, the JATS element
+<tt>/article/front/article-meta/title-group/article-title</tt> is internal metadata that is
+sourced from an author and thus appropriately included in Baseprint XML.
+In contrast, the JATS element
+<tt>/article/front/article-meta/history</tt> is external metadata, and does not make sense
+to store inside an immutable Baseprint document snapshot.</p>
       </section>
     </section>
     <section id="formal-specification">
@@ -195,19 +180,19 @@ by independent websites using Baseprint-compatible software.</p>
         <section id="criterion">
           <h4>Criterion</h4>
           <p>The formal part of this specification is defined in terms of <i>criteria</i> and does not
-      prescribe what criteria XML files must or should satisfy.
-      Each formal criterion is a true or false statement for a given XML file.
-      Each criterion is documented to facilitate communication about which criteria
-      might not be satisfied in particular contexts.
-      Depending on the context, it might or might not make sense to satisfy specific criteria.
-      In general, the more criteria that are satisfied by an XML file, the higher
-      the level of interoperability it will achieve with the reference software of this specification.</p>
+prescribe what criteria XML files must or should satisfy.
+Each formal criterion is a true or false statement for a given XML file.
+Each criterion is documented to facilitate communication about which criteria
+might not be satisfied in particular contexts.
+Depending on the context, it might or might not make sense to satisfy specific criteria.
+In general, the more criteria that are satisfied by an XML file, the higher
+the level of interoperability it will achieve with the reference software of this specification.</p>
         </section>
         <section id="element">
           <h4>Element</h4>
           <p>In the definition of a criterion, the term &#8220;element&#8221; refers to an XML element within an XML
-      document&#8217;s parse tree. The notation <tt>&lt;foobar&gt;</tt> may refer to an XML tag or elements with
-      that tag, depending on the context. When an element &#8220;has a tag&#8221; it never refers to a child element.</p>
+document&#8217;s parse tree. The notation <tt>&lt;foobar&gt;</tt> may refer to an XML tag or elements with
+that tag, depending on the context. When an element &#8220;has a tag&#8221; it never refers to a child element.</p>
         </section>
         <section id="content">
           <h4>Content</h4>
@@ -215,54 +200,41 @@ by independent websites using Baseprint-compatible software.</p>
           <dl>
             <div>
               <dt>mixed content</dt>
-              <dd>
-                <p>both text and child elements</p>
-              </dd>
+              <dd>both text and child elements</dd>
             </div>
             <div>
               <dt>element-only content</dt>
-              <dd>
-                <p>only child elements</p>
-              </dd>
+              <dd>only child elements</dd>
             </div>
             <div>
               <dt>text-only content</dt>
-              <dd>
-                <p>text with no child elements</p>
-              </dd>
+              <dd>text with no child elements</dd>
             </div>
             <div>
               <dt>whitespace-only content</dt>
-              <dd>
-                <p>non-empty whitespace content between a start and end tags (e.g., <tt>&lt;etal&gt; &lt;/etal&gt;</tt>)</p>
-              </dd>
+              <dd>non-empty whitespace content between a start and end tags (e.g., <tt>&lt;etal&gt; &lt;/etal&gt;</tt>)</dd>
             </div>
             <div>
-              <dt>HTML void element<sup>
-                  <xref rid="ref-void_element" ref-type="bibr">6</xref>,
-                  <xref rid="ref-html" ref-type="bibr">7</xref>
-                </sup> pseudo-content</dt>
-              <dd>
-                <p>the absence of content implied by an element serialized in the XML self-closing tag
-            syntax (e.g., <tt>&lt;br/&gt;</tt>)</p>
-              </dd>
+              <dt>HTML void element<sup><xref rid="void_element" ref-type="bibr">6</xref>,<xref rid="html" ref-type="bibr">7</xref></sup> pseudo-content</dt>
+              <dd>the absence of content implied by an element serialized in the XML self-closing tag
+syntax (e.g., <tt>&lt;br/&gt;</tt>)</dd>
             </div>
           </dl>
           <p>Whitespace is in the narrow sense of the ASCII characters tab (9), linefeed
-      (10), vertical tab (11), formfeed (12), carriage return (13), and space (32).</p>
+(10), vertical tab (11), formfeed (12), carriage return (13), and space (32).</p>
         </section>
         <section id="element-varieties">
           <h4>Element varieties</h4>
           <p>Some XML elements with the same tag have differing semantics depending on their location
-      within an XML document tree.
-      For this reason, some criteria in this specification are specified in terms of <i>element varieties</i>.
-      Specifically, the elements
-      <tt>&lt;a&gt;</tt>, <tt>&lt;article-title&gt;</tt>, <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;tt&gt;</tt>, <tt>&lt;sub&gt;</tt>, and <tt>&lt;sup&gt;</tt>
-      have multiple <i>varieties</i>.
-      For XML documents that satisfy the criteria of this specification, these elements will
-      unambiguously belong to exactly one of their varieties.</p>
+within an XML document tree.
+For this reason, some criteria in this specification are specified in terms of <i>element varieties</i>.
+Specifically, the elements
+<tt>&lt;a&gt;</tt>, <tt>&lt;article-title&gt;</tt>, <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;tt&gt;</tt>, <tt>&lt;sub&gt;</tt>, and <tt>&lt;sup&gt;</tt>
+have multiple <i>varieties</i>.
+For XML documents that satisfy the criteria of this specification, these elements will
+unambiguously belong to exactly one of their varieties.</p>
           <p>Elements with the following tags may be of the following varieties
-      based on the criteria of this specification.</p>
+based on the criteria of this specification.</p>
           <pre>ELEMENT TAG      ELEMENT VARIETIES
 -----------      -----------------
 &lt;a&gt;              ~OUT    ~IN
@@ -274,9 +246,9 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;sup&gt;            ~HYPER  ~COPY  ~HYPO  ~MINI  ~CITE
 &lt;section&gt;        ~2  ~3  ~4  ~5  ~6</pre>
           <p>The notation <tt>&lt;foo&gt;~BAR</tt> is used to denote a <tt>&lt;foo&gt;</tt> element of the <tt>~BAR</tt> variety.
-      The notation of <tt>&lt;foo&gt;</tt> without any variety means a <tt>&lt;foo&gt;</tt> element of <i>any</i> variety.</p>
+The notation of <tt>&lt;foo&gt;</tt> without any variety means a <tt>&lt;foo&gt;</tt> element of <i>any</i> variety.</p>
           <p>Element varieties could be made unnecessary by using different XML tag names,
-      but they would be non-standard tag names not found in HTML or JATS XML.</p>
+but they would be non-standard tag names not found in HTML or JATS XML.</p>
           <p>As an example, consider the <tt>&lt;sup&gt;</tt> elements of the following paragraph:</p>
           <pre>&lt;p&gt;
     &lt;sup&gt;
@@ -290,77 +262,65 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;/p&gt;</pre>
           <p>Based on the criteria of this specification, the <tt>&lt;sup&gt;</tt> elements are of the following varieties:</p>
           <ul>
-            <li>
-              <p>the first <tt>&lt;sup&gt;</tt> is of the variety <tt>&lt;sup&gt;~HYPER</tt>,</p>
-            </li>
-            <li>
-              <p>the second <tt>&lt;sup&gt;</tt> (nested inside the first) is of the variety <tt>&lt;sup&gt;~HYPO</tt>, and</p>
-            </li>
-            <li>
-              <p>the last <tt>&lt;sup&gt;</tt> is of the variety <tt>&lt;sup&gt;~CITE</tt>.</p>
-            </li>
+            <li>the first <tt>&lt;sup&gt;</tt> is of the variety <tt>&lt;sup&gt;~HYPER</tt>,</li>
+            <li>the second <tt>&lt;sup&gt;</tt> (nested inside the first) is of the variety <tt>&lt;sup&gt;~HYPO</tt>, and</li>
+            <li>the last <tt>&lt;sup&gt;</tt> is of the variety <tt>&lt;sup&gt;~CITE</tt>.</li>
           </ul>
         </section>
       </section>
       <section id="snapshot-directory-encoding">
         <h3>Snapshot Directory Encoding</h3>
         <p><b>Criterion #14435</b>:
-    The directory is encoded such that its computed hash interoperates with
-    <a rel="external" href="https://en.wikipedia.org/wiki/Git">Git software</a> as a Git tree hash.</p>
+The directory is encoded such that its computed hash interoperates with
+<a rel="external" href="https://en.wikipedia.org/wiki/Git">Git software</a> as a Git tree hash.</p>
         <p><b>Criterion #16289</b>:
-    The directory is encoded such that its computed hash interoperates with
-    the hash following the <tt>swh:1:dir:</tt> prefix of a
-    <a rel="external" href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</a>.</p>
+The directory is encoded such that its computed hash interoperates with
+the hash following the <tt>swh:1:dir:</tt> prefix of a
+<a rel="external" href="https://www.swhid.org/">SWHID (SoftWare Hash IDentifier)</a>.</p>
         <p><b>Criterion #12743</b>:
-    There is only one file in the directory and its filename is <tt>article.xml</tt>.
-    This file is in the Baseprint XML format described in this specification.</p>
+There is only one file in the directory and its filename is <tt>article.xml</tt>.
+This file is in the Baseprint XML format described in this specification.</p>
         <p><b>Criterion #14763</b>:
-    The directory (Git tree) entry for <tt>article.xml</tt> has a normal file mode in Git and does not
-    have the executable bit set.</p>
+The directory (Git tree) entry for <tt>article.xml</tt> has a normal file mode in Git and does not
+have the executable bit set.</p>
       </section>
       <section id="xmlhtmlcss-interoperability">
         <h3>XML/HTML/CSS interoperability</h3>
         <p><b>Criterion #15719</b>:
-    The file <tt>article.xml</tt> is &#8220;well-formed&#8221; per the <a rel="external" href="https://www.w3.org/TR/REC-xml/">XML 1.0</a> W3C recommendation.</p>
+The file <tt>article.xml</tt> is &#8220;well-formed&#8221; per the <a rel="external" href="https://www.w3.org/TR/REC-xml/">XML 1.0</a> W3C recommendation.</p>
         <p><b>Criterion #13799</b>:
-    There is no parsing dependency on any external XML DTD.</p>
+There is no parsing dependency on any external XML DTD.</p>
         <p><b>Criterion #13652</b>:
-    The only XML/HTML/SGML entities used are SGML numeric character references and the five
-    predefined entities of XML.</p>
+The only XML/HTML/SGML entities used are SGML numeric character references and the five
+predefined entities of XML.</p>
         <p><i>Note</i>: Use of convenient HTML entities such as <tt>&amp;nbsp;</tt> and <tt>&amp;copy;</tt> do not satisfy
-    criterion #13652.</p>
+criterion #13652.</p>
         <p><b>Criterion #14199</b>:
-    No XML namespaces are necessary to parse <tt>article.xml</tt>.</p>
+No XML namespaces are necessary to parse <tt>article.xml</tt>.</p>
         <p><i>Comment:</i> XML namespace prefixes are not compatible with CSS.
-    JATS elements using XML namespace prefixes are avoided in
-    Baseprint XML by using HTML tags rather than JATS tags for HTML-like elements and tag name
-    <tt>&lt;license-ref&gt;</tt> instead of <tt>&lt;ali:license_ref&gt;</tt>.</p>
+JATS elements using XML namespace prefixes are avoided in
+Baseprint XML by using HTML tags rather than JATS tags for HTML-like elements and tag name
+<tt>&lt;license-ref&gt;</tt> instead of <tt>&lt;ali:license_ref&gt;</tt>.</p>
         <p><b>Criterion #18620</b>:
-    HTML void elements<sup>
-            <xref rid="ref-void_element" ref-type="bibr">6</xref>,
-            <xref rid="ref-html" ref-type="bibr">7</xref>
-          </sup> (e.g., <tt>&lt;br/&gt;</tt>, <tt>&lt;col /&gt;</tt>, &#8230;) are serialized
-    with the self-closing XML syntax and not a pair of adjacent start and end tags (e.g.,
-    <tt>&lt;br/&gt;</tt> and not <tt>&lt;br&gt;&lt;/br&gt;</tt>).</p>
+HTML void elements<sup><xref rid="void_element" ref-type="bibr">6</xref>,<xref rid="html" ref-type="bibr">7</xref></sup> (e.g., <tt>&lt;br/&gt;</tt>, <tt>&lt;col /&gt;</tt>, &#8230;) are serialized
+with the self-closing XML syntax and not a pair of adjacent start and end tags (e.g.,
+<tt>&lt;br/&gt;</tt> and not <tt>&lt;br&gt;&lt;/br&gt;</tt>).</p>
         <p><b>Criterion #15105</b>:
-    No elements other than HTML void elements<sup>
-            <xref rid="ref-void_element" ref-type="bibr">6</xref>,
-            <xref rid="ref-html" ref-type="bibr">7</xref>
-          </sup> use the self-closing XML
-    syntax (e.g., <tt>&lt;br/&gt;</tt>).</p>
+No elements other than HTML void elements<sup><xref rid="void_element" ref-type="bibr">6</xref>,<xref rid="html" ref-type="bibr">7</xref></sup> use the self-closing XML
+syntax (e.g., <tt>&lt;br/&gt;</tt>).</p>
         <p><b>Criterion #11095</b>:
-    No XML elements are serialized as a pair of adjacent start and end tags (e.g.,
-    <tt>&lt;etal&gt;&lt;/etal&gt;</tt>). All XML elements that are not HTML void elements contain
-    some whitespace content (e.g.&#160;<tt>&lt;etal&gt; &lt;/etal&gt;</tt>) or some text or some child elements.</p>
+No XML elements are serialized as a pair of adjacent start and end tags (e.g.,
+<tt>&lt;etal&gt;&lt;/etal&gt;</tt>). All XML elements that are not HTML void elements contain
+some whitespace content (e.g.&#160;<tt>&lt;etal&gt; &lt;/etal&gt;</tt>) or some text or some child elements.</p>
         <p><i>Comment:</i> The equivalency in XML of self-closing tag syntax (e.g., <tt>&lt;br/&gt;</tt>) and empty
-    content between start/close tags syntax (e.g., <tt>&lt;br&gt;&lt;/br&gt;</tt>) is incompatible with HTML
-    parsers. HTML parsers ignore the <tt>/&gt;</tt> syntax and only rely on tag name to determine when
-    to expect a close tag. Some XML parsers do not support distinguishing between these two
-    XML syntaxes. Avoiding empty content between start/close tags avoids these parsing
-    incompatibilities.</p>
+content between start/close tags syntax (e.g., <tt>&lt;br&gt;&lt;/br&gt;</tt>) is incompatible with HTML
+parsers. HTML parsers ignore the <tt>/&gt;</tt> syntax and only rely on tag name to determine when
+to expect a close tag. Some XML parsers do not support distinguishing between these two
+XML syntaxes. Avoiding empty content between start/close tags avoids these parsing
+incompatibilities.</p>
         <p><b>Criterion #10825</b>:
-    The element tree structure and contents of <tt>article.xml</tt> are preserved when parsed as
-    type <tt>text/html</tt> by the <tt>DOMParser</tt> object of the Web API of widely available web browsers.</p>
+The element tree structure and contents of <tt>article.xml</tt> are preserved when parsed as
+type <tt>text/html</tt> by the <tt>DOMParser</tt> object of the Web API of widely available web browsers.</p>
         <p><i>Note:</i> Criterion #10825 above is implied by the rest of the criteria of this specification.</p>
       </section>
       <section id="html-content">
@@ -368,27 +328,27 @@ by independent websites using Baseprint-compatible software.</p>
         <section id="minimally-formatted-text">
           <h4>Minimally formatted text</h4>
           <p><b>Definition</b>:
-      Elements of variety <tt>~MINI</tt> have tag <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;sub&gt;</tt>, or <tt>&lt;sup&gt;</tt>.</p>
+Elements of variety <tt>~MINI</tt> have tag <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;sub&gt;</tt>, or <tt>&lt;sup&gt;</tt>.</p>
           <p><b>Definition</b>:
-      The element set <tt>{MINITEXT}</tt> consists of the elements:</p>
+The element set <tt>{MINITEXT}</tt> consists of the elements:</p>
           <pre>&lt;b&gt;~MINI
 &lt;i&gt;~MINI
 &lt;sub&gt;~MINI
 &lt;sup&gt;~MINI</pre>
           <p><b>Criterion #18662</b>:
-      Elements of variety <tt>~MINI</tt> contain mixed content with all child elements from
-      the set <tt>{MINITEXT}</tt>.</p>
+Elements of variety <tt>~MINI</tt> contain mixed content with all child elements from
+the set <tt>{MINITEXT}</tt>.</p>
           <p><i>Comment</i>: {MINITEXT} is used by <tt>&lt;article-title&gt;~SELF</tt>.</p>
         </section>
         <section id="copyable-hypertext">
           <h4>Copyable hypertext</h4>
           <p>Copyable hypertext is used by <tt>&lt;copyright-statement&gt;</tt> and <tt>&lt;license-p&gt;</tt>.
-      There are no citations, internal links, or cross references,
-      which would not make sense if copied out of the document.</p>
+There are no citations, internal links, or cross references,
+which would not make sense if copied out of the document.</p>
           <p><b>Definition</b>:
-      Elements of variety <tt>~COPY</tt> have tag <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;tt&gt;</tt>, <tt>&lt;sub&gt;</tt>, or <tt>&lt;sup&gt;</tt>.</p>
+Elements of variety <tt>~COPY</tt> have tag <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;tt&gt;</tt>, <tt>&lt;sub&gt;</tt>, or <tt>&lt;sup&gt;</tt>.</p>
           <p><b>Definition</b>:
-      The element set <tt>{COPYTEXT}</tt> consists of the elements:</p>
+The element set <tt>{COPYTEXT}</tt> consists of the elements:</p>
           <pre>&lt;a&gt;~OUT
 &lt;b&gt;~COPY
 &lt;i&gt;~COPY
@@ -396,15 +356,15 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;sub&gt;~COPY
 &lt;sup&gt;~COPY</pre>
           <p><b>Criterion #11694</b>:
-      Elements of variety <tt>~COPY</tt> contain mixed content with all child elements from the set
-      <tt>{COPYTEXT}</tt>.</p>
+Elements of variety <tt>~COPY</tt> contain mixed content with all child elements from the set
+<tt>{COPYTEXT}</tt>.</p>
           <p><i>Comment</i>: The <tt>{COPYTEXT}</tt> element set is motivated by interoperability with Crossref,
-      which uses the <a rel="external" href="https://jats.nlm.nih.gov/publishing/tag-library/1.4/element/copyright-statement.html">JATS publishing schema for <tt>&lt;copyright-statement&gt;</tt></a>.</p>
+which uses the <a rel="external" href="https://jats.nlm.nih.gov/publishing/tag-library/1.4/element/copyright-statement.html">JATS publishing schema for <tt>&lt;copyright-statement&gt;</tt></a>.</p>
         </section>
         <section id="hypertext">
           <h4>Hypertext</h4>
           <p><b>Definition</b>:
-      The element set <tt>{HYPERTEXT}</tt> consists of the elements:</p>
+The element set <tt>{HYPERTEXT}</tt> consists of the elements:</p>
           <pre>&lt;a&gt;
 &lt;b&gt;
 &lt;i&gt;
@@ -412,15 +372,15 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;sub&gt;
 &lt;sup&gt;</pre>
           <p><b>Criterion #13724</b>:
-      The following elements contain mixed content with all child elements from the set
-      <tt>{HYPERTEXT}</tt>:</p>
+The following elements contain mixed content with all child elements from the set
+<tt>{HYPERTEXT}</tt>:</p>
           <pre>&lt;b&gt;~HYPER
 &lt;i&gt;~HYPER
 &lt;tt&gt;~HYPER
 &lt;sub&gt;~HYPER
 &lt;sup&gt;~HYPER</pre>
           <p><b>Criterion #19901</b>:
-      The following elements do not have any attributes:</p>
+The following elements do not have any attributes:</p>
           <pre>&lt;b&gt;
 &lt;i&gt;
 &lt;tt&gt;
@@ -430,65 +390,63 @@ by independent websites using Baseprint-compatible software.</p>
         <section id="hypotext">
           <h4>Hypotext</h4>
           <p><b>Definition</b>:
-      The element set <tt>{HYPOTEXT}</tt> consists of the elements:</p>
+The element set <tt>{HYPOTEXT}</tt> consists of the elements:</p>
           <pre>&lt;b&gt;~HYPO
 &lt;i&gt;~HYPO
 &lt;tt&gt;~HYPO
 &lt;sub&gt;~HYPO
 &lt;sup&gt;~HYPO</pre>
           <p><b>Criterion #10387</b>:
-      Elements from the set <tt>{HYPOTEXT}</tt> contain mixed content with all child elements from the set
-      <tt>{HYPOTEXT}</tt>.</p>
+Elements from the set <tt>{HYPOTEXT}</tt> contain mixed content with all child elements from the set
+<tt>{HYPOTEXT}</tt>.</p>
         </section>
         <section id="other-elements">
           <h4>Other elements</h4>
           <section id="a">
             <h5>&lt;a&gt;</h5>
             <p><b>Criterion #19871</b>:
-        <tt>&lt;a&gt;</tt> contains mixed content with all child elements from the set <tt>{HYPOTEXT}</tt>.</p>
+<tt>&lt;a&gt;</tt> contains mixed content with all child elements from the set <tt>{HYPOTEXT}</tt>.</p>
             <p><b>Criterion #10107</b>:
-        <tt>&lt;a&gt;</tt> elements are of variety <tt>&lt;a&gt;~OUT</tt> or <tt>&lt;a&gt;~IN</tt>.</p>
+<tt>&lt;a&gt;</tt> elements are of variety <tt>&lt;a&gt;~OUT</tt> or <tt>&lt;a&gt;~IN</tt>.</p>
             <p><b>Criterion #17248</b>:
-        <tt>&lt;a&gt;~IN</tt> elements have only attribute <tt>href=</tt> and it equals a &#8216;#&#8217; (hash symbol)
-        followed by the value of an <tt>id=</tt> attribute of another element.</p>
+<tt>&lt;a&gt;~IN</tt> elements have only attribute <tt>href=</tt> and it equals a &#8216;#&#8217; (hash symbol)
+followed by the value of an <tt>id=</tt> attribute of another element.</p>
             <p><b>Criterion #11997</b>:
-        <tt>&lt;a&gt;~OUT</tt> elements have only attribute <tt>rel="external"</tt> and attribute <tt>href=</tt> equal to an
-        <tt>https:</tt> or <tt>http:</tt> URL.</p>
-            <p>The <a rel="external" href="https://html.spec.whatwg.org/multipage/links.html#link-type-external">HTML Living Standard</a><sup>
-                <xref rid="ref-html" ref-type="bibr">7</xref>
-              </sup>
-        and the <a rel="external" href="https://www.iana.org/assignments/link-relations/link-relations.xhtml">Internet Assigned Numbers
-        Authority</a>
-        specify <tt>rel="external"</tt>.</p>
+<tt>&lt;a&gt;~OUT</tt> elements have only attribute <tt>rel="external"</tt> and attribute <tt>href=</tt> equal to an
+<tt>https:</tt> or <tt>http:</tt> URL.</p>
+            <p>The <a rel="external" href="https://html.spec.whatwg.org/multipage/links.html#link-type-external">HTML Living Standard</a><sup><xref rid="html" ref-type="bibr">7</xref></sup>
+and the <a rel="external" href="https://www.iana.org/assignments/link-relations/link-relations.xhtml">Internet Assigned Numbers
+Authority</a>
+specify <tt>rel="external"</tt>.</p>
           </section>
           <section id="br">
             <h5>&lt;br/&gt;</h5>
             <p><b>Criterion #18396</b>:
-        <tt>&lt;br/&gt;</tt> elements have no attributes and contain empty content.</p>
+<tt>&lt;br/&gt;</tt> elements have no attributes and contain empty content.</p>
           </section>
           <section id="code">
             <h5>&lt;code&gt;</h5>
             <p><b>Criterion #13634</b>:
-        <tt>&lt;code&gt;</tt> elements have no attributes.</p>
+<tt>&lt;code&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #15943</b>:
-        <tt>&lt;code&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
+<tt>&lt;code&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           </section>
           <section id="p">
             <h5>&lt;p&gt;</h5>
             <p>The <tt>&lt;p&gt;</tt> element in this edition 2 is equivalent to the <tt>&lt;p&gt;~HTML</tt> element variety of
-        edition 1. The element variety distinction is no longer needed because all <tt>&lt;p&gt;~WRAPPER</tt>
-        related criteria have been dropped.</p>
+edition 1. The element variety distinction is no longer needed because all <tt>&lt;p&gt;~WRAPPER</tt>
+related criteria have been dropped.</p>
             <p><b>Criterion #13912</b>:
-        <tt>&lt;p&gt;</tt> elements have no attributes.</p>
+<tt>&lt;p&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #14762</b>:
-        <tt>&lt;p&gt;</tt> elements contain mixed content with all child elements from the set <tt>{HYPERTEXT}</tt>.</p>
+<tt>&lt;p&gt;</tt> elements contain mixed content with all child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           </section>
           <section id="pre">
             <h5>&lt;pre&gt;</h5>
             <p><b>Criterion #10062</b>:
-        <tt>&lt;pre&gt;</tt> elements have no attributes.</p>
+<tt>&lt;pre&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #18825</b>:
-        <tt>&lt;pre&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
+<tt>&lt;pre&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           </section>
         </section>
         <section id="list-elements">
@@ -496,44 +454,44 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="ol-ul">
             <h5>&lt;ol&gt; &amp; &lt;ul&gt;</h5>
             <p><b>Criterion #13698</b>:
-        <tt>&lt;ol&gt;</tt> and <tt>&lt;ul&gt;</tt> elements have no attributes.</p>
+<tt>&lt;ol&gt;</tt> and <tt>&lt;ul&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #17842</b>:
-        <tt>&lt;ol&gt;</tt> and <tt>&lt;ul&gt;</tt> elements contain element-only content with only <tt>&lt;li&gt;</tt> child elements.</p>
+<tt>&lt;ol&gt;</tt> and <tt>&lt;ul&gt;</tt> elements contain element-only content with only <tt>&lt;li&gt;</tt> child elements.</p>
           </section>
           <section id="li">
             <h5>&lt;li&gt;</h5>
             <p><b>Criterion #18401</b>:
-        <tt>&lt;li&gt;</tt> elements have no attributes.</p>
+<tt>&lt;li&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #13486</b>:
-        <tt>&lt;li&gt;</tt> elements contain element-only content with child elements from the set <tt>{P_LEVEL}</tt>.</p>
+<tt>&lt;li&gt;</tt> elements contain element-only content with child elements from the set <tt>{P_LEVEL}</tt>.</p>
           </section>
           <section id="dl">
             <h5>&lt;dl&gt;</h5>
             <p><b>Criterion #16653</b>:
-        <tt>&lt;dl&gt;</tt> elements have no attributes.</p>
+<tt>&lt;dl&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #19568</b>:
-        <tt>&lt;dl&gt;</tt> elements contain element-only content with only <tt>&lt;div&gt;</tt> child elements.</p>
+<tt>&lt;dl&gt;</tt> elements contain element-only content with only <tt>&lt;div&gt;</tt> child elements.</p>
           </section>
           <section id="div-child-element-of-dl">
             <h5>&lt;div&gt; child element of &lt;dl&gt;</h5>
             <p><b>Criterion #13056</b>:
-        <tt>&lt;div&gt;</tt> child elements of <tt>&lt;dl&gt;</tt> have no attributes.</p>
+<tt>&lt;div&gt;</tt> child elements of <tt>&lt;dl&gt;</tt> have no attributes.</p>
             <p><b>Criterion #11744</b>:
-        <tt>&lt;div&gt;</tt> child elements of <tt>&lt;dl&gt;</tt> contain element-only content with child elements of either <tt>&lt;dt&gt;</tt> or <tt>&lt;dd&gt;</tt>.</p>
+<tt>&lt;div&gt;</tt> child elements of <tt>&lt;dl&gt;</tt> contain element-only content with child elements of either <tt>&lt;dt&gt;</tt> or <tt>&lt;dd&gt;</tt>.</p>
           </section>
           <section id="dt">
             <h5>&lt;dt&gt;</h5>
             <p><b>Criterion #15106</b>:
-        <tt>&lt;dt&gt;</tt> elements have no attributes.</p>
+<tt>&lt;dt&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #17876</b>:
-        <tt>&lt;dt&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
+<tt>&lt;dt&gt;</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           </section>
           <section id="dd">
             <h5>&lt;dd&gt;</h5>
             <p><b>Criterion #18382</b>:
-        <tt>&lt;dd&gt;</tt> elements have no attributes.</p>
+<tt>&lt;dd&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #13562</b>:
-        <tt>&lt;dd&gt;</tt> elements contain element-only content with child elements from the set <tt>{P_LEVEL}</tt>.</p>
+<tt>&lt;dd&gt;</tt> elements contain element-only content with child elements from the set <tt>{P_LEVEL}</tt>.</p>
           </section>
         </section>
       </section>
@@ -544,11 +502,11 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="article">
             <h5>&lt;article&gt;</h5>
             <p><b>Criterion #15199</b>:
-        <tt>&lt;article&gt;</tt> is the root element of the XML document.</p>
+<tt>&lt;article&gt;</tt> is the root element of the XML document.</p>
             <p><b>Criterion #10864</b>:
-        <tt>&lt;article&gt;</tt> has no attributes.</p>
+<tt>&lt;article&gt;</tt> has no attributes.</p>
             <p><b>Criterion #16641</b>:
-        <tt>&lt;article&gt;</tt> contains element-only content with at most one child element per tag from the set:</p>
+<tt>&lt;article&gt;</tt> contains element-only content with at most one child element per tag from the set:</p>
             <pre>&lt;front&gt;
 &lt;article-body&gt;
 &lt;back&gt;</pre>
@@ -556,16 +514,16 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="front">
             <h5>&lt;front&gt;</h5>
             <p><b>Criterion #14001</b>:
-        <tt>&lt;front&gt;</tt> has no attributes.</p>
+<tt>&lt;front&gt;</tt> has no attributes.</p>
             <p><b>Criterion #12640</b>:
-        <tt>&lt;front&gt;</tt> contains element-only content with at most one child element of <tt>&lt;article-meta&gt;</tt>.</p>
+<tt>&lt;front&gt;</tt> contains element-only content with at most one child element of <tt>&lt;article-meta&gt;</tt>.</p>
           </section>
           <section id="article-meta-element-tree">
             <h5>&lt;article-meta&gt; element tree</h5>
             <p><b>Criterion #13284</b>:
-        <tt>&lt;article-meta&gt;</tt> has no attributes.</p>
+<tt>&lt;article-meta&gt;</tt> has no attributes.</p>
             <p><b>Criterion #11553</b>:
-        <tt>&lt;article-meta&gt;</tt> contains element-only content with at most one child element per tag from the set:</p>
+<tt>&lt;article-meta&gt;</tt> contains element-only content with at most one child element per tag from the set:</p>
             <pre>&lt;title-group&gt;
 &lt;contrib-group&gt;
 &lt;permissions&gt;
@@ -574,15 +532,15 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="back-element-tree">
             <h5>&lt;back&gt; element tree</h5>
             <p><b>Criterion #11019</b>:
-        <tt>&lt;back&gt;</tt> has no attributes.</p>
+<tt>&lt;back&gt;</tt> has no attributes.</p>
             <p><b>Criterion #18947</b>:
-        <tt>&lt;back&gt;</tt> contains element-only content with exactly one child element <tt>&lt;ref-list&gt;</tt>.</p>
+<tt>&lt;back&gt;</tt> contains element-only content with exactly one child element <tt>&lt;ref-list&gt;</tt>.</p>
           </section>
         </section>
         <section id="content-elements">
           <h4>Content elements</h4>
           <p><b>Definition</b>:
-      <tt>{P_LEVEL}</tt> denotes the set of elements:</p>
+<tt>{P_LEVEL}</tt> denotes the set of elements:</p>
           <pre>&lt;code&gt;
 &lt;blockquote&gt;
 &lt;dl&gt;
@@ -593,48 +551,48 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="blockquote">
             <h5>&lt;blockquote&gt;</h5>
             <p><b>Criterion #13925</b>:
-        <tt>&lt;blockquote&gt;</tt> elements have no attributes.</p>
+<tt>&lt;blockquote&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #13249</b>:
-        <tt>&lt;blockquote&gt;</tt> elements contain element-only content with only <tt>&lt;p&gt;</tt> child elements.</p>
+<tt>&lt;blockquote&gt;</tt> elements contain element-only content with only <tt>&lt;p&gt;</tt> child elements.</p>
           </section>
           <section id="abstract">
             <h5>&lt;abstract&gt;</h5>
             <p><b>Criterion #14631</b>:
-        <tt>&lt;abstract&gt;</tt> has no attributes.</p>
+<tt>&lt;abstract&gt;</tt> has no attributes.</p>
             <p><b>Criterion #17433</b>:
-        <tt>&lt;abstract&gt;</tt> contains element-only content with all child elements from the set
-        <tt>{P_LEVEL}</tt>.</p>
+<tt>&lt;abstract&gt;</tt> contains element-only content with all child elements from the set
+<tt>{P_LEVEL}</tt>.</p>
           </section>
           <section id="article-body">
             <h5>&lt;article-body&gt;</h5>
             <p><b>Criterion #19029</b>:
-        <tt>&lt;article-body&gt;</tt> has no attributes.</p>
+<tt>&lt;article-body&gt;</tt> has no attributes.</p>
             <p><b>Criterion #11247</b>:
-        <tt>&lt;article-body&gt;</tt> contains element-only content with a sequence of child elements matching the regular
-        expression:</p>
+<tt>&lt;article-body&gt;</tt> contains element-only content with a sequence of child elements matching the regular
+expression:</p>
             <p><tt>({P_LEVEL})* (&lt;section&gt;~2)*</tt></p>
           </section>
           <section id="section">
             <h5>&lt;section&gt;</h5>
             <p><b>Criterion #12167</b>:
-        <tt>&lt;section&gt;</tt> elements have no attributes or an <tt>id=</tt> attribute.</p>
+<tt>&lt;section&gt;</tt> elements have no attributes or an <tt>id=</tt> attribute.</p>
             <p><b>Criterion #14586</b>:
-        <tt>&lt;section&gt;~N</tt> elements contain element-only content with a sequence of child elements matching the
-        regular expression:</p>
+<tt>&lt;section&gt;~N</tt> elements contain element-only content with a sequence of child elements matching the
+regular expression:</p>
             <p><tt>(&lt;hN&gt;)? ({P_LEVEL})* (&lt;section&gt;~(N+1))*</tt></p>
             <p>for <tt>N</tt> equal to 2, 3, 4, or 5.</p>
             <p><b>Criterion #18843</b>:
-        <tt>&lt;section&gt;~6</tt> elements contain element-only content with a sequence of child elements matching the
-        regular expression:</p>
+<tt>&lt;section&gt;~6</tt> elements contain element-only content with a sequence of child elements matching the
+regular expression:</p>
             <p><tt>(&lt;h6&gt;)? ({P_LEVEL})* (&lt;section&gt;~6)*</tt></p>
           </section>
           <section id="h2-h3-h4-h5-h6">
             <h5>&lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;</h5>
             <p><b>Criterion #10699</b>:
-        <tt>&lt;h2&gt;</tt>, <tt>&lt;h3&gt;</tt>, <tt>&lt;h4&gt;</tt>, <tt>&lt;h5&gt;</tt>, and <tt>&lt;h6&gt;</tt> elements have no attributes.</p>
+<tt>&lt;h2&gt;</tt>, <tt>&lt;h3&gt;</tt>, <tt>&lt;h4&gt;</tt>, <tt>&lt;h5&gt;</tt>, and <tt>&lt;h6&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #14064</b>:
-        <tt>&lt;h2&gt;</tt>, <tt>&lt;h3&gt;</tt>, <tt>&lt;h4&gt;</tt>, <tt>&lt;h5&gt;</tt>, and <tt>&lt;h6&gt;</tt> elements contain mixed content with each child
-        element either <tt>&lt;br/&gt;</tt> or of the element set <tt>{HYPERTEXT}</tt>.</p>
+<tt>&lt;h2&gt;</tt>, <tt>&lt;h3&gt;</tt>, <tt>&lt;h4&gt;</tt>, <tt>&lt;h5&gt;</tt>, and <tt>&lt;h6&gt;</tt> elements contain mixed content with each child
+element either <tt>&lt;br/&gt;</tt> or of the element set <tt>{HYPERTEXT}</tt>.</p>
           </section>
         </section>
       </section>
@@ -645,20 +603,20 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="title-group">
             <h5>&lt;title-group&gt;</h5>
             <p><b>Criterion #15574</b>:
-        <tt>&lt;title-group&gt;</tt> has no attributes.</p>
+<tt>&lt;title-group&gt;</tt> has no attributes.</p>
             <p><b>Criterion #19365</b>:
-        <tt>&lt;title-group&gt;</tt> contains element-only content with at most one child element
-        <tt>&lt;article-title&gt;~SELF</tt>.</p>
+<tt>&lt;title-group&gt;</tt> contains element-only content with at most one child element
+<tt>&lt;article-title&gt;~SELF</tt>.</p>
           </section>
           <section id="article-title-1">
             <h5>&lt;article-title&gt;</h5>
             <p><b>Criterion #17019</b>:
-        <tt>&lt;article-title&gt;</tt> elements have no attributes.</p>
+<tt>&lt;article-title&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #10037</b>:
-        <tt>&lt;article-title&gt;</tt> elements are either <tt>&lt;article-title&gt;~SELF</tt> or <tt>&lt;article-title&gt;~REF</tt>.</p>
+<tt>&lt;article-title&gt;</tt> elements are either <tt>&lt;article-title&gt;~SELF</tt> or <tt>&lt;article-title&gt;~REF</tt>.</p>
             <p><b>Criterion #11294</b>:
-        <tt>&lt;article-title&gt;~SELF</tt> contains mixed content with child elements from the set
-        <tt>{MINITEXT}</tt>.</p>
+<tt>&lt;article-title&gt;~SELF</tt> contains mixed content with child elements from the set
+<tt>{MINITEXT}</tt>.</p>
           </section>
         </section>
         <section id="contributors">
@@ -666,35 +624,29 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="contrib-group">
             <h5>&lt;contrib-group&gt;</h5>
             <p><b>Criterion #10923</b>:
-        <tt>&lt;contrib-group&gt;</tt> has no attributes.</p>
+<tt>&lt;contrib-group&gt;</tt> has no attributes.</p>
             <p><b>Criterion #17698</b>:
-        <tt>&lt;contrib-group&gt;</tt> contains element-only content with only child elements of <tt>&lt;contrib&gt;</tt>.</p>
+<tt>&lt;contrib-group&gt;</tt> contains element-only content with only child elements of <tt>&lt;contrib&gt;</tt>.</p>
           </section>
           <section id="contrib">
             <h5>&lt;contrib&gt;</h5>
             <p><b>Criterion #17181</b>:
-        <tt>&lt;contrib&gt;</tt> elements have exactly one attribute of <tt>contrib-type=</tt> with value
-        <tt>"author"</tt>.</p>
+<tt>&lt;contrib&gt;</tt> elements have exactly one attribute of <tt>contrib-type=</tt> with value
+<tt>"author"</tt>.</p>
             <p><b>Criterion #19818</b>:
-        <tt>&lt;contrib&gt;</tt> elements contain element-only content with child elements:</p>
+<tt>&lt;contrib&gt;</tt> elements contain element-only content with child elements:</p>
             <ul>
-              <li>
-                <p><tt>&lt;name&gt;</tt> (exactly one)</p>
-              </li>
-              <li>
-                <p><tt>&lt;contrib-id&gt;</tt> (zero or one)</p>
-              </li>
-              <li>
-                <p><tt>&lt;email&gt;</tt> (zero or one)</p>
-              </li>
+              <li><tt>&lt;name&gt;</tt> (exactly one)</li>
+              <li><tt>&lt;contrib-id&gt;</tt> (zero or one)</li>
+              <li><tt>&lt;email&gt;</tt> (zero or one)</li>
             </ul>
           </section>
           <section id="name">
             <h5>&lt;name&gt;</h5>
             <p><b>Criterion #15691</b>:
-        <tt>&lt;name&gt;</tt> has no attributes.</p>
+<tt>&lt;name&gt;</tt> has no attributes.</p>
             <p><b>Criterion #12424</b>:
-        <tt>&lt;name&gt;</tt> contains element-only content with child elements from the set:</p>
+<tt>&lt;name&gt;</tt> contains element-only content with child elements from the set:</p>
             <pre>&lt;surname&gt;
 &lt;given-names&gt;
 &lt;suffix&gt;</pre>
@@ -703,17 +655,17 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="surname-given-names-and-suffix">
             <h5>&lt;surname&gt;, &lt;given-names&gt;, and &lt;suffix&gt;</h5>
             <p><b>Criterion #17569</b>:
-        <tt>&lt;surname&gt;</tt>, <tt>&lt;given-names&gt;</tt>, and <tt>&lt;suffix&gt;</tt> have no attributes.</p>
+<tt>&lt;surname&gt;</tt>, <tt>&lt;given-names&gt;</tt>, and <tt>&lt;suffix&gt;</tt> have no attributes.</p>
             <p><b>Criterion #17289</b>:
-        <tt>&lt;surname&gt;</tt>, <tt>&lt;given-names&gt;</tt>, and <tt>&lt;suffix&gt;</tt> contain text-only content.</p>
+<tt>&lt;surname&gt;</tt>, <tt>&lt;given-names&gt;</tt>, and <tt>&lt;suffix&gt;</tt> contain text-only content.</p>
           </section>
           <section id="contrib-id">
             <h5>&lt;contrib-id&gt;</h5>
             <p><b>Criterion #13828</b>:
-        <tt>&lt;contrib-id&gt;</tt> has exactly one attribute with value <tt>contrib-id-type="orcid"</tt>.</p>
+<tt>&lt;contrib-id&gt;</tt> has exactly one attribute with value <tt>contrib-id-type="orcid"</tt>.</p>
             <p><b>Criterion #12150</b>:
-        <tt>&lt;contrib-id&gt;</tt> contains text-only content of a valid ORCID including the
-        <tt>https://orcid.org/</tt> prefix.</p>
+<tt>&lt;contrib-id&gt;</tt> contains text-only content of a valid ORCID including the
+<tt>https://orcid.org/</tt> prefix.</p>
           </section>
         </section>
         <section id="permissions-and-licensing">
@@ -721,47 +673,47 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="permissions">
             <h5>&lt;permissions&gt;</h5>
             <p><b>Criterion #19885</b>:
-        <tt>&lt;permissions&gt;</tt> has no attributes.</p>
+<tt>&lt;permissions&gt;</tt> has no attributes.</p>
             <p><b>Criterion #11010</b>:
-        <tt>&lt;permissions&gt;</tt> contains element-only content of only child elements <tt>&lt;copyright-statement&gt;</tt> and
-        <tt>&lt;license&gt;</tt> (zero or one of each).</p>
+<tt>&lt;permissions&gt;</tt> contains element-only content of only child elements <tt>&lt;copyright-statement&gt;</tt> and
+<tt>&lt;license&gt;</tt> (zero or one of each).</p>
           </section>
           <section id="copyright-statement">
             <h5>&lt;copyright-statement&gt;</h5>
             <p><b>Criterion #13932</b>:
-        <tt>&lt;copyright-statement&gt;</tt> has no attributes.</p>
+<tt>&lt;copyright-statement&gt;</tt> has no attributes.</p>
             <p><b>Criterion #17441</b>:
-        <tt>&lt;copyright-statement&gt;</tt> contains mixed content with child elements of set <tt>{COPYTEXT}</tt>.</p>
+<tt>&lt;copyright-statement&gt;</tt> contains mixed content with child elements of set <tt>{COPYTEXT}</tt>.</p>
           </section>
           <section id="license">
             <h5>&lt;license&gt;</h5>
             <p><b>Criterion #19618</b>:
-        <tt>&lt;license&gt;</tt> has no attributes.</p>
+<tt>&lt;license&gt;</tt> has no attributes.</p>
             <p><b>Criterion #13667</b>:
-        <tt>&lt;license&gt;</tt> contains element-only content with child elements from the set:</p>
+<tt>&lt;license&gt;</tt> contains element-only content with child elements from the set:</p>
             <pre>&lt;license-p&gt;
 &lt;license_ref&gt;
 &lt;ali:license_ref&gt;</pre>
             <p><b>Criterion #15516</b>:
-        <tt>&lt;license&gt;</tt> does not contains multiple child elements with the same tag.</p>
+<tt>&lt;license&gt;</tt> does not contains multiple child elements with the same tag.</p>
             <p><b>Criterion #16066</b>:
-        <tt>&lt;license&gt;</tt> does not contains both a <tt>&lt;license_ref&gt;</tt> child element and a
-        <tt>&lt;ali:license_ref&gt;</tt> child element.</p>
+<tt>&lt;license&gt;</tt> does not contains both a <tt>&lt;license_ref&gt;</tt> child element and a
+<tt>&lt;ali:license_ref&gt;</tt> child element.</p>
           </section>
           <section id="license-p">
             <h5>&lt;license-p&gt;</h5>
             <p><b>Criterion #10671</b>:
-        <tt>&lt;license-p&gt;</tt> has no attributes.</p>
+<tt>&lt;license-p&gt;</tt> has no attributes.</p>
             <p><b>Criterion #10974</b>:
-        <tt>&lt;license-p&gt;</tt> contains mixed content with child elements of set <tt>{COPYTEXT}</tt>.</p>
+<tt>&lt;license-p&gt;</tt> contains mixed content with child elements of set <tt>{COPYTEXT}</tt>.</p>
           </section>
           <section id="alilicense_ref">
             <h5>&lt;ali:license_ref&gt;</h5>
             <p><b>Criterion #16170</b>:
-        <tt>&lt;ali:license_ref&gt;</tt> contains text-only content of a URL.</p>
+<tt>&lt;ali:license_ref&gt;</tt> contains text-only content of a URL.</p>
             <p><b>Criterion #16811</b>:
-        <tt>&lt;ali:license_ref&gt;</tt> has no attribute or an attribute of <tt>content-type=</tt> with any one of
-        the following values:</p>
+<tt>&lt;ali:license_ref&gt;</tt> has no attribute or an attribute of <tt>content-type=</tt> with any one of
+the following values:</p>
             <pre>"cc0license"
 "ccbylicense"
 "ccbysalicense"
@@ -770,7 +722,7 @@ by independent websites using Baseprint-compatible software.</p>
 "ccbyndlicense"
 "ccbyncndlicense"</pre>
             <p><b>Criterion #11510</b>:
-        If the non-whitespace text contents of <tt>&lt;ali:license_ref&gt;</tt> have one of the following prefixes:</p>
+If the non-whitespace text contents of <tt>&lt;ali:license_ref&gt;</tt> have one of the following prefixes:</p>
             <pre>"https://creativecommons.org/publicdomain/zero/"
 "https://creativecommons.org/licenses/by/"
 "https://creativecommons.org/licenses/by-sa/"
@@ -779,7 +731,7 @@ by independent websites using Baseprint-compatible software.</p>
 "https://creativecommons.org/licenses/by-nd/"
 "https://creativecommons.org/licenses/by-nc-nd/"</pre>
             <p>then the <tt>content-type=</tt> value, if present, must equal the corresponding respective
-        value:</p>
+value:</p>
             <pre>"cc0license"
 "ccbylicense"
 "ccbysalicense"
@@ -797,34 +749,28 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="xref">
             <h5>&lt;xref&gt;</h5>
             <p><b>Criterion #14740</b>:
-        <tt>&lt;xref&gt;</tt> elements have exactly two attributes: <tt>rid=</tt> and <tt>ref-type=</tt>.</p>
+<tt>&lt;xref&gt;</tt> elements have exactly two attributes: <tt>rid=</tt> and <tt>ref-type=</tt>.</p>
             <p><b>Criterion #11027</b>:
-        <tt>&lt;xref&gt;</tt> elements have an attribute of <tt>ref-type=</tt> with the value <tt>bibr</tt>.</p>
+<tt>&lt;xref&gt;</tt> elements have an attribute of <tt>ref-type=</tt> with the value <tt>bibr</tt>.</p>
             <p><b>Criterion #12086</b>:
-        <tt>&lt;xref&gt;</tt> elements have a value for <tt>rid=</tt> that
-        matches the value of the attribute <tt>id=</tt> of a <tt>&lt;ref&gt;</tt> element.</p>
+<tt>&lt;xref&gt;</tt> elements have a value for <tt>rid=</tt> that
+matches the value of the attribute <tt>id=</tt> of a <tt>&lt;ref&gt;</tt> element.</p>
             <p><b>Criterion #10484</b>:
-        <tt>&lt;xref&gt;</tt> elements contain text-only content of
-        a single integer (surrounded by optional whitespace).
-        The integer corresponds to the ordered position in <tt>&lt;ref-list&gt;</tt> of the <tt>&lt;ref&gt;</tt> element
-        with an <tt>id=</tt> attribute value matching the <tt>rid=</tt> attribute value of the <tt>&lt;xref&gt;</tt> element.</p>
+<tt>&lt;xref&gt;</tt> elements contain text-only content of
+a single integer (surrounded by optional whitespace).
+The integer corresponds to the ordered position in <tt>&lt;ref-list&gt;</tt> of the <tt>&lt;ref&gt;</tt> element
+with an <tt>id=</tt> attribute value matching the <tt>rid=</tt> attribute value of the <tt>&lt;xref&gt;</tt> element.</p>
           </section>
           <section id="supcite">
             <h5>&lt;sup&gt;~CITE</h5>
             <p><b>Criterion #14278</b>:
-        <tt>&lt;sup&gt;~CITE</tt> elements only have child elements of <tt>&lt;xref&gt;</tt>.</p>
+<tt>&lt;sup&gt;~CITE</tt> elements only have child elements of <tt>&lt;xref&gt;</tt>.</p>
             <p><b>Criterion #12352</b>:
-        <tt>&lt;sup&gt;~CITE</tt> elements have mixed content with text-only content of:</p>
+<tt>&lt;sup&gt;~CITE</tt> elements have mixed content with text-only content of:</p>
             <ul>
-              <li>
-                <p>optional whitespace before the first child element,</p>
-              </li>
-              <li>
-                <p>optional whitespace after the last child element, and</p>
-              </li>
-              <li>
-                <p>a comma and optional whitespace between child elements.</p>
-              </li>
+              <li>optional whitespace before the first child element,</li>
+              <li>optional whitespace after the last child element, and</li>
+              <li>a comma and optional whitespace between child elements.</li>
             </ul>
           </section>
         </section>
@@ -833,29 +779,28 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="ref-list">
             <h5>&lt;ref-list&gt;</h5>
             <p><b>Criterion #14165</b>:
-        <tt>&lt;ref-list&gt;</tt> has no attributes.</p>
+<tt>&lt;ref-list&gt;</tt> has no attributes.</p>
             <p><b>Criterion #12136</b>:
-        <tt>&lt;ref-list&gt;</tt> contains element-only content with only <tt>&lt;ref&gt;</tt> child elements.</p>
+<tt>&lt;ref-list&gt;</tt> contains element-only content with only <tt>&lt;ref&gt;</tt> child elements.</p>
           </section>
           <section id="ref">
             <h5>&lt;ref&gt;</h5>
             <p><b>Criterion #18652</b>:
-        <tt>&lt;ref&gt;</tt> elements have one attribute, and it is <tt>id=</tt>.</p>
+<tt>&lt;ref&gt;</tt> elements have one attribute, and it is <tt>id=</tt>.</p>
             <p><b>Criterion #15949</b>:
-        <tt>&lt;ref&gt;</tt> contains element-only content with exactly one child element of <tt>&lt;element-citation&gt;</tt>.</p>
+<tt>&lt;ref&gt;</tt> contains element-only content with exactly one child element of <tt>&lt;element-citation&gt;</tt>.</p>
           </section>
           <section id="element-citation">
             <h5>&lt;element-citation&gt;</h5>
             <p><b>Criterion #15660</b>:
-        <tt>&lt;element-citation&gt;</tt> elements have no attributes.</p>
+<tt>&lt;element-citation&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #14559</b>:
-        <tt>&lt;element-citation&gt;</tt> contains element-only content with child elements from the set:</p>
+<tt>&lt;element-citation&gt;</tt> contains element-only content with child elements from the set:</p>
             <pre>&lt;article-title&gt;~REF
 &lt;comment&gt;
 &lt;date-in-citation&gt;
 &lt;day&gt;
 &lt;edition&gt;
-&lt;elocation-id&gt;
 &lt;fpage&gt;
 &lt;isbn&gt;
 &lt;issn&gt;
@@ -871,16 +816,15 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;volume&gt;
 &lt;year&gt;</pre>
             <p><b>Criterion #12492</b>:
-        For <tt>&lt;element-citation&gt;</tt> elements, there are one or zero child elements for each
-        possible tag, with the exception of <tt>&lt;pub-id&gt;</tt>, which can appear more than once.</p>
+For <tt>&lt;element-citation&gt;</tt> elements, there are one or zero child elements for each
+possible tag, with the exception of <tt>&lt;pub-id&gt;</tt>, which can appear more than once.</p>
             <p><b>Criterion #13786</b>:
-        For <tt>&lt;element-citation&gt;</tt> elements, all child elements with the tag <tt>&lt;pub-id&gt;</tt> have different
-        values for the attribute <tt>pub-id-type=</tt>.</p>
+For <tt>&lt;element-citation&gt;</tt> elements, all child elements with the tag <tt>&lt;pub-id&gt;</tt> have different
+values for the attribute <tt>pub-id-type=</tt>.</p>
             <p><b>Criterion #18428</b>:
-        The following elements under <tt>&lt;element-citation&gt;</tt> have no attributes and contain
-        text-only content:</p>
+The following elements under <tt>&lt;element-citation&gt;</tt> have no attributes and contain
+text-only content:</p>
             <pre>&lt;comment&gt;
-&lt;elocation-id&gt;
 &lt;fpage&gt;
 &lt;isbn&gt;
 &lt;issn&gt;
@@ -892,15 +836,15 @@ by independent websites using Baseprint-compatible software.</p>
 &lt;uri&gt;
 &lt;volume&gt;</pre>
             <p><b>Criterion #10807</b>:
-        <tt>&lt;article-title&gt;~REF</tt> elements contain text-only content.</p>
+<tt>&lt;article-title&gt;~REF</tt> elements contain text-only content.</p>
           </section>
           <section id="person-group">
             <h5>&lt;person-group&gt;</h5>
             <p><b>Criterion #18377</b>:
-        <tt>&lt;person-group&gt;</tt> elements have exactly one attribute, <tt>person-group-type=</tt>, with either the value
-        <tt>"author"</tt> or <tt>"editor"</tt>.</p>
+<tt>&lt;person-group&gt;</tt> elements have exactly one attribute, <tt>person-group-type=</tt>, with either the value
+<tt>"author"</tt> or <tt>"editor"</tt>.</p>
             <p><b>Criterion #17091</b>:
-        <tt>&lt;person-group&gt;</tt> contains element-only content with child elements from the set:</p>
+<tt>&lt;person-group&gt;</tt> contains element-only content with child elements from the set:</p>
             <pre>&lt;name&gt;
 &lt;string-name&gt;
 &lt;etal&gt;</pre>
@@ -908,37 +852,37 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="string-name">
             <h5>&lt;string-name&gt;</h5>
             <p><b>Criterion #18187</b>:
-        <tt>&lt;string-name&gt;</tt> elements have no attributes and contain text-only content.</p>
+<tt>&lt;string-name&gt;</tt> elements have no attributes and contain text-only content.</p>
           </section>
           <section id="etal">
             <h5>&lt;etal&gt;</h5>
             <p><b>Criterion #16837</b>:
-        <tt>&lt;etal&gt;</tt> elements have no attributes and contain empty content.</p>
+<tt>&lt;etal&gt;</tt> elements have no attributes and contain empty content.</p>
             <p><b>Criterion #14180</b>:
-        <tt>&lt;person-group&gt;</tt> elements have no more than one <tt>&lt;etal/&gt;</tt> child element.</p>
+<tt>&lt;person-group&gt;</tt> elements have no more than one <tt>&lt;etal/&gt;</tt> child element.</p>
           </section>
           <section id="year-month-and-day-elements">
             <h5>&lt;year&gt;, &lt;month&gt;, and &lt;day&gt; elements</h5>
             <p><b>Criterion #13721</b>:
-        <tt>&lt;year&gt;</tt>, <tt>&lt;month&gt;</tt>, and <tt>&lt;day&gt;</tt> elements have no attributes.</p>
+<tt>&lt;year&gt;</tt>, <tt>&lt;month&gt;</tt>, and <tt>&lt;day&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #17289</b>:
-        <tt>&lt;year&gt;</tt>, <tt>&lt;month&gt;</tt>, and <tt>&lt;day&gt;</tt> elements contain just an integer as content and do not have any non-digit
-        characters.</p>
+<tt>&lt;year&gt;</tt>, <tt>&lt;month&gt;</tt>, and <tt>&lt;day&gt;</tt> elements contain just an integer as content and do not have any non-digit
+characters.</p>
             <p><b>Criterion #10430</b>:
-        Child elements <tt>&lt;year&gt;</tt>, <tt>&lt;month&gt;</tt>, and <tt>&lt;day&gt;</tt> appear at most once under their parent
-        element.</p>
+Child elements <tt>&lt;year&gt;</tt>, <tt>&lt;month&gt;</tt>, and <tt>&lt;day&gt;</tt> appear at most once under their parent
+element.</p>
             <p><b>Criterion #14321</b>:
-        Child element <tt>&lt;month&gt;</tt> appears only if <tt>&lt;year&gt;</tt> is present as a sibling element.</p>
+Child element <tt>&lt;month&gt;</tt> appears only if <tt>&lt;year&gt;</tt> is present as a sibling element.</p>
             <p><b>Criterion #19206</b>:
-        Child element <tt>&lt;day&gt;</tt> appears only if <tt>&lt;month&gt;</tt> is present as a sibling element.</p>
+Child element <tt>&lt;day&gt;</tt> appears only if <tt>&lt;month&gt;</tt> is present as a sibling element.</p>
           </section>
           <section id="date-in-citation">
             <h5>&lt;date-in-citation&gt;</h5>
             <p><b>Criterion #13166</b>:
-        <tt>&lt;date-in-citation&gt;</tt> has exactly one attribute, it is <tt>content-type=</tt>, and its value is
-        <tt>"access-date"</tt>.</p>
+<tt>&lt;date-in-citation&gt;</tt> has exactly one attribute, it is <tt>content-type=</tt>, and its value is
+<tt>"access-date"</tt>.</p>
             <p><b>Criterion #11337</b>:
-        <tt>&lt;date-in-citation&gt;</tt> contains element-only content with child elements from the set:</p>
+<tt>&lt;date-in-citation&gt;</tt> contains element-only content with child elements from the set:</p>
             <pre>&lt;year&gt;
 &lt;month&gt;
 &lt;day&gt;</pre>
@@ -946,21 +890,21 @@ by independent websites using Baseprint-compatible software.</p>
           <section id="edition">
             <h5>&lt;edition&gt;</h5>
             <p><b>Criterion #18615</b>:
-        <tt>&lt;edition&gt;</tt> elements have no attributes.</p>
+<tt>&lt;edition&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #11753</b>:
-        <tt>&lt;edition&gt;</tt> elements contain just an integer as content and do not have any non-digit
-        characters.</p>
+<tt>&lt;edition&gt;</tt> elements contain just an integer as content and do not have any non-digit
+characters.</p>
           </section>
           <section id="pub-id">
             <h5>&lt;pub-id&gt;</h5>
             <p><b>Criterion #14308</b>:
-        <tt>&lt;pub-id&gt;</tt> elements have exactly one attribute, it is <tt>pub-id-type=</tt>, and it has the value <tt>"doi"</tt> or <tt>"pmid"</tt>.</p>
+<tt>&lt;pub-id&gt;</tt> elements have exactly one attribute, it is <tt>pub-id-type=</tt>, and it has the value <tt>"doi"</tt> or <tt>"pmid"</tt>.</p>
             <p><b>Criterion #15283</b>:
-        <tt>&lt;pub-id&gt;</tt> elements with the attribute value <tt>pub-id-type="doi"</tt> have text-only content
-        that starts with &#8220;10.&#8221; and not &#8220;http&#8221;.</p>
+<tt>&lt;pub-id&gt;</tt> elements with the attribute value <tt>pub-id-type="doi"</tt> have text-only content
+that starts with &#8220;10.&#8221; and not &#8220;http&#8221;.</p>
             <p><b>Criterion #10955</b>:
-        <tt>&lt;pub-id&gt;</tt> elements with the attribute value <tt>pub-id-type="pmid"</tt> have text-only content of a
-        valid PubMed Identification Number.</p>
+<tt>&lt;pub-id&gt;</tt> elements with the attribute value <tt>pub-id-type="pmid"</tt> have text-only content of a
+valid PubMed Identification Number.</p>
           </section>
         </section>
       </section>
@@ -972,7 +916,7 @@ by independent websites using Baseprint-compatible software.</p>
         <section id="html-like-jats-elements">
           <h4>HTML-like JATS Elements</h4>
           <p>The criteria for the following JATS elements from edition 1 have been replaced with criteria
-      for their corresponding XHTML elements in edition 2.</p>
+for their corresponding XHTML elements in edition 2.</p>
           <pre>JATS          XHTML
 -----------   -----
 &lt;bold&gt;        &lt;b&gt;
@@ -995,88 +939,71 @@ by independent websites using Baseprint-compatible software.</p>
           <h4>JATS tags renamed for HTML/CSS-compatibility</h4>
           <p>The following JATS tags are renamed:</p>
           <ul>
-            <li>
-              <p><tt>&lt;body&gt;</tt> to <tt>&lt;article-body&gt;</tt></p>
-            </li>
-            <li>
-              <p><tt>&lt;source&gt;</tt> to <tt>&lt;source-title&gt;</tt></p>
-            </li>
-            <li>
-              <p><tt>&lt;ali:license_ref&gt;</tt> to <tt>&lt;license-ref&gt;</tt></p>
-            </li>
+            <li><tt>&lt;body&gt;</tt> to <tt>&lt;article-body&gt;</tt></li>
+            <li><tt>&lt;source&gt;</tt> to <tt>&lt;source-title&gt;</tt></li>
+            <li><tt>&lt;ali:license_ref&gt;</tt> to <tt>&lt;license-ref&gt;</tt></li>
           </ul>
           <p>These renames achieve HTML/CSS/XML interoperability by satifiying criteria #10825,
-      #18620, and #14199.</p>
+#18620, and #14199.</p>
         </section>
         <section id="li-and-dd-child-elements">
           <h4>&lt;li&gt; and &lt;dd&gt; child elements</h4>
           <p>Consistent with the HTML standard,
-      <tt>&lt;li&gt;</tt> and <tt>&lt;dd&gt;</tt> child elements can be any elements from the set <tt>{P_LEVEL}</tt>.
-      This is an intentional non-alignment with the NISO JATS standard.
-      The reference XSL transform file will transform Baseprint XML to JATS XML,
-      moving required child elements to be under non-HTML JATS <tt>&lt;p&gt;</tt> child elements as required by
-      NISO JATS.</p>
+<tt>&lt;li&gt;</tt> and <tt>&lt;dd&gt;</tt> child elements can be any elements from the set <tt>{P_LEVEL}</tt>.
+This is an intentional non-alignment with the NISO JATS standard.
+The reference XSL transform file will transform Baseprint XML to JATS XML,
+moving required child elements to be under non-HTML JATS <tt>&lt;p&gt;</tt> child elements as required by
+NISO JATS.</p>
         </section>
         <section id="elimination-of-non-html-jats-p">
           <h4>Elimination of non-HTML JATS &lt;p&gt;</h4>
           <p>The JATS-specific <tt>&lt;p&gt;~WRAPPER</tt> element variety and all related criteria have been
-      eliminated or replaced.
-      The <tt>&lt;p&gt;</tt> element in this edition 2 is equivalent to the <tt>&lt;p&gt;~HTML</tt> element variety
-      of edition 1.</p>
+eliminated or replaced.
+The <tt>&lt;p&gt;</tt> element in this edition 2 is equivalent to the <tt>&lt;p&gt;~HTML</tt> element variety
+of edition 1.</p>
           <p>The <tt>&lt;p&gt;</tt> element in Baseprint XML is now aligned with the HTML standard.
-      This is an intentional non-alignment with the NISO JATS standard.
-      The reference XSL transform file will transform Baseprint XML to JATS XML that does
-      include non-HTML-standard JATS <tt>&lt;p&gt;</tt> elements required by the NISO standard.</p>
+This is an intentional non-alignment with the NISO JATS standard.
+The reference XSL transform file will transform Baseprint XML to JATS XML that does
+include non-HTML-standard JATS <tt>&lt;p&gt;</tt> elements required by the NISO standard.</p>
         </section>
         <section id="stronger-content-criteria">
           <h4>Stronger content criteria</h4>
           <dl>
             <div>
               <dt>&lt;article-title&gt;</dt>
-              <dd>
-                <p>changed to only contain the elements <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;sub&gt;</tt>, and <tt>&lt;sup&gt;</tt>.
-            See <a rel="external" href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</a> for the rationale.</p>
-              </dd>
+              <dd>changed to only contain the elements <tt>&lt;b&gt;</tt>, <tt>&lt;i&gt;</tt>, <tt>&lt;sub&gt;</tt>, and <tt>&lt;sup&gt;</tt>.
+See <a rel="external" href="https://github.com/singlesourcepub/baseprints/discussions/19">Discussion #19 on GitHub</a> for the rationale.</dd>
             </div>
             <div>
               <dt>&lt;abstract&gt;</dt>
-              <dd>
-                <p>content criteria require only <tt>{P_LEVEL}</tt> child elements and no subsections.</p>
-              </dd>
+              <dd>content criteria require only <tt>{P_LEVEL}</tt> child elements and no subsections.</dd>
             </div>
             <div>
               <dt>&lt;copyright-statement&gt;</dt>
-              <dd>
-                <p>changed to contain <tt>{COPYTEXT}</tt> instead of <tt>{HYPERTEXT}</tt>.</p>
-              </dd>
+              <dd>changed to contain <tt>{COPYTEXT}</tt> instead of <tt>{HYPERTEXT}</tt>.</dd>
             </div>
             <div>
               <dt>&lt;license-p&gt;</dt>
-              <dd>
-                <p>changed to contain <tt>{COPYTEXT}</tt> instead of <tt>{HYPERTEXT}</tt>.</p>
-              </dd>
+              <dd>changed to contain <tt>{COPYTEXT}</tt> instead of <tt>{HYPERTEXT}</tt>.</dd>
             </div>
           </dl>
         </section>
         <section id="elimination-ref-listtitle">
           <h4>Elimination ref-list/title</h4>
           <p><tt>&lt;title&gt;</tt> under <tt>&lt;ref-list&gt;</tt> has been removed. This tag name is also used in HTML.
-      This title has only been set to &#8220;References&#8221; in both all existing Baseprint documents
-      and the vast majority of recent PubMed Central JATS XML files.
-      This element also resulted in a more complex parsing model being at the same level as a
-      sequence of <tt>&lt;ref&gt;</tt> child elements.
-      If customization of reference title is ever needed, a different tag name and
-      location are likely to be chosen for Baseprint XML.</p>
+This title has only been set to &#8220;References&#8221; in both all existing Baseprint documents
+and the vast majority of recent PubMed Central JATS XML files.
+This element also resulted in a more complex parsing model being at the same level as a
+sequence of <tt>&lt;ref&gt;</tt> child elements.
+If customization of reference title is ever needed, a different tag name and
+location are likely to be chosen for Baseprint XML.</p>
         </section>
         <section id="misc">
           <h4>Misc</h4>
           <ul>
-            <li>
-              <p><tt>xmlns:xlink</tt> namespace no longer needed since <tt>&lt;ext-link&gt;</tt> replaced with <tt>&lt;a&gt;</tt></p>
-            </li>
-            <li>
-              <p><tt>&lt;xref&gt;</tt> element in edition 2 is equivalent to <tt>&lt;xref&gt;~CITE</tt> of edition 1</p>
-            </li>
+            <li><tt>xmlns:xlink</tt> namespace no longer needed since <tt>&lt;ext-link&gt;</tt> replaced with <tt>&lt;a&gt;</tt></li>
+            <li><tt>&lt;xref&gt;</tt> element in edition 2 is equivalent to <tt>&lt;xref&gt;~CITE</tt> of edition 1</li>
+            <li>JATS <tt>&lt;elocation-id&gt;</tt> eliminated (use <tt>&lt;fpage&gt;</tt> for better CSLJSON interoperability)</li>
           </ul>
         </section>
       </section>
@@ -1084,27 +1011,27 @@ by independent websites using Baseprint-compatible software.</p>
   </article-body>
   <back>
     <ref-list>
-      <ref id="ref-jats">
+      <ref id="jats">
         <element-citation>
           <person-group person-group-type="author">
             <string-name>U.S. National Library of Medicine (NLM)</string-name>
           </person-group>
-          <article-title>Journal Article Tag Suite</article-title>
+          <source-title>Journal Article Tag Suite</source-title>
           <year>2024</year>
           <uri>https://jats.nlm.nih.gov/</uri>
         </element-citation>
       </ref>
-      <ref id="ref-jats_authoring">
+      <ref id="jats_authoring">
         <element-citation>
           <person-group person-group-type="author">
             <string-name>U.S. National Library of Medicine (NLM)</string-name>
           </person-group>
-          <article-title>JATS: Article Authoring Tag Set</article-title>
+          <source-title>JATS: Article Authoring Tag Set</source-title>
           <year>2024</year>
           <uri>https://jats.nlm.nih.gov/articleauthoring/1.4/</uri>
         </element-citation>
       </ref>
-      <ref id="ref-dsgl">
+      <ref id="dsgl">
         <element-citation>
           <person-group person-group-type="author">
             <name>
@@ -1112,12 +1039,12 @@ by independent websites using Baseprint-compatible software.</p>
               <given-names>E. Castedo</given-names>
             </name>
           </person-group>
-          <article-title>Document Succession Git Layout (DSGL)</article-title>
+          <source-title>Document Succession Git Layout (DSGL)</source-title>
           <year>2024</year>
           <uri>https://perm.pub/VGajCjaNP1Ugz58Khn1JWOEdMZ8</uri>
         </element-citation>
       </ref>
-      <ref id="ref-jats4r_2015">
+      <ref id="jats4r_2015">
         <element-citation>
           <person-group person-group-type="author">
             <name>
@@ -1136,11 +1063,11 @@ by independent websites using Baseprint-compatible software.</p>
           <article-title>A client-side JATS4R validator using saxon-CE</article-title>
           <source-title>Balisage: The Markup Conference</source-title>
           <year>2015</year>
-          <volume>15</volume>
           <uri>https://doi.org/10.4242/BalisageVol15.Beck01</uri>
+          <volume>15</volume>
         </element-citation>
       </ref>
-      <ref id="ref-jats4r_2019">
+      <ref id="jats4r_2019">
         <element-citation>
           <person-group person-group-type="author">
             <name>
@@ -1178,12 +1105,12 @@ by independent websites using Baseprint-compatible software.</p>
           <uri>https://www.ncbi.nlm.nih.gov/books/NBK540949/</uri>
         </element-citation>
       </ref>
-      <ref id="ref-void_element">
+      <ref id="void_element">
         <element-citation>
           <person-group person-group-type="author">
             <string-name>MDN team</string-name>
           </person-group>
-          <article-title>Void element</article-title>
+          <source-title>Void element</source-title>
           <date-in-citation content-type="access-date">
             <year>2025</year>
             <month>09</month>
@@ -1192,12 +1119,12 @@ by independent websites using Baseprint-compatible software.</p>
           <uri>https://developer.mozilla.org/en-US/docs/Glossary/Void_element</uri>
         </element-citation>
       </ref>
-      <ref id="ref-html">
+      <ref id="html">
         <element-citation>
           <person-group person-group-type="author">
             <string-name>WHATWG community</string-name>
           </person-group>
-          <article-title>HTML Living Standard</article-title>
+          <source-title>HTML Living Standard</source-title>
           <date-in-citation content-type="access-date">
             <year>2024</year>
             <month>09</month>

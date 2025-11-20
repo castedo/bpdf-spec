@@ -942,7 +942,6 @@ with an `id=` attribute value matching the `rid=` attribute value of the `<xref>
 <date-in-citation>
 <day>
 <edition>
-<elocation-id>
 <fpage>
 <isbn>
 <issn>
@@ -972,7 +971,6 @@ The following elements under `<element-citation>` have no attributes and contain
 text-only content:
 ```
 <comment>
-<elocation-id>
 <fpage>
 <isbn>
 <issn>
@@ -1165,3 +1163,4 @@ location are likely to be chosen for Baseprint XML.
 
 * `xmlns:xlink` namespace no longer needed since `<ext-link>` replaced with `<a>`
 * `<xref>` element in edition 2 is equivalent to `<xref>~CITE` of edition 1
+* JATS `<elocation-id>` eliminated (use `<fpage>` for better CSLJSON interoperability)
