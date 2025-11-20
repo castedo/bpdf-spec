@@ -19,12 +19,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: "Generate baseprint and commit to autobaseprint branch"
-        uses: castedo/baseprinter-action@v17
+        uses: castedo/baseprinter-action@v19
         with:
           just-recipe: baseprint
-          # do not use baseprint-path in sources
-          # baseprint snapshot contents will be automatically stored there
-          # on the autobaseprint branch
           baseprint-path: baseprint
       - name: "Upload HTML/PDF preview artifacts for GitHub Pages"
         uses: actions/upload-pages-artifact@v3
