@@ -240,6 +240,7 @@ based on the criteria of this specification.</p>
 &lt;a&gt;              ~OUT    ~IN
 &lt;article-title&gt;  ~SELF   ~REF
 &lt;b&gt;              ~HYPER  ~COPY  ~HYPO  ~MINI
+&lt;div&gt;            ~PARA   ~DITEM
 &lt;i&gt;              ~HYPER  ~COPY  ~HYPO  ~MINI
 &lt;tt&gt;             ~HYPER  ~COPY  ~HYPO
 &lt;sub&gt;            ~HYPER  ~COPY  ~HYPO  ~MINI
@@ -458,22 +459,23 @@ related criteria have been dropped.</p>
             <h5>&lt;li&gt;</h5>
             <p><b>Criterion #18401</b>:
 <tt>&lt;li&gt;</tt> elements have no attributes.</p>
-            <p><b>Criterion #13486</b>:
-<tt>&lt;li&gt;</tt> elements contain element-only content with child elements from the set <tt>{P_LEVEL}</tt>.</p>
+            <p><b>Criterion #15700</b>:
+<tt>&lt;li&gt;</tt> elements contain biform content.</p>
           </section>
           <section id="dl">
             <h5>&lt;dl&gt;</h5>
             <p><b>Criterion #16653</b>:
 <tt>&lt;dl&gt;</tt> elements have no attributes.</p>
             <p><b>Criterion #19568</b>:
-<tt>&lt;dl&gt;</tt> elements contain element-only content with only <tt>&lt;div&gt;</tt> child elements.</p>
+<tt>&lt;dl&gt;</tt> elements contain element-only content with only <tt>&lt;div&gt;~DITEM</tt> child elements.</p>
           </section>
-          <section id="div-child-element-of-dl">
-            <h5>&lt;div&gt; child element of &lt;dl&gt;</h5>
+          <section id="divditem">
+            <h5>&lt;div&gt;~DITEM</h5>
             <p><b>Criterion #13056</b>:
-<tt>&lt;div&gt;</tt> child elements of <tt>&lt;dl&gt;</tt> have no attributes.</p>
-            <p><b>Criterion #11744</b>:
-<tt>&lt;div&gt;</tt> child elements of <tt>&lt;dl&gt;</tt> contain element-only content with child elements of either <tt>&lt;dt&gt;</tt> or <tt>&lt;dd&gt;</tt>.</p>
+<tt>&lt;div&gt;~DITEM</tt> elements have no attributes.</p>
+            <p><b>Criterion #14716</b>:
+<tt>&lt;div&gt;~DITEM</tt> elements contain element-only content of one <tt>&lt;dt&gt;</tt> child element
+followed by zero or more <tt>&lt;dd&gt;</tt> child elements.</p>
           </section>
           <section id="dt">
             <h5>&lt;dt&gt;</h5>
@@ -486,8 +488,8 @@ related criteria have been dropped.</p>
             <h5>&lt;dd&gt;</h5>
             <p><b>Criterion #18382</b>:
 <tt>&lt;dd&gt;</tt> elements have no attributes.</p>
-            <p><b>Criterion #13562</b>:
-<tt>&lt;dd&gt;</tt> elements contain element-only content with child elements from the set <tt>{P_LEVEL}</tt>.</p>
+            <p><b>Criterion #19626</b>:
+<tt>&lt;dd&gt;</tt> elements contain biform content.</p>
           </section>
         </section>
       </section>
@@ -536,27 +538,38 @@ related criteria have been dropped.</p>
         <section id="content-elements">
           <h4>Content elements</h4>
           <p><b>Definition</b>:
-<tt>{P_LEVEL}</tt> denotes the set of elements:</p>
+<tt>{BLOCK}</tt> denotes the set of elements:</p>
           <pre>&lt;blockquote&gt;
+&lt;div&gt;~PARA
 &lt;dl&gt;
 &lt;ol&gt;
 &lt;p&gt;
 &lt;pre&gt;
 &lt;ul&gt;</pre>
+          <p><b>Definition</b>:
+<i>Biform content</i> is either element-only content with elements from the set
+<tt>{BLOCK}</tt> or mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           <section id="blockquote">
             <h5>&lt;blockquote&gt;</h5>
             <p><b>Criterion #13925</b>:
 <tt>&lt;blockquote&gt;</tt> elements have no attributes.</p>
-            <p><b>Criterion #13249</b>:
-<tt>&lt;blockquote&gt;</tt> elements contain element-only content with only <tt>&lt;p&gt;</tt> child elements.</p>
+            <p><b>Criterion #18123</b>:
+<tt>&lt;blockquote&gt;</tt> elements contain biform content.</p>
+          </section>
+          <section id="divpara">
+            <h5>&lt;div&gt;~PARA</h5>
+            <p><b>Criterion #16024</b>:
+<tt>&lt;div&gt;~PARA</tt> elements have no attributes.</p>
+            <p><b>Criterion #10714</b>:
+<tt>&lt;div&gt;~PARA</tt> elements contain mixed content with child elements from the set <tt>{HYPERTEXT}</tt>.</p>
           </section>
           <section id="abstract">
             <h5>&lt;abstract&gt;</h5>
             <p><b>Criterion #14631</b>:
 <tt>&lt;abstract&gt;</tt> has no attributes.</p>
-            <p><b>Criterion #17433</b>:
+            <p><b>Criterion #19837</b>:
 <tt>&lt;abstract&gt;</tt> contains element-only content with all child elements from the set
-<tt>{P_LEVEL}</tt>.</p>
+<tt>{BLOCK}</tt>.</p>
           </section>
           <section id="article-body">
             <h5>&lt;article-body&gt;</h5>
@@ -565,7 +578,7 @@ related criteria have been dropped.</p>
             <p><b>Criterion #11247</b>:
 <tt>&lt;article-body&gt;</tt> contains element-only content with a sequence of child elements matching the regular
 expression:</p>
-            <p><tt>({P_LEVEL})* (&lt;section&gt;~2)*</tt></p>
+            <p><tt>({BLOCK})* (&lt;section&gt;~2)*</tt></p>
           </section>
           <section id="section">
             <h5>&lt;section&gt;</h5>
@@ -574,12 +587,12 @@ expression:</p>
             <p><b>Criterion #14586</b>:
 <tt>&lt;section&gt;~N</tt> elements contain element-only content with a sequence of child elements matching the
 regular expression:</p>
-            <p><tt>(&lt;hN&gt;)? ({P_LEVEL})* (&lt;section&gt;~(N+1))*</tt></p>
+            <p><tt>(&lt;hN&gt;)? ({BLOCK})* (&lt;section&gt;~(N+1))*</tt></p>
             <p>for <tt>N</tt> equal to 2, 3, 4, or 5.</p>
             <p><b>Criterion #18843</b>:
 <tt>&lt;section&gt;~6</tt> elements contain element-only content with a sequence of child elements matching the
 regular expression:</p>
-            <p><tt>(&lt;h6&gt;)? ({P_LEVEL})* (&lt;section&gt;~6)*</tt></p>
+            <p><tt>(&lt;h6&gt;)? ({BLOCK})* (&lt;section&gt;~6)*</tt></p>
           </section>
           <section id="h2-h3-h4-h5-h6">
             <h5>&lt;h2&gt;, &lt;h3&gt;, &lt;h4&gt;, &lt;h5&gt;, &lt;h6&gt;</h5>
@@ -916,7 +929,7 @@ for their corresponding XHTML elements in edition 2.</p>
 -----------   -----
 &lt;bold&gt;        &lt;b&gt;
 &lt;break/&gt;      &lt;br/&gt;
-&lt;def-item&gt;    &lt;div&gt; (under &lt;dl&gt;)
+&lt;def-item&gt;    &lt;div&gt;~DITEM
 &lt;def-list&gt;    &lt;dl&gt;
 &lt;def&gt;         &lt;dd&gt;
 &lt;disp-quote&gt;  &lt;blockquote&gt;
@@ -944,7 +957,8 @@ for their corresponding XHTML elements in edition 2.</p>
         <section id="li-and-dd-child-elements">
           <h4>&lt;li&gt; and &lt;dd&gt; child elements</h4>
           <p>Consistent with the HTML standard,
-<tt>&lt;li&gt;</tt> and <tt>&lt;dd&gt;</tt> child elements can be any elements from the set <tt>{P_LEVEL}</tt>.
+<tt>&lt;li&gt;</tt> and <tt>&lt;dd&gt;</tt> child elements contain a simplifed variant of HTML <i>flow content</i>,
+defined as <i>biform content</i> in this specification.
 This is an intentional non-alignment with the NISO JATS standard.
 The reference XSL transform file will transform Baseprint XML to JATS XML,
 moving required child elements to be under non-HTML JATS <tt>&lt;p&gt;</tt> child elements as required by
@@ -971,7 +985,7 @@ See <a rel="external" href="https://github.com/singlesourcepub/baseprints/discus
             </div>
             <div>
               <dt>&lt;abstract&gt;</dt>
-              <dd>content criteria require only <tt>{P_LEVEL}</tt> child elements and no subsections.</dd>
+              <dd>content criteria require only <tt>{BLOCK}</tt> child elements and no subsections.</dd>
             </div>
             <div>
               <dt>&lt;copyright-statement&gt;</dt>
@@ -1004,6 +1018,9 @@ like in JATS.</p>
             <li><tt>xmlns:xlink</tt> namespace no longer needed since <tt>&lt;ext-link&gt;</tt> replaced with <tt>&lt;a&gt;</tt></li>
             <li><tt>&lt;xref&gt;</tt> element in edition 2 is equivalent to <tt>&lt;xref&gt;~CITE</tt> of edition 1</li>
             <li>JATS <tt>&lt;elocation-id&gt;</tt> eliminated (use <tt>&lt;fpage&gt;</tt> for better CSLJSON interoperability)</li>
+            <li>replaced element set <tt>{P_LEVEL}</tt> with <tt>{BLOCK}</tt></li>
+            <li>added <tt>&lt;div&gt;~PARA</tt> element variety</li>
+            <li>defined <i>biform content</i> for elements <tt>&lt;li&gt;</tt>, <tt>&lt;dd&gt;</tt>, and <tt>blockquote</tt>.</li>
           </ul>
         </section>
       </section>
